@@ -8,100 +8,166 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">F</div>
-      <div>
-        <strong>FURY LAB</strong>
-        <span>RU · арбалет и жезл</span>
-      </div>
-    </div>
-    <div class="top-actions">
-      <span class="version">v0.1.0-dev</span>
-      <button id="resetBuild" class="ghost">Очистить сборку</button>
-      <button id="simulateTop" class="primary">Симулировать 5 минут</button>
-    </div>
-  </header>
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="Fury Lab">
+    <span class="brand-mark">F</span>
+    <span><strong>FURY LAB</strong><small>RU · арбалет и жезл</small></span>
+  </a>
+  <div class="top-actions">
+    <span class="version">v0.2.0-dev</span>
+    <button id="resetBuild" class="btn ghost">Очистить сборку</button>
+  </div>
+</header>
 
-  <main class="layout">
-    <section class="column">
-      <div class="section-head">
-        <span>КОНСТРУКТОР ПЕРСОНАЖА</span>
-        <h1>Фурия</h1>
-      </div>
+<main id="top" class="page">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">КОНСТРУКТОР ПЕРСОНАЖА</div>
+      <h1>Фурия</h1>
+      <p>Crossbow + Wand · PvE · одна цель</p>
+    </div>
+    <button id="simulateHero" class="btn primary">Симулировать 5 минут ↓</button>
+  </section>
 
-      <article class="card">
-        <div class="card-title"><h2>Экипировка</h2><span id="gearCount">0 / 13</span></div>
-        <p class="muted">Нажми на слот, чтобы выбрать предмет. Каталог предметов будет подключён следующим этапом.</p>
-        <div id="gearGrid" class="slot-grid"></div>
+  <div class="workspace">
+    <section class="main-column">
+      <article class="panel">
+        <header class="panel-head"><div><h2>Экипировка</h2><p>Нажми на слот, чтобы выбрать предмет.</p></div><b id="gearCount">0 / 13</b></header>
+        <div id="gearGrid" class="gear-grid"></div>
+        <div class="subsection">
+          <div class="subhead"><h3>Синергия трёх рун</h3><span id="runeSynergyCount">0</span></div>
+          <div class="empty-state" id="runeSynergy">Нет активных сочетаний. Выбери три руны в подходящем порядке. Эти бонусы уже включаются в характеристики рун.</div>
+        </div>
       </article>
 
-      <article class="card">
-        <div class="card-title"><h2>Панель умений</h2><span>Специализации: <b id="specPoints">0</b> / 100 оч.</span></div>
-        <h3>Активные <span id="activeCount">0 / 12</span></h3>
-        <div id="activeSkills" class="skill-grid"></div>
-        <h3>Пассивные <span id="passiveCount">0 / 8</span></h3>
-        <div id="passiveSkills" class="skill-grid compact"></div>
-        <h3>Защита</h3>
-        <div id="defenseSkill" class="skill-grid compact"></div>
+      <article class="panel">
+        <header class="panel-head"><div><h2>Панель умений</h2><p>Выбери ячейку. Описание и специализации выбранного умения появятся ниже.</p></div><b>Специализации: <span id="specPoints">0</span> / 100</b></header>
+        <div class="skill-section">
+          <div class="subhead"><h3>Активные</h3><span id="activeCount">0 / 12</span></div>
+          <div id="activeSkills" class="skill-grid active"></div>
+        </div>
+        <div class="skill-section">
+          <div class="subhead"><h3>Пассивные</h3><span id="passiveCount">0 / 8</span></div>
+          <div id="passiveSkills" class="skill-grid passive"></div>
+        </div>
+        <div class="skill-section">
+          <div class="subhead"><h3>Защита</h3></div>
+          <div id="defenseSkill" class="skill-grid defense"></div>
+        </div>
+        <div id="skillDetails" class="detail-card muted-card">Выбери умение, чтобы увидеть его описание и трейты.</div>
       </article>
 
-      <article class="card">
-        <div class="card-title"><h2>Атрибуты</h2><span>Уровень 55 · <b id="spentPoints">0</b> / 54 очка</span></div>
-        <div id="attributes" class="attributes"></div>
+      <article class="panel">
+        <header class="panel-head"><div><h2>Характеристики</h2><p>Урон оружия, атрибуты, бонусы экипировки и рун.</p></div></header>
+        <div class="weapon-row">
+          <div class="weapon-box"><span>Урон оружия</span><strong>Арбалет</strong><b id="xbowRange">—</b></div>
+          <div class="weapon-box"><span>Урон оружия</span><strong>Жезл</strong><b id="wandRange">—</b></div>
+        </div>
+
+        <div class="subsection">
+          <div class="subhead"><h3>Атрибуты</h3><span>Уровень 55 · <b id="spentPoints">0</b> / 54 · Осталось: <b id="remainingPoints">54</b></span></div>
+          <p class="hint">База 10. Прибавки 1–20 стоят 1 очко, 21–40 — 2, далее — 4. Бонусы вещей не расходуют очки.</p>
+          <div id="attributes" class="attributes"></div>
+        </div>
+
+        <div class="subsection split">
+          <div>
+            <h3>Бонусы предметов, трейтов и рун</h3>
+            <div id="buildBonuses" class="empty-state">Выбери экипировку, чтобы увидеть её бонусы.</div>
+          </div>
+          <div>
+            <h3>Из чего складываются характеристики</h3>
+            <div class="formula-list">
+              <span>Экипировка + трейты</span><span>Атрибуты + пороги</span><span>Руны + синергии</span><span>Постоянное мастерство</span>
+            </div>
+          </div>
+        </div>
+        <div class="warning">Комплекты, руны хаоса и особые эффекты предметов пока не моделируются полностью.</div>
+      </article>
+
+      <article class="panel">
+        <header class="panel-head"><div><h2>Мастерство оружия</h2><p>Обычные узлы — до 10 уровней; синергии — 0/1. По 200 очков на оружие.</p></div><a class="text-link" href="https://throneandliberty.ru/" target="_blank" rel="noreferrer">Данные RUTL ↗</a></header>
+        <div class="mastery-tabs">
+          <button class="tab active" data-mastery-tab="crossbow">Арбалет <span id="crossbowMasteryPoints">0 / 200</span></button>
+          <button class="tab" data-mastery-tab="wand">Жезл · книжка <span id="wandMasteryPoints">0 / 200</span></button>
+        </div>
+        <div id="masteryTree" class="mastery-tree"></div>
+        <p class="hint">Нажми узел: +1. Правая кнопка мыши: −1. Условные эффекты синергий и эпических узлов пока не входят в DPS.</p>
       </article>
     </section>
 
-    <section class="column">
-      <article class="card">
-        <div class="card-title"><h2>Характеристики</h2><span>текущая сборка</span></div>
-        <div class="stat-grid">
-          <label>Мин. урон<input id="minDamage" type="number" value="150" min="0"></label>
-          <label>Макс. урон<input id="maxDamage" type="number" value="230" min="0"></label>
-          <label>Скорость атаки, %<input id="attackSpeed" type="number" value="0"></label>
-          <label>Шанс крита<input id="critChance" type="number" value="0" min="0"></label>
-          <label>Крит. урон, %<input id="critDamage" type="number" value="50"></label>
-          <label>Шанс мощной атаки<input id="heavyChance" type="number" value="0" min="0"></label>
-          <label>Повышение урона умений<input id="skillBoost" type="number" value="0"></label>
-          <label>Сопротивление цели<input id="skillResist" type="number" value="0"></label>
+    <aside class="side-column">
+      <article class="panel sticky-card">
+        <div class="eyebrow">ОДНА ЦЕЛЬ · 300 СЕКУНД</div>
+        <h2>Симуляция и поиск ротации</h2>
+        <div class="badge">Экспериментальная модель</div>
+        <div class="assumptions">
+          <p><b>Оружие в руках:</b> арбалет</p>
+          <p>Автоатаки — арбалетом. Умения жезла рассчитываются по диапазону жезла.</p>
+          <p>Умения: эпический уровень 5. Для «Гнева природы» RU коэффициенты уровня 5 ещё требуют подтверждения.</p>
+          <p>Неподвижный манекен без ответных атак.</p>
         </div>
-        <div class="notice">Комплекты, руны хаоса, особые эффекты предметов и часть условных эффектов мастерства пока не моделируются.</div>
-      </article>
 
-      <article class="card">
-        <div class="card-title"><h2>Мастерство оружия</h2><span>0 / 200 + 0 / 200</span></div>
-        <div class="mastery-columns">
-          <div><h3>Арбалет</h3><div class="mastery-placeholder">Дерево мастерства будет восстановлено из каталога RUTL.</div></div>
-          <div><h3>Жезл</h3><div class="mastery-placeholder">Дерево мастерства будет восстановлено из каталога RUTL.</div></div>
-        </div>
-      </article>
-
-      <article class="card simulator">
-        <div class="card-title"><h2>Симуляция одной цели</h2><span>300 секунд</span></div>
-        <p class="muted">Автоатаки — арбалетом. Умения жезла используют диапазон жезла. Сейчас это техническая версия восстановленного симулятора.</p>
-        <div class="sim-controls">
-          <label>Режим
+        <div class="form-stack">
+          <label>Характеристики
             <select id="simMode"><option value="current">Из текущей сборки</option><option value="manual">Итоговые из игры</option></select>
+          </label>
+          <label>Что подбирать
+            <select id="optMode"><option value="panel">Приоритеты моей панели (состав фиксирован)</option><option value="full">Активные + специализации + ротация</option></select>
           </label>
           <label>Глубина поиска
             <select id="searchDepth"><option value="180">180 вариантов</option><option value="600">600 вариантов</option></select>
           </label>
         </div>
-        <button id="simulate" class="primary wide">Симулировать 5 минут</button>
-        <div id="result" class="result empty">
-          <span>Средний DPS модели</span>
-          <strong>—</strong>
-          <small>Нажми «Симулировать 5 минут».</small>
+
+        <details open>
+          <summary>Характеристики для боя и допущения</summary>
+          <div class="combat-inputs">
+            <label>Мин. урон<input id="minDamage" type="number" value="150"></label>
+            <label>Макс. урон<input id="maxDamage" type="number" value="230"></label>
+            <label>Скорость атаки, %<input id="attackSpeed" type="number" value="0"></label>
+            <label>Шанс крита<input id="critChance" type="number" value="0"></label>
+            <label>Крит. урон, %<input id="critDamage" type="number" value="50"></label>
+            <label>Шанс мощной атаки<input id="heavyChance" type="number" value="0"></label>
+            <label>Повышение урона умений<input id="skillBoost" type="number" value="0"></label>
+            <label>Сопротивление урону умений<input id="skillResist" type="number" value="0"></label>
+          </div>
+        </details>
+        <details>
+          <summary>Время применения и PvE-множители умений</summary>
+          <div class="empty-state">Подключаем проверенные RU значения по мере валидации.</div>
+        </details>
+        <details>
+          <summary>Что учитывает модель</summary>
+          <div class="checklist">
+            <span>✓ базовый диапазон оружия</span><span>✓ crit / heavy expectation</span><span>✓ Skill Damage Boost / Resistance</span><span>△ ротация умений</span><span>△ DoT / Curse Explosion</span><span>△ уникальные эффекты</span>
+          </div>
+        </details>
+
+        <button id="simulate" class="btn primary wide">Симулировать 5 минут</button>
+        <div id="result" class="result">
+          <span>Средний DPS модели</span><strong>—</strong><small>Результат — средний DPS модели, а не подтверждённый DPS RU.</small>
         </div>
       </article>
 
-      <article class="card source-card">
-        <div><strong>RUTL</strong><span>основной источник данных RU</span></div>
-        <div><strong>Fury Lab</strong><span>ветка develop · восстановление проекта</span></div>
+      <article class="panel footer-card">
+        <div><b>RUTL</b><span>снимок 24.09.2026</span></div>
+        <div><b>Fury Lab</b><span>восстановление · GitHub develop</span></div>
+        <a href="https://github.com/sidorov-ka/fury-stat-lab/tree/develop" target="_blank" rel="noreferrer">Исходники ↗</a>
       </article>
-    </section>
-  </main>
+    </aside>
+  </div>
+</main>
 
-  <script type="module" src="./src/app.js"></script>
+<div id="pickerModal" class="modal" hidden>
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card">
+    <div class="modal-head"><div><div class="eyebrow" id="modalEyebrow">ВЫБОР</div><h2 id="modalTitle">Выбрать</h2></div><button class="icon-btn" data-close-modal>×</button></div>
+    <input id="modalSearch" class="search" placeholder="Поиск..." autocomplete="off">
+    <div id="modalList" class="modal-list"></div>
+  </div>
+</div>
+
+<script type="module" src="./src/app.js"></script>
 </body>
 </html>
