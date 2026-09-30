@@ -1,9 +1,7 @@
 {
-  "name": "fury-stat-lab",
-  "version": "0.1.0",
-  "private": false,
-  "type": "module",
-  "scripts": {
-    "test": "node --test"
-  }
+  "name":"fury-stat-lab",
+  "version":"0.2.0",
+  "private":false,
+  "type":"module",
+  "scripts":{"test":"node --test","serve":"python -m http.server 8000"}
 }
