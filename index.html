@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Fury Lab — калькулятор персонажа Throne and Liberty для арбалета и жезла." />
+  <title>Fury Lab — Crossbow + Wand</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">F</div>
+      <div>
+        <strong>FURY LAB</strong>
+        <span>RU · арбалет и жезл</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span class="version">v0.1.0-dev</span>
+      <button id="resetBuild" class="ghost">Очистить сборку</button>
+      <button id="simulateTop" class="primary">Симулировать 5 минут</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="column">
+      <div class="section-head">
+        <span>КОНСТРУКТОР ПЕРСОНАЖА</span>
+        <h1>Фурия</h1>
+      </div>
+
+      <article class="card">
+        <div class="card-title"><h2>Экипировка</h2><span id="gearCount">0 / 13</span></div>
+        <p class="muted">Нажми на слот, чтобы выбрать предмет. Каталог предметов будет подключён следующим этапом.</p>
+        <div id="gearGrid" class="slot-grid"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-title"><h2>Панель умений</h2><span>Специализации: <b id="specPoints">0</b> / 100 оч.</span></div>
+        <h3>Активные <span id="activeCount">0 / 12</span></h3>
+        <div id="activeSkills" class="skill-grid"></div>
+        <h3>Пассивные <span id="passiveCount">0 / 8</span></h3>
+        <div id="passiveSkills" class="skill-grid compact"></div>
+        <h3>Защита</h3>
+        <div id="defenseSkill" class="skill-grid compact"></div>
+      </article>
+
+      <article class="card">
+        <div class="card-title"><h2>Атрибуты</h2><span>Уровень 55 · <b id="spentPoints">0</b> / 54 очка</span></div>
+        <div id="attributes" class="attributes"></div>
+      </article>
+    </section>
+
+    <section class="column">
+      <article class="card">
+        <div class="card-title"><h2>Характеристики</h2><span>текущая сборка</span></div>
+        <div class="stat-grid">
+          <label>Мин. урон<input id="minDamage" type="number" value="150" min="0"></label>
+          <label>Макс. урон<input id="maxDamage" type="number" value="230" min="0"></label>
+          <label>Скорость атаки, %<input id="attackSpeed" type="number" value="0"></label>
+          <label>Шанс крита<input id="critChance" type="number" value="0" min="0"></label>
+          <label>Крит. урон, %<input id="critDamage" type="number" value="50"></label>
+          <label>Шанс мощной атаки<input id="heavyChance" type="number" value="0" min="0"></label>
+          <label>Повышение урона умений<input id="skillBoost" type="number" value="0"></label>
+          <label>Сопротивление цели<input id="skillResist" type="number" value="0"></label>
+        </div>
+        <div class="notice">Комплекты, руны хаоса, особые эффекты предметов и часть условных эффектов мастерства пока не моделируются.</div>
+      </article>
+
+      <article class="card">
+        <div class="card-title"><h2>Мастерство оружия</h2><span>0 / 200 + 0 / 200</span></div>
+        <div class="mastery-columns">
+          <div><h3>Арбалет</h3><div class="mastery-placeholder">Дерево мастерства будет восстановлено из каталога RUTL.</div></div>
+          <div><h3>Жезл</h3><div class="mastery-placeholder">Дерево мастерства будет восстановлено из каталога RUTL.</div></div>
+        </div>
+      </article>
+
+      <article class="card simulator">
+        <div class="card-title"><h2>Симуляция одной цели</h2><span>300 секунд</span></div>
+        <p class="muted">Автоатаки — арбалетом. Умения жезла используют диапазон жезла. Сейчас это техническая версия восстановленного симулятора.</p>
+        <div class="sim-controls">
+          <label>Режим
+            <select id="simMode"><option value="current">Из текущей сборки</option><option value="manual">Итоговые из игры</option></select>
+          </label>
+          <label>Глубина поиска
+            <select id="searchDepth"><option value="180">180 вариантов</option><option value="600">600 вариантов</option></select>
+          </label>
+        </div>
+        <button id="simulate" class="primary wide">Симулировать 5 минут</button>
+        <div id="result" class="result empty">
+          <span>Средний DPS модели</span>
+          <strong>—</strong>
+          <small>Нажми «Симулировать 5 минут».</small>
+        </div>
+      </article>
+
+      <article class="card source-card">
+        <div><strong>RUTL</strong><span>основной источник данных RU</span></div>
+        <div><strong>Fury Lab</strong><span>ветка develop · восстановление проекта</span></div>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
