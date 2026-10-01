@@ -1,5 +1,5 @@
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=character-stats-1';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=build-only-1';
 
 import {treeStats,treeWarnings} from './mastery-tree.js';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
@@ -55,6 +55,13 @@ export function deriveStats(state,catalog){
  // This node gives the same rating against all five monster species; count it once.
  out.species+=Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(mastery[k+'_damage_amplification']||0)*.1));
  return out;
+}
+// Character values always come from the build. Only fight assumptions may be overridden.
+export const COMBAT_ASSUMPTION_KEYS=['resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
+export function simulationParams(state,catalog,assumptions={}){
+ const params={...BUFF_DEFAULTS,...deriveStats(state,catalog),sheetIncludesPassives:1};
+ for(const key of COMBAT_ASSUMPTION_KEYS)if(Object.hasOwn(assumptions,key))params[key]=assumptions[key];
+ return params;
 }
 export function characterStats(state,catalog){
  const {raw}=rawCharacterStats(state,catalog),out={...raw},combat=deriveStats(state,catalog);

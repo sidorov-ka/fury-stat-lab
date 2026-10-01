@@ -1,13 +1,13 @@
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=character-stats-1';
-import {deriveStats,characterStats,statBreakdown,specializationRole,ROLE_LABELS} from './simulator.js?v=character-stats-1';
-import {setupSimulation} from './sim-ui.js?v=character-stats-1';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=build-only-1';
+import {deriveStats,characterStats,statBreakdown,specializationRole,ROLE_LABELS} from './simulator.js?v=build-only-1';
+import {setupSimulation} from './sim-ui.js?v=build-only-1';
 import {createStore,mergeDefaults} from './storage.js';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js';
 import {TREES,normalizeTree} from './mastery-tree.js';
-import {mountMastery} from './mastery-ui.js?v=character-stats-1';
+import {mountMastery} from './mastery-ui.js?v=build-only-1';
 import {mountRunes} from './rune-ui.js';
 import {runeEffects,runeSlots} from './runes.js';
-import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=character-stats-1';
+import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=build-only-1';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -77,7 +77,7 @@ function renderStats(){
  const others=Object.fromEntries(Object.entries(stats).filter(([k])=>!ATTRS.some(([a])=>a.toLowerCase()===k.toLowerCase())&&!/_main_hand$|_off_hand$/.test(k)));
  $('stat-list').innerHTML=statRows(others)||'';
  if($('mastery-totals'))$('mastery-totals').innerHTML=MASTERY_FIELDS.map(([k,label])=>`<div class="stat-line"><span>${escape(label.replace(', п.п.',', %'))}</span><b>${n(combat[k])}</b></div>`).join('');
- let breakdown=$('stat-breakdown');if(!breakdown){breakdown=document.createElement('details');breakdown.id='stat-breakdown';document.querySelector('.totals').append(breakdown);breakdown.innerHTML='<summary>Из чего складываются характеристики</summary><p class="micro">Столбцы показывают изменение результата при последовательном добавлении источников слева направо. Пороги атрибутов входят в источник, который их открыл. Для интервала атаки учитывается порядок формулы. Режим «Итоговые из игры» относится только к пяти атрибутам.</p><div class="sim-table-wrap"></div>';}
+ let breakdown=$('stat-breakdown');if(!breakdown){breakdown=document.createElement('details');breakdown.id='stat-breakdown';document.querySelector('.totals').append(breakdown);breakdown.innerHTML='<summary>Из чего складываются характеристики</summary><p class="micro">Столбцы показывают изменение результата при последовательном добавлении источников слева направо. Пороги атрибутов входят в источник, который их открыл. Для интервала атаки учитывается порядок формулы.</p><div class="sim-table-wrap"></div>';}
  const b=statBreakdown(state,catalog),list=[...MASTERY_FIELDS,['interval','Интервал автоатаки, с'],['rangeDamage','Урон дальнего боя, %'],['species','Повышение урона по виду цели']];
  breakdown.querySelector('.sim-table-wrap').innerHTML=`<table><thead><tr><th>Характеристика</th>${b.labels.map(l=>`<th>${escape(l)}</th>`).join('')}<th>Итого</th></tr></thead><tbody>${list.map(([k,l])=>`<tr><td>${escape(l.replace(', п.п.',', %'))}</td>${b.values[k].map(v=>`<td>${v>0?'+':''}${Number(v.toFixed(3)).toLocaleString('ru-RU',{maximumFractionDigits:3})}</td>`).join('')}<td><b>${Number(b.total[k].toFixed(3)).toLocaleString('ru-RU',{maximumFractionDigits:3})}</b></td></tr>`).join('')}</tbody></table>`;
 }
@@ -152,7 +152,7 @@ $('unequip').onclick=()=>{if(pick.kind==='gear'){delete state.items[pick.slot];r
 $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('picker').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('picker').close()}});
 
 $('weapon').onchange=renderStats;
-$('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Ручные параметры симуляции сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
+$('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
  try{const r=await fetch('catalog.json');if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
