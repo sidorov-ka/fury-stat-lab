@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {deriveStats,statBreakdown,attackInterval} from '../dist/simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../dist/catalog.json',import.meta.url)));
+const weapon=catalog.equipment.find(i=>i.category==='Crossbow');
+const state={items:{weapon1:{id:weapon.id,level:0,traits:[]}},attrs:{str:30,dex:78,Int:60,per:40,con:10},attrMode:'total',active:[],passive:[],defensive:[],specs:{},mastery:{speed:3,bonus:2},masteryTrees:{CR:{Crossbow_Normal_Attack_01:10}}};
+const p=deriveStats(state,catalog),low=deriveStats({...state,attrs:{...state.attrs,dex:10}},catalog);
+assert.equal(p.speed,low.speed,'Dexterity must not enter percentage attack speed');
+assert(p.interval<low.interval,'Dexterity must reduce attack interval');
+assert(Math.abs(attackInterval(.574,20.4,27.66)-(.574-20.4*.0067)/1.2766)<1e-12);
+const b=statBreakdown(state,catalog);for(const [k,values] of Object.entries(b.values))assert(Math.abs(values.reduce((a,v)=>a+v,0)-b.total[k])<1e-8,k);
+assert.deepEqual(b.total,p);
+const changed=deriveStats({...state,baseHp:6000,baseMana:5500},catalog);assert.equal(changed.hp-p.hp,825);assert.equal(changed.mana-p.mana,325);
+assert.equal(deriveStats({...state,baseHp:NaN},catalog).hp,p.hp);
+console.log('Stats: separate dexterity timing, additive breakdown and explicit base HP/MP passed.');

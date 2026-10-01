@@ -1,0 +1,296 @@
+[
+  {
+    "name": "base",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 0,
+        "hit": 1000,
+        "bonus_dmg": 0,
+        "heavy_attack": 0,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": true,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 350,
+      "crit_dmg": 450,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 450,
+      "min_dmg": 250
+    }
+  },
+  {
+    "name": "boost",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 1000,
+        "hit": 1000,
+        "bonus_dmg": 0,
+        "heavy_attack": 0,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": true,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 525,
+      "crit_dmg": 675,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 675,
+      "min_dmg": 375
+    }
+  },
+  {
+    "name": "critical",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 0,
+        "hit": 1000,
+        "bonus_dmg": 0,
+        "heavy_attack": 0,
+        "critical_hit": 1000,
+        "critical_dmg": 20
+      },
+      "defender": {
+        "use_scarecrow": true,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 445,
+      "crit_dmg": 540,
+      "crit_rate": 50.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 450,
+      "min_dmg": 250
+    }
+  },
+  {
+    "name": "bonus_heavy",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 0,
+        "hit": 1000,
+        "bonus_dmg": 25,
+        "heavy_attack": 1000,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": true,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 550,
+      "crit_dmg": 475,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 50.0,
+      "hit_rate": 100,
+      "max_dmg": 475,
+      "min_dmg": 275
+    }
+  },
+  {
+    "name": "mult_bonus",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 0,
+        "hit": 1000,
+        "bonus_dmg": 25,
+        "heavy_attack": 0,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": true,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 2
+      }
+    },
+    "result": {
+      "avg_dmg": 725,
+      "crit_dmg": 925,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 925,
+      "min_dmg": 525
+    }
+  },
+  {
+    "name": "defense",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 0,
+        "hit": 1000,
+        "bonus_dmg": 0,
+        "heavy_attack": 0,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": false,
+        "pvp_pve": "PvE",
+        "defense": 2500,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 0,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 175,
+      "crit_dmg": 225,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 225,
+      "min_dmg": 125
+    }
+  },
+  {
+    "name": "resistance",
+    "input": {
+      "attacker": {
+        "atk_min": 100,
+        "atk_max": 200,
+        "skill_dmg_boost": 500,
+        "hit": 1000,
+        "bonus_dmg": 0,
+        "heavy_attack": 0,
+        "critical_hit": 0,
+        "critical_dmg": 0
+      },
+      "defender": {
+        "use_scarecrow": false,
+        "pvp_pve": "PvE",
+        "defense": 0,
+        "endurance": 0,
+        "evasion": 0,
+        "skill_dmg_reduction": 300,
+        "crit_dmg_reduction": 0,
+        "dmg_reduction": 0
+      },
+      "skill": {
+        "base_dmg": 200,
+        "add_dmg": 50,
+        "charging_mult": 1,
+        "pve_mult": 1,
+        "special_mult": 1
+      }
+    },
+    "result": {
+      "avg_dmg": 327,
+      "crit_dmg": 420,
+      "crit_rate": 0.0,
+      "glancing_rate": 0.0,
+      "heavy_attack_rate": 0.0,
+      "hit_rate": 100,
+      "max_dmg": 420,
+      "min_dmg": 233
+    }
+  }
+]

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {attributeCost,spentAttributes,migrateAttributes} from '../dist/attributes.js';
+import {totalAttributes} from '../dist/engine.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../dist/catalog.json',import.meta.url)));
+for(const [v,c] of [[10,0],[30,20],[31,22],[50,60],[51,64]])assert.equal(attributeCost(v),c);
+assert.equal(spentAttributes({str:30,dex:30,Int:24,per:10,con:10}),54);
+const item=catalog.equipment.find(e=>e.extraStats?.dex>0);
+const state={attrs:{str:22,dex:80,Int:60,per:40,con:10},attrMode:'total',items:item?{weapon1:{id:item.id,level:0,traits:[]}}:{},masteryTrees:{},mastery:{}};
+const before=totalAttributes(state,catalog);migrateAttributes(state,catalog);assert.deepEqual(totalAttributes(state,catalog),before);assert.equal(state.attrMode,'base');
+const first=structuredClone(state);migrateAttributes(state,catalog);assert.deepEqual(state,first);
+const cost=spentAttributes(state.attrs);state.items={};assert.equal(spentAttributes(state.attrs),cost);
+console.log('Attribute tiers, 54-point budget, lossless migration and gear-independent costs passed.');

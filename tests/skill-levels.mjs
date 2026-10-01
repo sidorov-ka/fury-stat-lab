@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {models,IDS,levelFiveCooldown,simulate,DEFAULTS} from '../dist/simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../dist/catalog.json',import.meta.url)));
+const state={items:{},attrs:{},active:[],passive:[],defensive:[],specs:{[IDS.spread]:['SkillSet_WP_WA_GR_S_CurseSpread_trait_1']}};
+const m=models(catalog,state);for(const [key,value] of [['spread',42],['step',11.8],['trap',40],['rapid',6],['nature',0]])assert.equal(m.find(s=>s.id===IDS[key]).cooldownSec,value);
+assert.equal(levelFiveCooldown({cooldownSec:21,levelProgression:[{label:'Время восстановления другого умения ▼',values:['1','2','3','4','5 сек.']}]}),21);
+const input={catalog,state,params:{...DEFAULTS,wandMin:100,wandMax:100,mana:1e6,auto:0},priority:[IDS.spread,IDS.touch]};
+const current=simulate(input),old=simulate({...input,overrides:{[IDS.spread]:{cooldownSec:63}}});assert(current.counts[IDS.spread]>old.counts[IDS.spread]);
+assert.equal(models(catalog,state,{[IDS.spread]:{cooldownSec:99}}).find(s=>s.id===IDS.spread).cooldownSec,99);
+console.log('Epic 5: correct cooldown rows, overrides, nature exception and increased spread casts passed.');

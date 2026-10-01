@@ -1,0 +1,29 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {TREES,summary,changeNode,normalizeTree,treeStats,treeWarnings} from '../dist/mastery-tree.js';
+import {deriveStats,expectedHit,DEFAULTS} from '../dist/simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../dist/catalog.json',import.meta.url)));
+const t=TREES.CR;let s={};
+const add=(id,count)=>{for(let i=0;i<count;i++){const r=changeNode(t,s,id,1);assert.equal(r.error,'');s=r.selected;}};
+assert.equal(TREES.CR.nodes.length,52);assert.equal(TREES.WA_GR.nodes.length,52);
+assert(changeNode(t,s,'Crossbow_High_Attack_01',1).error);
+add('Crossbow_Normal_Attack_01',10);assert(changeNode(t,s,'Crossbow_Normal_Attack_01',1).error);
+add('Crossbow_Normal_Attack_02',10);add('Crossbow_Normal_AttackUtil_03',10);
+assert.equal(summary(t,s).total,30);
+add('Crossbow_Normal_Attack_Skill',1);assert.equal(summary(t,s).total,30);
+add('Crossbow_High_Attack_01',10);add('Crossbow_High_Attack_02',10);
+const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},attrMode:'base',active:[],passive:[],defensive:[],specs:{},masteryTrees:{CR:s,WA_GR:{}}};
+const base=deriveStats({...state,masteryTrees:{}},catalog),p=deriveStats(state,catalog);
+assert.equal(p.speed,base.speed+2.1);assert.equal(p.critR,base.critR+88);assert.equal(p.rangeDamage,3);
+assert(treeWarnings(state).length);assert.equal(treeStats(state).melee_armor,-48);
+const saved=JSON.parse(JSON.stringify(s));assert.deepEqual(normalizeTree(t,saved),s);
+const removed=changeNode(t,s,'Crossbow_Normal_Attack_01',-1).selected;assert(!removed.Crossbow_High_Attack_01);assert(!removed.Crossbow_High_Attack_02);
+assert.deepEqual(normalizeTree(t,{fake:10,Crossbow_Normal_Attack_01:200}),{Crossbow_Normal_Attack_01:10});
+const hit={...DEFAULTS,crossMin:100,crossMax:100,wandMin:100,wandMax:100,rangeDamage:3};assert.equal(expectedHit(hit,'Crossbow',1,0),103);assert.equal(expectedHit(hit,'Wand',1,0),100);
+assert.equal(treeStats({...state,masteryTrees:{CR:{},WA_GR:{}}}).range_critical_attack,undefined);
+let capped={};for(const n of t.nodes.filter(n=>n.grade!=='epic'&&n.type!=='synergy'))for(let i=0;i<10;i++){const r=changeNode(t,capped,n.id,1);if(!r.error)capped=r.selected;}
+assert.equal(summary(t,capped).total,200);
+const room=t.nodes.find(n=>n.type!=='synergy'&&n.grade==='common'&&(capped[n.id]||0)<10)||t.nodes.find(n=>n.type!=='synergy'&&n.grade==='uncommon'&&(capped[n.id]||0)<10);
+assert(changeNode(t,capped,room.id,1).error);
+for(const tree of Object.values(TREES))for(const l of tree.links){assert(tree.nodes.some(n=>n.id===l.from));assert(tree.nodes.some(n=>n.id===l.to));assert(l.points.length>=2);}
+console.log('Mastery trees: source geometry, level caps, ring locks, cascading removal, source-unit conversion, negative stats and persistence passed.');
