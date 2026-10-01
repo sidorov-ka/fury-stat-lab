@@ -28,6 +28,7 @@ export function weaponRange(item,level=0){
 }
 export function gearStats(state,catalog){
  const out=runeStats(state,catalog);
+ if(!state.excludeSetBonuses)for(const [k,v] of Object.entries(setStats(state,catalog)))out[k]=(out[k]||0)+v;
  for(const entry of Object.values(state.items)){
   const item=catalog.equipment.find(x=>x.id===entry.id);if(!item)continue;
   for(const [k,v] of Object.entries(itemStats(item,entry.level,entry.traits,catalog))){
@@ -45,4 +46,24 @@ export function specCost(state,catalog){
 export function totalAttributes(state,catalog){
  const gear=gearStats(state,catalog),mastery=treeStats(state);
  return Object.fromEntries(ATTRS.map(([k])=>[k,Number(state.attrs[k]||0)+Number(state.attributeAdjustments?.[k]||0)+(state.attrMode==='total'?0:Number(gear[k]||gear[k.toLowerCase()]||0)+Number(mastery[k.toLowerCase()]||0))]));
+}
+
+// A set threshold is applied once, regardless of how many equipped pieces carry its definition.
+export function activeSets(state,catalog){
+ const groups=new Map(),seen=new Set();
+ for(const entry of Object.values(state.items||{})){
+  const item=catalog.equipment.find(x=>x.id===entry.id);if(!item?.setName||seen.has(item.id))continue;
+  seen.add(item.id);const group=groups.get(item.setName)||{name:item.setName,count:0,bonuses:new Map()};group.count++;
+  for(const bonus of item.setBonuses||[])if(!group.bonuses.has(bonus.pieces))group.bonuses.set(bonus.pieces,bonus);
+  groups.set(item.setName,group);
+ }
+ return [...groups.values()].map(g=>({name:g.name,count:g.count,bonuses:[...g.bonuses.values()].filter(b=>g.count>=b.pieces)}));
+}
+export function setStats(state,catalog){
+ const stats={};
+ for(const group of activeSets(state,catalog))for(const bonus of group.bonuses)for(const row of bonus.stats||[]){
+  const key=row.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());
+  if(Number.isFinite(row.value))stats[key]=(stats[key]||0)+row.value;
+ }
+ return stats;
 }

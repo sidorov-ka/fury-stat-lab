@@ -1,6 +1,6 @@
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js';
-import {applyMastery} from './mastery.js';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=character-stats-1';
+
 import {treeStats,treeWarnings} from './mastery-tree.js';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
@@ -19,11 +19,14 @@ export function specializationRole(id,n){
 export function specializationUtility(catalog,specs){return catalog.skills.reduce((sum,s)=>sum+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)&&['utility','defensive'].includes(specializationRole(s.id,Number(t.id.split('_').at(-1))))).reduce((n,t)=>n+t.cost,0),0);}
 export const chance=(rating,k=1000)=>Math.max(0,rating)/(Math.max(0,rating)+k);
 export function attackInterval(baseSeconds,dexPercent,speedPercent){return Math.max(.001,baseSeconds-Math.max(0,dexPercent)*.0067)/Math.max(.01,1+speedPercent/100);}
-export function deriveStats(state,catalog){
+// Client-derived base level table: TL Codex gear builder, retrieved 2026-10-01.
+// https://tlcodex.com/en/gearbuild/934/ : character level 55, stat IDs 163 (HP), 166 (MP).
+export const LEVEL_55_BASE=Object.freeze({hp:6675,mana:5550});
+function rawCharacterStats(state,catalog){
  const raw={...catalog.attributes.baseCharacter.stats};for(const [k,v] of Object.entries(gearStats(state,catalog)))raw[k]=(raw[k]||0)+v;
  const mastery=treeStats(state);for(const [k,v] of Object.entries(mastery))raw[k]=(raw[k]||0)+v;
- raw.cost_max=(raw.cost_max||0)+(Number.isFinite(state.baseMana)&&state.baseMana>=0?state.baseMana:catalog.attributes.baseLevelStats.cost_max);
- raw.hp_max=(raw.hp_max||0)+(Number.isFinite(state.baseHp)&&state.baseHp>=0?state.baseHp:catalog.attributes.baseLevelStats.hp_max);
+ raw.cost_max=(raw.cost_max||0)+LEVEL_55_BASE.mana;
+ raw.hp_max=(raw.hp_max||0)+LEVEL_55_BASE.hp;
  for(const entry of Object.values(state.items)){const item=catalog.equipment.find(x=>x.id===entry.id);if(item&&item.slot!=='Weapon'){const st=itemStats(item,entry.level,entry.traits,catalog);for(const k of ['bonus_attack_power_main_hand','attack_power_main_hand'])raw[k]=(raw[k]||0)+(st[k]||0);}}
  const extras={Crossbow:{},Wand:{}},attributes=totalAttributes(state,catalog);let dexPercent=0;
  for(const [attr] of ATTRS){
@@ -32,6 +35,10 @@ export function deriveStats(state,catalog){
   for(const [k,v] of Object.entries(row)){if(attr==='dex'&&k==='attack_speed_modifier'){dexPercent=Math.max(0,(v-(catalog.attributeStats.dex?.[10]?.attack_speed_modifier||0))*.01);continue;}if(typeof v==='number')raw[k]=(raw[k]||0)+v;else for(const weapon of ['Crossbow','Wand'])extras[weapon][k]=(extras[weapon][k]||0)+(v[weapon.toLowerCase()]||0);}
   for(const m of catalog.attributes.milestones||[])if(m.attribute===attr.toUpperCase()&&total>=m.count)for(const b of m.bonuses)raw[b.stat]=(raw[b.stat]||0)+b.value;
  }
+ return {raw,extras,dexPercent,mastery};
+}
+export function deriveStats(state,catalog){
+ const {raw,extras,dexPercent,mastery}=rawCharacterStats(state,catalog);
  const val=k=>(raw[k]||0)*(catalog.formats[k]?.mul??1);
  const out={...DEFAULTS,critR:val('all_critical_attack')+val('range_critical_attack'),critM:val('all_critical_attack')+val('magic_critical_attack'),heavyR:val('all_double_attack')+val('range_double_attack'),heavyM:val('all_double_attack')+val('magic_double_attack'),critDamage:val('critical_damage_dealt_modifier'),boost:val('skill_power_amplification'),bonus:val('damage_reduction_penetration'),cooldown:val('skill_cooldown_modifier'),speed:val('attack_speed_modifier'),mana:val('cost_max'),regen:val('cost_regen'),efficiency:val('cost_consumption_modifier'),hp:val('hp_max'),buffDuration:val('buff_given_duration_modifier')};
  for(const [slot,weapon,prefix] of [['weapon1','Crossbow','cross'],['weapon2','Wand','wand']]){
@@ -47,17 +54,25 @@ export function deriveStats(state,catalog){
  out.rangeDamage=(raw.range_damage_dealt_modifier||0)*.01;out.magicDamage=(raw.magic_damage_dealt_modifier||0)*.01;
  // This node gives the same rating against all five monster species; count it once.
  out.species+=Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(mastery[k+'_damage_amplification']||0)*.1));
- return applyMastery(out,state.mastery);
+ return out;
+}
+export function characterStats(state,catalog){
+ const {raw}=rawCharacterStats(state,catalog),out={...raw},combat=deriveStats(state,catalog);
+ for(const type of ['melee','range','magic'])for(const suffix of ['critical_attack','double_attack'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_'+suffix]||0);
+ delete out.all_critical_attack;delete out.all_double_attack;
+ for(const [stat,key] of [['damage_reduction_penetration','bonus'],['heal_modifier','healing']])out[stat]=combat[key]/(catalog.formats[stat]?.mul||1);
+ return out;
 }
 export function statBreakdown(state,catalog){
  const baseline={...state,attributeAdjustments:{},items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},attrMode:'total',masteryTrees:{},mastery:{},passive:[],active:[],defensive:[],specs:{}};
- const attributes={...baseline,attrs:state.attrs,attrMode:state.attrMode};
- const gear={...attributes,items:Object.fromEntries(Object.entries(state.items).map(([k,v])=>[k,{...v,runes:[]}]))};
+ const attributes={...baseline,attrs:state.attrs,attrMode:state.attrMode,attributeAdjustments:state.attributeAdjustments};
+ const gear={...attributes,excludeSetBonuses:true,items:Object.fromEntries(Object.entries(state.items).map(([k,v])=>[k,{...v,runes:[]}]))};
  const runes={...gear,items:state.items};
- const mastery={...runes,masteryTrees:state.masteryTrees};
+ const sets={...runes,excludeSetBonuses:false};
+ const mastery={...sets,masteryTrees:state.masteryTrees};
  const passives={...mastery,passive:state.passive};
- const steps=[baseline,attributes,gear,runes,mastery,passives,state].map(s=>deriveStats(s,catalog));
- return {labels:['База + 10 атрибутов','Атрибуты','Экипировка','Руны','Мастерство','Пассивные','Ручные прибавки'],values:Object.fromEntries(Object.keys(steps.at(-1)).map(k=>[k,steps.map((s,i)=>s[k]-(i?steps[i-1][k]:0))])),total:steps.at(-1)};
+ const steps=[baseline,attributes,gear,runes,sets,mastery,passives].map(s=>deriveStats(s,catalog));
+ return {labels:['База + 10 атрибутов','Атрибуты','Экипировка','Руны','Комплекты','Мастерство','Пассивные'],values:Object.fromEntries(Object.keys(steps.at(-1)).map(k=>[k,steps.map((s,i)=>s[k]-(i?steps[i-1][k]:0))])),total:steps.at(-1)};
 }
 // Epic level 5. Only the exact cooldown progression label describes this skill's cooldown.
 // Passive reductions and defensive skill effects must not replace their own cooldown.

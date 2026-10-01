@@ -1,13 +1,13 @@
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js';
-import {deriveStats,statBreakdown,specializationRole,ROLE_LABELS} from './simulator.js';
-import {setupSimulation} from './sim-ui.js';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=character-stats-1';
+import {deriveStats,characterStats,statBreakdown,specializationRole,ROLE_LABELS} from './simulator.js?v=character-stats-1';
+import {setupSimulation} from './sim-ui.js?v=character-stats-1';
 import {createStore,mergeDefaults} from './storage.js';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js';
 import {TREES,normalizeTree} from './mastery-tree.js';
-import {mountMastery} from './mastery-ui.js?v=mastery-icons-1';
+import {mountMastery} from './mastery-ui.js?v=character-stats-1';
 import {mountRunes} from './rune-ui.js';
 import {runeEffects,runeSlots} from './runes.js';
-import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,gearStats,specCost,totalAttributes} from './engine.js';
+import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=character-stats-1';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -15,7 +15,7 @@ const rarity={Common:'#89929c',Uncommon:'#64ad84',Rare:'#739fe6',Rare2:'#739fe6'
 const gradeName={Common:'Обычный',Uncommon:'Необычный',Rare:'Редкий',Rare2:'Редкий',Epic:'Эпический',Heroic:'Героический',Legendary:'Легендарный'};
 let simulation;
 let catalog, itemMap,skillMap,selectedSkill=null,pick=null,previewId=null,draft=null;
-const emptyState=()=>({baseHp:5175,baseMana:5175,items:{},mastery:emptyMastery(),masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{}});
+const emptyState=()=>({items:{},mastery:emptyMastery(),masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{}});
 let state=emptyState();
 const saveStatus=document.createElement('p');saveStatus.className='micro';saveStatus.setAttribute('role','status');document.querySelector('.topbar').after(saveStatus);
 let browserStorage;try{browserStorage=window.localStorage;}catch{browserStorage={getItem(){throw Error('unavailable')}};}
@@ -56,9 +56,6 @@ function renderGear(){
 }
 function renderAttrs(){
  renderMastery();
- let base=$('base-parameters');if(!base){base=document.createElement('details');base.id='base-parameters';document.querySelector('.totals').append(base);}
- base.innerHTML=`<summary>Базовые здоровье и мана · проверить для уровня 55</summary><p class="notice">По умолчанию 5 175 — база уровня 50 из каталога. База уровня 55 пока не подтверждена. Здесь вводятся значения до атрибутов, экипировки и мастерства, а не итоговые HP/MP персонажа.</p><div class="sim-fields"><label>Базовое здоровье<input data-base="baseHp" type="number" min="0" step="1" value="${state.baseHp}"></label><label>Базовая мана<input data-base="baseMana" type="number" min="0" step="1" value="${state.baseMana}"></label></div>`;
- base.querySelectorAll('[data-base]').forEach(el=>el.oninput=()=>{if(el.value===''||!el.validity.valid)return;state[el.dataset.base]=Number(el.value);renderStats();});
  renderAttributeRows();
 }
 function renderAttributeRows(){
@@ -74,11 +71,11 @@ function renderStats(){
  renderAttributeRows();
  if(restored)profile.save('build',{state,weapon:$('weapon').value});
  simulation?.update();
- const stats=gearStats(state,catalog),entry=state.items[$('weapon').value],weapon=itemMap.get(entry?.id),combat=deriveStats(state,catalog),prefix=$('weapon').value==='weapon1'?'cross':'wand',range=weapon?[combat[prefix+'Min'],combat[prefix+'Max']]:null;
+ const stats=characterStats(state,catalog),entry=state.items[$('weapon').value],weapon=itemMap.get(entry?.id),combat=deriveStats(state,catalog),prefix=$('weapon').value==='weapon1'?'cross':'wand',range=weapon?[combat[prefix+'Min'],combat[prefix+'Max']]:null;
  $('damage-range').innerHTML=`<small>${escape(weapon?.name||'Оружие не выбрано')} · расчётный диапазон для боя</small><b>${range?range.map(n).join(' — '):'—'}</b>`;
  $('primary-stats').innerHTML=ATTRS.map(([k,label])=>`<div class="primary-stat"><small>${label}</small><b>${n(totalAttributes(state,catalog)[k])}</b></div>`).join('');
- const others=Object.fromEntries(Object.entries(stats).filter(([k])=>!ATTRS.some(([a])=>a===k)));
- $('stat-list').innerHTML=statRows(others)||'<p class="hint">Выбери экипировку, чтобы увидеть её бонусы.</p>';
+ const others=Object.fromEntries(Object.entries(stats).filter(([k])=>!ATTRS.some(([a])=>a.toLowerCase()===k.toLowerCase())&&!/_main_hand$|_off_hand$/.test(k)));
+ $('stat-list').innerHTML=statRows(others)||'';
  if($('mastery-totals'))$('mastery-totals').innerHTML=MASTERY_FIELDS.map(([k,label])=>`<div class="stat-line"><span>${escape(label.replace(', п.п.',', %'))}</span><b>${n(combat[k])}</b></div>`).join('');
  let breakdown=$('stat-breakdown');if(!breakdown){breakdown=document.createElement('details');breakdown.id='stat-breakdown';document.querySelector('.totals').append(breakdown);breakdown.innerHTML='<summary>Из чего складываются характеристики</summary><p class="micro">Столбцы показывают изменение результата при последовательном добавлении источников слева направо. Пороги атрибутов входят в источник, который их открыл. Для интервала атаки учитывается порядок формулы. Режим «Итоговые из игры» относится только к пяти атрибутам.</p><div class="sim-table-wrap"></div>';}
  const b=statBreakdown(state,catalog),list=[...MASTERY_FIELDS,['interval','Интервал автоатаки, с'],['rangeDamage','Урон дальнего боя, %'],['species','Повышение урона по виду цели']];
