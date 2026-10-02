@@ -1,5 +1,5 @@
 import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings} from './mastery-tree.js';
-const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.svg',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.svg'};
+const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number(v).toLocaleString('ru-RU',{maximumFractionDigits:2});
 const colors={common:'#a3adba',uncommon:'#64ad84',rare:'#739fe6',epic:'#b68bea'};
