@@ -1,4 +1,4 @@
-import {ATTRS,totalAttributes} from './engine.js?v=build-only-1';
+import {ATTRS,totalAttributes} from './engine.js?v=automatic-key-nodes-1';
 export const ATTRIBUTE_BUDGET=54;
 export function attributeCost(value){const n=Math.max(0,Math.floor(value)-10);return Math.min(20,n)+2*Math.min(20,Math.max(0,n-20))+4*Math.max(0,n-40);}
 export const spentAttributes=attrs=>ATTRS.reduce((s,[k])=>s+attributeCost(attrs[k]??10),0);

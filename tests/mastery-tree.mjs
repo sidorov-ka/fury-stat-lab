@@ -8,9 +8,15 @@ const add=(id,count)=>{for(let i=0;i<count;i++){const r=changeNode(t,s,id,1);ass
 assert.equal(TREES.CR.nodes.length,52);assert.equal(TREES.WA_GR.nodes.length,52);
 assert(changeNode(t,s,'Crossbow_High_Attack_01',1).error);
 add('Crossbow_Normal_Attack_01',10);assert(changeNode(t,s,'Crossbow_Normal_Attack_01',1).error);
-add('Crossbow_Normal_Attack_02',10);add('Crossbow_Normal_AttackUtil_03',10);
+add('Crossbow_Normal_Attack_02',9);assert(!s.Crossbow_Normal_Attack_Skill);
+add('Crossbow_Normal_Attack_02',1);assert.equal(s.Crossbow_Normal_Attack_Skill,1);assert.equal(summary(t,s).total,20);
+assert(!changeNode(t,s,'Crossbow_Normal_Attack_02',-1).selected.Crossbow_Normal_Attack_Skill);
+add('Crossbow_Normal_AttackUtil_03',10);
 assert.equal(summary(t,s).total,30);
-add('Crossbow_Normal_Attack_Skill',1);assert.equal(summary(t,s).total,30);
+assert.equal(s.Crossbow_Normal_Attack_Skill,1);assert.equal(summary(t,s).total,30);
+const clicked=changeNode(t,s,'Crossbow_Normal_Attack_Skill',-1);assert.deepEqual(clicked.selected,s);
+const stripped=Object.fromEntries(Object.entries(s).filter(([id])=>!id.endsWith('_Skill')));assert.deepEqual(normalizeTree(t,stripped),s);
+assert.equal(normalizeTree(t,{Crossbow_Normal_Attack_Skill:1}).Crossbow_Normal_Attack_Skill,undefined);
 add('Crossbow_High_Attack_01',10);add('Crossbow_High_Attack_02',10);
 const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},attrMode:'base',active:[],passive:[],defensive:[],specs:{},masteryTrees:{CR:s,WA_GR:{}}};
 const base=deriveStats({...state,masteryTrees:{}},catalog),p=deriveStats(state,catalog);
