@@ -1,4 +1,5 @@
 import json, urllib.request, concurrent.futures, pathlib, hashlib, time
+from ru_catalog_overrides import apply_ru_overrides
 ROOT = pathlib.Path(__file__).parent / 'dist'
 ASSETS = ROOT / 'icons'
 ASSETS.mkdir(exist_ok=True)
@@ -9,6 +10,7 @@ def read(name):
     endpoint = 'skills' if name == 'fury-skills' else name
     return json.loads(urllib.request.urlopen('https://rutl.org/builder-data/'+endpoint+'.json', timeout=30).read())
 items = [x for x in read('equipment') if x['slot'] != 'Weapon' or x['category'] in ('Crossbow','Wand')]
+apply_ru_overrides(items)
 skills = [x for x in read('fury-skills') if x['weapon'] in ('Crossbow','Wand')]
 urls = set(x.get('thumbnail') for x in items+skills)
 urls.update(s.get('icon') for x in skills for s in x.get('specializations',[]))

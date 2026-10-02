@@ -83,3 +83,16 @@
 Данные заточки «Лунных серпов» +11 и «Восхваления Ханзайзина» +12 совпали с текущим equipment.json RUTL; таблицы не подгонялись под итоговый урон персонажа. Полная сборка из пользовательского браузера не экспортирована. Эти исправления и тесты не доказывают совпадение всех характеристик с RU: руны хаоса, стелларит, эффекты дня/ночи и другие не реализованные бонусы требуют отдельной сверки. Для пользовательского «Выгодного момента» в игре показано 10 очков атаки, но прежний скриншот сайта не даёт однозначно восстановить ту же конфигурацию; автоматическая модель использует категории и формы исходных данных RUTL.
 
 Проверки: tests/passive-sheet.mjs — независимые числовые примеры уровней 4/5, 9,02147%, исцеление ×0,7, отключённые связки, +38 и условные +30/−4, две бесплатные синергии, +198 ослабления, сумма источников. Все ранее существовавшие проверки также пройдены.
+
+
+### RU correction: Бел’Адир +12
+
+`crossbow_aa_t2_polymorph_001` supports +12 in the user's RU T2 client.
+The upstream catalogue incorrectly caps it at +9 and contains only off-hand
+weapon scaling at +10..12. The local override restores both hands using
+the existing Epic weapon curve and extends DEX, stamina regeneration and
+damage-reduction penetration using their existing +1..9 curves. These
+extra-stat values at +10..12 are inferred and still need client verification.
+At +12 the unmodified weapon ranges are 31–127 main / 44–166 off-hand;
+DEX is 11, stamina regeneration raw 8600, penetration 22.
+The override also runs during `prepare-data.py` imports.
