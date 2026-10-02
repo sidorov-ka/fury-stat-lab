@@ -1,13 +1,13 @@
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=automatic-key-nodes-1';
-import {deriveStats,characterStats,statBreakdown,specializationRole,ROLE_LABELS} from './simulator.js?v=automatic-key-nodes-2';
-import {setupSimulation} from './sim-ui.js?v=automatic-key-nodes-2';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=passive-sheet-1';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=passive-sheet-1';
+import {setupSimulation} from './sim-ui.js?v=passive-sheet-1';
 import {createStore,mergeDefaults} from './storage.js';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js';
-import {TREES,normalizeTree} from './mastery-tree.js?v=automatic-key-nodes-1';
-import {mountMastery} from './mastery-ui.js?v=centered-icons-2';
+import {TREES,normalizeTree} from './mastery-tree.js?v=passive-sheet-1';
+import {mountMastery} from './mastery-ui.js?v=passive-sheet-1';
 import {mountRunes} from './rune-ui.js';
 import {runeEffects,runeSlots} from './runes.js';
-import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=automatic-key-nodes-1';
+import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=passive-sheet-1';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -15,7 +15,7 @@ const rarity={Common:'#89929c',Uncommon:'#64ad84',Rare:'#739fe6',Rare2:'#739fe6'
 const gradeName={Common:'Обычный',Uncommon:'Необычный',Rare:'Редкий',Rare2:'Редкий',Epic:'Эпический',Heroic:'Героический',Legendary:'Легендарный'};
 let simulation;
 let catalog, itemMap,skillMap,selectedSkill=null,pick=null,previewId=null,draft=null;
-const emptyState=()=>({items:{},mastery:emptyMastery(),masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{}});
+const emptyState=()=>({items:{},mastery:emptyMastery(),masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{},passiveLevels:{}});
 let state=emptyState();
 const saveStatus=document.createElement('p');saveStatus.className='micro';saveStatus.setAttribute('role','status');document.querySelector('.topbar').after(saveStatus);
 let browserStorage;try{browserStorage=window.localStorage;}catch{browserStorage={getItem(){throw Error('unavailable')}};}
@@ -26,8 +26,8 @@ function toast(s){$('toast').textContent=s;$('toast').style.display='block';clea
 function image(item,cls=''){return item?.thumbnail?`<img class="${cls}" src="${escape(item.thumbnail)}" alt="" loading="lazy">`:''}
 function icon(item,badge='',key=''){return `<span class="slot-icon ${item?'occupied':''}" style="--rarity:${rarity[item?.grade]||'#739fe6'}">${item?image(item):'<span class="plus">+</span>'}${badge?`<span class="level">${escape(badge)}</span>`:''}${key?`<span class="key">${escape(key)}</span>`:''}</span>`}
 function emptyGearIcon(slot){const category=SLOTS.find(x=>x[0]===slot)[2];const placeholder=catalog.equipment.find(x=>x.category===category||x.slot===category);return `<span class="slot-icon empty-slot">${image(placeholder)}<span class="plus">+</span></span>`}
-function statLabel(k){return catalog.labels[k]||k}
-function format(k,v){const f=catalog.formats[k]||{};return n(v*(f.mul??1))+(f.suffix||'')}
+function statLabel(k){return catalog.labels[k]||({attack_power_modifier:'Базовый урон'}[k])||k}
+function format(k,v){const f=catalog.formats[k]||(k==='attack_power_modifier'?{mul:.01,suffix:'%'}:{});return n(v*(f.mul??1))+(f.suffix||'')}
 function statRows(stats){return Object.entries(stats).filter(([,v])=>v!==0).map(([k,v])=>`<div class="stat-line"><span>${escape(statLabel(k))}</span><b>${escape(format(k,v))}</b></div>`).join('')}
 function gearRunes(item,entry){
  if(!runeSlots(item))return '';
@@ -88,7 +88,7 @@ function renderMastery(){
 function renderSkills(){
  renderStats();
  for(const type of ['active','passive','defensive']){
-  $(type+'-bar').innerHTML=state[type].map((id,i)=>{const s=skillMap.get(id),specs=state.specs[id]?.length||0;return `<button class="skill-button ${selectedSkill?.type===type&&selectedSkill?.index===i?'selected':''}" data-type="${type}" data-index="${i}" title="${escape(s?.name||'Выбрать умение')}" aria-label="${escape((s?.name||'Пустое умение')+', слот '+(i+1))}">${icon(s,specs?specs+' сп.':'',type==='active'?i+1:'')}<small>${escape(s?.name||'Выбрать')}</small><span class="skill-spec-icons">${(s?.specializations||[]).filter(t=>state.specs[id]?.includes(t.id)).map(t=>`<img src="${escape(t.icon)}" alt="${escape(t.name)}" title="${escape(t.name)}">`).join('')}</span></button>`}).join('');
+  $(type+'-bar').innerHTML=state[type].map((id,i)=>{const s=skillMap.get(id),specs=state.specs[id]?.length||0;return `<button class="skill-button ${selectedSkill?.type===type&&selectedSkill?.index===i?'selected':''}" data-type="${type}" data-index="${i}" title="${escape(s?.name||'Выбрать умение')}" aria-label="${escape((s?.name||'Пустое умение')+', слот '+(i+1))}">${icon(s,type==='passive'&&s?'Эпич. '+passiveLevel(state,id):specs?specs+' сп.':'',type==='active'?i+1:'')}<small>${escape(s?.name||'Выбрать')}</small><span class="skill-spec-icons">${(s?.specializations||[]).filter(t=>state.specs[id]?.includes(t.id)).map(t=>`<img src="${escape(t.icon)}" alt="${escape(t.name)}" title="${escape(t.name)}">`).join('')}</span></button>`}).join('');
   $(type+'-bar').querySelectorAll('button').forEach(b=>b.onclick=()=>{const type=b.dataset.type,index=Number(b.dataset.index);selectedSkill={type,index};renderSkills();if(state[type][index])renderSkillDetail();else{renderSkillDetail();openSkill(type,index)}});
  }
  $('active-count').textContent=state.active.filter(Boolean).length+' / 12';$('passive-count').textContent=state.passive.filter(Boolean).length+' / 8';
@@ -99,7 +99,8 @@ function renderSkillDetail(){
  const s=selectedSkill&&skillMap.get(state[selectedSkill.type][selectedSkill.index]);
  if(!s){$('skill-detail').innerHTML='<div class="empty-detail">Выбери умение, чтобы увидеть его описание и трейты.</div>';return}
  const selected=state.specs[s.id]||[];
- $('skill-detail').innerHTML=`<div class="skill-detail-grid"><div><div class="detail-title">${image(s)}<div><h2>${escape(s.name)}</h2><span class="micro">${escape(s.sourceNote||'Описание из каталога RUTL')}</span></div></div>${skillMeta(s)}<p class="description">${escape(s.description)}</p>${s.levelProgression?.length?`<details><summary class="micro">Значения по уровням в источнике</summary>${s.levelProgression.map(r=>`<p class="description">${escape(r.label)}: ${escape(r.values.join(' → '))}</p>`).join('')}</details>`:''}<div class="skill-actions"><button id="replace-skill">Заменить</button><button id="remove-skill" class="quiet">Снять</button></div></div><div><h3>Специализации / трейты умения</h3><div class="spec-list">${s.specializations?.length?s.specializations.map(t=>`<label class="spec-row"><input type="checkbox" data-spec="${escape(t.id)}" ${selected.includes(t.id)?'checked':''}>${t.icon?`<img src="${escape(t.icon)}" alt="">`:'<span></span>'}<span><b>${escape(t.name)} · ${ROLE_LABELS[specializationRole(s.id,Number(t.id.split("_").at(-1)))]}</b><p>${escape(t.description)}</p></span><span class="cost">${n(t.cost)} оч.</span></label>`).join(''):'<p class="hint">У этого умения нет специализаций в каталоге.</p>'}</div><p class="micro" style="margin-top:10px">Описание базового умения показано отдельно от изменений специализаций. Зависимости между специализациями сверяй с описанием.</p></div></div>`;
+ $('skill-detail').innerHTML=`<div class="skill-detail-grid"><div><div class="detail-title">${image(s)}<div><h2>${escape(s.name)}</h2><span class="micro">${escape(s.sourceNote||'Описание из каталога RUTL')}</span></div></div>${skillMeta(s)}${s.category==='Passive'?`<label class="inline-label">Уровень пассивного умения<select id="passive-level" aria-label="Уровень пассивного умения">${[1,2,3,4,5].map(level=>`<option value="${level}" ${passiveLevel(state,s.id)===level?'selected':''}>Эпическое · ${level}</option>`).join('')}</select></label><p class="micro">Значения выбранного уровня: ${(s.levelProgression||[]).map(r=>escape(r.label+' '+r.values[passiveLevel(state,s.id)-1])).join(' · ')}. Описание ниже — текст каталога для 5-го уровня; условные эффекты смотри в ограничениях расчёта.</p>`:''}<p class="description">${escape(s.description)}</p>${s.levelProgression?.length?`<details><summary class="micro">Значения по уровням в источнике</summary>${s.levelProgression.map(r=>`<p class="description">${escape(r.label)}: ${escape(r.values.join(' → '))}</p>`).join('')}</details>`:''}<div class="skill-actions"><button id="replace-skill">Заменить</button><button id="remove-skill" class="quiet">Снять</button></div></div><div><h3>Специализации / трейты умения</h3><div class="spec-list">${s.specializations?.length?s.specializations.map(t=>`<label class="spec-row"><input type="checkbox" data-spec="${escape(t.id)}" ${selected.includes(t.id)?'checked':''}>${t.icon?`<img src="${escape(t.icon)}" alt="">`:'<span></span>'}<span><b>${escape(t.name)} · ${ROLE_LABELS[specializationRole(s.id,Number(t.id.split("_").at(-1)))]}</b><p>${escape(t.description)}</p></span><span class="cost">${n(t.cost)} оч.</span></label>`).join(''):'<p class="hint">У этого умения нет специализаций в каталоге.</p>'}</div><p class="micro" style="margin-top:10px">Описание базового умения показано отдельно от изменений специализаций. Зависимости между специализациями сверяй с описанием.</p></div></div>`;
+ if($('passive-level'))$('passive-level').onchange=e=>{state.passiveLevels??={};state.passiveLevels[s.id]=Number(e.target.value);renderSkills();renderSkillDetail();};
  $('replace-skill').onclick=()=>openSkill(selectedSkill.type,selectedSkill.index);
  $('remove-skill').onclick=()=>{removeSkill(selectedSkill.type,selectedSkill.index);renderSkills();renderSkillDetail()};
  $('skill-detail').querySelectorAll('[data-spec]').forEach(c=>c.onchange=()=>{const t=s.specializations.find(t=>t.id===c.dataset.spec);let list=state.specs[s.id]||[];if(c.checked){if(specCost(state,catalog)+t.cost>100){c.checked=false;toast('Лимит специализаций — 100 очков.');return}list=[...list,t.id]}else list=list.filter(x=>x!==t.id);state.specs[s.id]=list;renderSkills()});
@@ -160,6 +161,7 @@ async function init(){
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);
    for(const [slot] of SLOTS){const entry=saved.state.items?.[slot];if(entry&&itemMap.has(entry.id)&&Number.isFinite(entry.level)&&Array.isArray(entry.traits))state.items[slot]=entry;}
    for(const type of ['active','passive','defensive'])state[type]=state[type].map(id=>skillMap.has(id)?id:null);
+   state.passiveLevels=Object.fromEntries(state.passive.filter(Boolean).map(id=>[id,passiveLevel(saved.state,id)]));
    for(const id of [...state.active,...state.passive,...state.defensive].filter(Boolean)){const valid=skillMap.get(id).specializations||[];state.specs[id]=(Array.isArray(saved.state.specs?.[id])?saved.state.specs[id]:[]).filter(s=>valid.some(t=>t.id===s));}
    if(!['total','base'].includes(state.attrMode))state.attrMode='total';
    if(saved.state.attributeVersion!==1){delete state.attributeVersion;migrateAttributes(state,catalog);}

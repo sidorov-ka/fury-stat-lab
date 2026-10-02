@@ -1,10 +1,29 @@
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=automatic-key-nodes-1';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=passive-sheet-1';
 
-import {treeStats,treeWarnings} from './mastery-tree.js?v=automatic-key-nodes-1';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=passive-sheet-1';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
-export const DEFAULTS={rangeDamage:0,magicDamage:0,crossMin:0,crossMax:0,offMin:0,offMax:0,wandMin:0,wandMax:0,critR:0,critM:0,heavyR:0,heavyM:0,critDamage:0,boost:0,bonus:0,cooldown:0,speed:0,offhand:0,interval:0.5,mana:5175,regen:6,regenPeriod:10,efficiency:0,hp:5175,buffDuration:0,night:0,defense:0,defenseK:2500,ratingK:1000,species:0,pve:1,dotCrit:0,auto:1,animationFloor:0.25,latency:0,healing:0,sheetIncludesPassives:0};
+// Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.
+export function passiveLevel(state,id){const value=Number(state.passiveLevels?.[id]);return Number.isFinite(value)&&value>=1?Math.min(5,Math.trunc(value)):5;}
+export function passiveValue(state,catalog,id,label,fallback){
+ const row=catalog.skills.find(s=>s.id===id)?.levelProgression?.find(r=>r.label.trim()===label);
+ const value=row?.values?.[passiveLevel(state,id)-1]?.match(/^([\d]+(?:[.,]\d+)?)/);
+ return value?Number(value[1].replace(',','.')):fallback;
+}
+const REVIVAL='WP_WA_GR_S_HealEfficiencyByMaxCost';
+const masteryActive=(state,key,id)=>Boolean(normalizeTree(TREES[key],state.masteryTrees?.[key])[id]);
+export function passiveSheetEffects(state,catalog,mana){
+ const has=id=>(state.passive||[]).includes(id),value=(id,label,fallback)=>passiveValue(state,catalog,id,label,fallback);
+ const revenge=has(REVIVAL)&&masteryActive(state,'WA_GR','Wand_High_Attack_Skill');
+ const revival=has(REVIVAL)?value(REVIVAL,'Эффективность исцеления ▲',3.02)*mana/1000:0;
+ const advantage=has(PASS.ambi)&&masteryActive(state,'CR','Crossbow_High_Attack_Skill');
+ return {revival,healingMultiplier:revenge?.7:1,baseDamagePercent:revenge?revival*.25:0,
+  offMaxBonus:has(PASS.ambi)?value(PASS.ambi,'Макс. урон парного оружия ▲',40)+(advantage?30:0):0,
+  offChanceBonus:advantage?-4:0,bonus:has(PASS.bonus)?value(PASS.bonus,'Дополнит. урон ▲',13):0,
+  weaken:has('WP_CR_S_WeakenAccuracy')?value('WP_CR_S_WeakenAccuracy','Ослабление ▲',205):0};
+}
+export const DEFAULTS={rangeDamage:0,magicDamage:0,crossMin:0,crossMax:0,offMin:0,offMax:0,wandMin:0,wandMax:0,critR:0,critM:0,heavyR:0,heavyM:0,critDamage:0,boost:0,bonus:0,cooldown:0,speed:0,offhand:0,interval:0.5,mana:5175,regen:6,regenPeriod:10,efficiency:0,hp:5175,buffDuration:0,night:0,defense:0,defenseK:2500,ratingK:1000,species:0,pve:1,dotCrit:0,auto:1,animationFloor:0.25,latency:0,healing:0,sheetIncludesPassives:0,baseDamagePercent:0};
 export const SCREENSHOT={crossMin:87,crossMax:400,offMin:71,offMax:376,wandMin:166,wandMax:491,offhand:32.8,healing:3.6,critR:1371.2,critM:1437.2,heavyR:337,heavyM:409,critDamage:9,boost:130.5,bonus:25,cooldown:43.8,speed:27.66,interval:0.340,mana:12523,regen:661.75,efficiency:41.51,hp:16613,buffDuration:33.25};
 export const SUPPORTED_SPECS={mark:[1,2,3],step:[1,3,4],nature:[2,4],rapid:[1,2,3,4],mana:[1,2,3],ghost:[2,3],buck:[1,2],barrage:[3],shot:[1,2,3],weak:[1,2],trap:[1,2,3],touch:[1,2,3],decay:[1,2,3],burst:[1,2,3],area:[1,3],spread:[1,2,3],light:[1,2,3],laser:[2,3,4]};
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
@@ -46,11 +65,15 @@ export function deriveStats(state,catalog){
   const r=weaponRange(item,e.level),x=extras[weapon];
   const minBonus=(raw.bonus_attack_power_main_hand||0)+(x.bonus_attack_power_main_hand||0),spreadBonus=(raw.attack_power_main_hand||0)+(x.attack_power_main_hand||0);
   out[prefix+'Min']=r[0]+minBonus;out[prefix+'Max']=r[1]+minBonus+spreadBonus;
-  if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus+(state.passive.includes(PASS.ambi)?40:0);out.offhand=(s.off_hand_attack_chance||0)*.01+val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed);}
+  if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus;out.offhand=(s.off_hand_attack_chance||0)*.01+val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed);}
  }
- if(state.passive.includes(PASS.bonus))out.bonus+=13;
+ const passive=passiveSheetEffects(state,catalog,out.mana);
+ out.offMax+=out.offMin?passive.offMaxBonus:0;out.offhand+=out.offMin?passive.offChanceBonus:0;
+ out.bonus+=passive.bonus;out.baseDamagePercent=passive.baseDamagePercent;
+ // Apply the sheet modifier once, after additive weapon and attribute bonuses.
+ for(const key of ['crossMin','crossMax','offMin','offMax','wandMin','wandMax'])out[key]+=Math.floor(out[key]*passive.baseDamagePercent/100);
  out.offhand+=(mastery.off_hand_attack_chance||0)*.01;
- out.healing=val('heal_modifier');
+ out.healing=(val('heal_modifier')+passive.revival)*passive.healingMultiplier;
  out.rangeDamage=(raw.range_damage_dealt_modifier||0)*.01;out.magicDamage=(raw.magic_damage_dealt_modifier||0)*.01;
  // This node gives the same rating against all five monster species; count it once.
  out.species+=Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(mastery[k+'_damage_amplification']||0)*.1));
@@ -67,6 +90,9 @@ export function characterStats(state,catalog){
  const {raw}=rawCharacterStats(state,catalog),out={...raw},combat=deriveStats(state,catalog);
  for(const type of ['melee','range','magic'])for(const suffix of ['critical_attack','double_attack'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_'+suffix]||0);
  delete out.all_critical_attack;delete out.all_double_attack;
+ const passive=passiveSheetEffects(state,catalog,combat.mana);
+ out.weaken_accuracy=(out.weaken_accuracy||0)+passive.weaken/(catalog.formats.weaken_accuracy?.mul||1);
+ out.attack_power_modifier=(out.attack_power_modifier||0)+passive.baseDamagePercent/(catalog.formats.attack_power_modifier?.mul||.01);
  for(const [stat,key] of [['damage_reduction_penetration','bonus'],['heal_modifier','healing']])out[stat]=combat[key]/(catalog.formats[stat]?.mul||1);
  return out;
 }
@@ -77,7 +103,7 @@ export function statBreakdown(state,catalog){
  const runes={...gear,items:state.items};
  const sets={...runes,excludeSetBonuses:false};
  const mastery={...sets,masteryTrees:state.masteryTrees};
- const passives={...mastery,passive:state.passive};
+ const passives={...mastery,passive:state.passive,passiveLevels:state.passiveLevels};
  const steps=[baseline,attributes,gear,runes,sets,mastery,passives].map(s=>deriveStats(s,catalog));
  return {labels:['База + 10 атрибутов','Атрибуты','Экипировка','Руны','Комплекты','Мастерство','Пассивные'],values:Object.fromEntries(Object.keys(steps.at(-1)).map(k=>[k,steps.map((s,i)=>s[k]-(i?steps[i-1][k]:0))])),total:steps.at(-1)};
 }
@@ -106,7 +132,7 @@ export function coverage(state,catalog){
  if(state.active.includes(IDS.nature)){const specs=state.specs[IDS.nature]||[];if(!specs.length)warnings.push('Гнев природы: выбери стихию в специализациях; без стихии он не участвует в расчёте.');if(specs.some(s=>s.endsWith('_2')))warnings.push('Гнев природы, огонь: учтены заряд 21% и расход 23 маны. Урон и взаимодействия воспламенения не учтены: требуется описание «Огненных зарядов». DPS огненной сборки неполный.');if(specs.length>1)warnings.push('Гнев природы: перед боем включается первая выбранная стихия в порядке ветер → огонь → холод → молния; переключения в бою не моделируются.');}
  for(const id of state.active.filter(Boolean))if(!Object.values(IDS).includes(id))warnings.push(`${catalog.skills.find(s=>s.id===id)?.name}: ещё не моделируется и не участвует в поиске.`);
  for(const [key,id] of Object.entries(IDS))for(const sp of state.specs[id]||[])if(!SUPPORTED_SPECS[key].includes(Number(sp.split('_').at(-1))))warnings.push(`${catalog.skills.find(s=>s.id===id)?.name} — ${catalog.skills.find(s=>s.id===id)?.specializations.find(s=>s.id===sp)?.name}: эффект не учтён.`);
- for(const id of state.passive.filter(Boolean))if(!Object.values(PASS).includes(id))warnings.push(`${catalog.skills.find(s=>s.id===id)?.name}: пассивный эффект не моделируется (либо не действует на неподвижной цели без ответных атак).`);
+ for(const id of state.passive.filter(Boolean))if(![...Object.values(PASS),REVIVAL,'WP_CR_S_WeakenAccuracy'].includes(id))warnings.push(`${catalog.skills.find(s=>s.id===id)?.name}: пассивный эффект не моделируется (либо не действует на неподвижной цели без ответных атак).`);
  return warnings;
 }
 export function expectedHit(p,weapon,coef,flat,{dot=false,skill=true,off=false,maxBonus=0,critBonus=0,critDamageBonus=0,boostBonus=0,resistanceDrop=0,bonus=0,skillMultiplier=1}={}){
@@ -136,19 +162,20 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
  const buffs={nature:0,ghost:0,step:0,adapt:0,decay:0,selfBoost:0,light:0,wind:0},dots={},effectEvents=[];
  let lightStarted=0,lightDirected=false;
  let markEnd=0,markPool=0,markExplosive=false,markSource=null,procWindow=-1,procCount=0;
- const duration=n=>n*(1+p.buffDuration/100),curseDuration=n=>n+(has(PASS.duration)?3.3:0);
+ const pv=(id,label,fallback)=>passiveValue(state,catalog,id,label,fallback);
+ const duration=n=>n*(1+p.buffDuration/100),curseDuration=n=>n+(has(PASS.duration)?pv(PASS.duration,'Время действия проклятий ▲',3.3):0);
  const activeDot=key=>dots[key]&&dots[key].end>t;
  const dotStacks=()=>activeDot('touch')?dots.touch.stacks:0;
  const weak=()=>dotStacks()>0||activeDot('area')||buffs.decay>t||markEnd>t||slow>t;
- const add=(id,value,hits=0)=>{if(t>=300||value<=0)return;total+=value;damage[id]=(damage[id]||0)+value;if(detail)damageEvents.push({time:+t.toFixed(2),id,value});bins[Math.min(29,Math.floor(t/10))]+=value;if(markEnd>t&&id!=='mark-explosion')markPool+=value;if(has(PASS.pact)&&(activeDot('touch')||activeDot('area')))hp=Math.min(p.hp,hp+value*.174);};
- const opts=(dot=false,off=false)=>({dot,off,maxBonus:lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?40:0),critBonus:off&&has(PASS.ambi)?90:0,critDamageBonus:buffs.step>t?20:0,boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0),resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?13:0)+(buffs.adapt>t?26:0)});
+ const add=(id,value,hits=0)=>{if(t>=300||value<=0)return;total+=value;damage[id]=(damage[id]||0)+value;if(detail)damageEvents.push({time:+t.toFixed(2),id,value});bins[Math.min(29,Math.floor(t/10))]+=value;if(markEnd>t&&id!=='mark-explosion')markPool+=value;if(has(PASS.pact)&&(activeDot('touch')||activeDot('area')))hp=Math.min(p.hp,hp+value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100);};
+ const opts=(dot=false,off=false)=>({dot,off,maxBonus:lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:off&&has(PASS.ambi)?90:0,critDamageBonus:buffs.step>t?20:0,boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0),resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
  const offchance=(s)=>clamp(p.offhand/100+(buffs.ghost>t?1:0)+(s?.key==='shot'&&sp(s,3)?.3:0),0,1);
  const hitValue=(s,c,f,dot=false,mult=1)=>expectedHit(p,s.weapon,c,f,{...opts(dot),skillMultiplier:s.pve*mult});
  function reduce(amount){for(const s of list)if(s.key!=='ghost'||has(PASS.thirst))cd[s.id]=Math.max(t,cd[s.id]-amount);}
  function weaken(stacks=1){
   if(!has(PASS.thirst)&&buffs.ghost<=t)return;
   const window=Math.floor(t);if(window!==procWindow){procWindow=window;procCount=0;}
-  if(procCount++<10)reduce(stacks>1?.072:.36);
+  if(procCount++<10)reduce(stacks>1?pv(PASS.thirst,'Время восстановления (2+ ур. ослабления) ▼',.072):pv(PASS.thirst,'Время восстановления ▼',.36));
  }
  function procGale(s,hits){
   if(!((s.key==='rapid'&&sp(s,1))||(s.key==='barrage'&&sp(s,3))||(s.key==='shot'&&sp(s,1))))return;
@@ -166,7 +193,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
   procGale(s,hits);
  }
  function enqueue(at,fn){pending.push({at,fn});pending.sort((a,b)=>a.at-b.at);}
- function dotDamage(d){return hitValue(d.s,d.c,d.f,true)*d.stacks*(has(PASS.night)&&p.night?1.36:1);}
+ function dotDamage(d){return hitValue(d.s,d.c,d.f,true)*d.stacks*(has(PASS.night)&&p.night?1+pv(PASS.night,'Периодический урон ▲',36)/100:1);}
  function putDot(key,s,c,f,seconds,stacks=1){
   const previous=dots[key];dots[key]={s,c,f,end:t+curseDuration(seconds),next:previous&&previous.end>t?previous.next:t+1,stacks};weaken(stacks);
  }

@@ -1,4 +1,4 @@
-import {treeStats} from './mastery-tree.js?v=automatic-key-nodes-1';
+import {treeStats} from './mastery-tree.js?v=passive-sheet-1';
 import {runeStats} from './runes.js';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
 export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
