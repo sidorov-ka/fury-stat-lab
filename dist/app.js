@@ -4,7 +4,7 @@ import {setupSimulation} from './sim-ui.js?v=automatic-key-nodes-2';
 import {createStore,mergeDefaults} from './storage.js';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js';
 import {TREES,normalizeTree} from './mastery-tree.js?v=automatic-key-nodes-1';
-import {mountMastery} from './mastery-ui.js?v=automatic-key-nodes-1';
+import {mountMastery} from './mastery-ui.js?v=centered-icons-1';
 import {mountRunes} from './rune-ui.js';
 import {runeEffects,runeSlots} from './runes.js';
 import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=automatic-key-nodes-1';
