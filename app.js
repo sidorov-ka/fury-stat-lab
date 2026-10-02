@@ -155,7 +155,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json');if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=bellandir-12-1',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);

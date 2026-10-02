@@ -96,3 +96,13 @@ extra-stat values at +10..12 are inferred and still need client verification.
 At +12 the unmodified weapon ranges are 31–127 main / 44–166 off-hand;
 DEX is 11, stamina regeneration raw 8600, penetration 22.
 The override also runs during `prepare-data.py` imports.
+
+
+### Exact RU Бел’Адир +12 tooltip (2026-10-03)
+
+The user supplied a +12 weapon tooltip: main 35–148, off-hand 44–166,
+DEX 13, stamina regeneration 8.65 and penetration 22. These replace the
+previous inferred +12 main-hand / DEX / stamina values. +10 and +11 still
+use extrapolation and require client verification. The screenshots also
+show WIS 70 in game versus 66 on the site; the complete build and chaos
+rune values are not provided, so that difference is not patched by guessing.

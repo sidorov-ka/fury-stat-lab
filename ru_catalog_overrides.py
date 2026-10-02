@@ -20,4 +20,12 @@ def apply_ru_overrides(items):
                 'stamina_regen': 500 * level,
                 'damage_reduction_penetration': 3 * level // 2,
             }
+
+        # Exact RU +12 tooltip supplied 2026-10-03: main 35–148,
+        # off-hand 44–166, DEX 13, stamina regen 8.65, penetration 22.
+        item['enchantScaling']['12'].update({
+            'attack_power_main_hand': 52,
+            'bonus_attack_power_main_hand': 15,
+        })
+        item['extraEnchantScaling']['12'].update({'dex': 8, 'stamina_regen': 6050})
     return items
