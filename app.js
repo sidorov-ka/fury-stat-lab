@@ -143,7 +143,7 @@ function renderItemPreview(item){
  const updateValues=()=>{let values=itemStats(item,draft.level,draft.traits,catalog);if(item.slot==='Weapon'){const range=weaponRange(item,draft.level);$('item-values').innerHTML=`<div class="stat-line"><span>Урон оружия</span><b>${range.map(n).join(' — ')}</b></div>`+statRows(Object.fromEntries(Object.entries(values).filter(([k])=>!k.includes('attack_power'))))}else $('item-values').innerHTML=statRows(values)};
  updateValues();
  const runeHost=document.createElement('div');runeHost.className='rune-panel';$('picker-preview').append(runeHost);mountRunes(runeHost,item,draft,catalog,statRows,escape);
- $('enhance').onchange=e=>{draft.level=Math.max(0,Math.min(item.enchantMaxLevel||0,Math.trunc(Number(e.target.value)||0)));e.target.value=draft.level;updateValues()};
+ $('enhance').oninput=$('enhance').onchange=e=>{draft.level=Math.max(0,Math.min(item.enchantMaxLevel||0,Math.trunc(Number(e.target.value)||0)));e.target.value=draft.level;updateValues()};
  $('picker-preview').querySelectorAll('[data-trait]').forEach(el=>el.onchange=()=>{const i=Number(el.dataset.trait);if(el.value&&draft.traits.some((t,j)=>j!==i&&t?.id===el.value)){el.value=draft.traits[i]?.id||'';$('picker-message').textContent='На предмете нельзя выбрать одинаковые трейты.';return}draft.traits[i]={id:el.value,level:Number($('picker-preview').querySelector(`[data-trait-level="${i}"]`).value)||1};$('picker-message').textContent='';updateValues()});
  $('picker-preview').querySelectorAll('[data-trait-level]').forEach(el=>el.onchange=()=>{const i=Number(el.dataset.traitLevel);el.value=Math.max(1,Math.min(limit,Math.trunc(Number(el.value)||1)));draft.traits[i]={id:draft.traits[i]?.id||'',level:Number(el.value)};updateValues()});
  $('choose').onclick=()=>{if(pick.slot.startsWith('ring')){const other=pick.slot==='ring1'?'ring2':'ring1';if(state.items[other]?.id===item.id){$('picker-message').textContent='Это кольцо уже надето во втором слоте.';return}}draft.traits=draft.traits.filter(t=>t?.id);state.items[pick.slot]=structuredClone(draft);renderGear();renderStats();$('picker').close()};
@@ -155,7 +155,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=bellandir-12-1',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=bellandir-12-2',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);
