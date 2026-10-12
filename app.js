@@ -1,4 +1,4 @@
-import {normalizeCommon,mountCommon} from './common-mastery.js?v=friendly-build-20261012';
+import {normalizeCommon,mountCommon} from './common-mastery.js?v=friendly-build-20261012-2';
 import {equipmentDraft,newTrait} from './equipment-defaults.js?v=friendly-build-20261012';
 import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=friendly-build-20261012';
 import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=friendly-build-20261012';
