@@ -4,28 +4,23 @@ def apply_ru_overrides(items):
     for item in items:
         if item['id'] != 'crossbow_aa_t2_polymorph_001':
             continue
-        # RU T2 supports +12 (user-confirmed). Upstream has only off-hand
-        # rows above +9. Extend the same Epic weapon curves used at +1..9;
-        # the +10..12 extra-stat values still need RU-client verification.
+        # TL Build controls at +1, +9, +10, +11, +12 (2026-10-12),
+        # corroborated by the user's RU +12 tooltip. Upstream's main-hand
+        # and DEX/stamina base values belong to the older version.
         item['enchantMaxLevel'] = 12
-        for level in range(10, 13):
+        item['baseStats'].update({'attack_power_main_hand': 79,
+                                  'bonus_attack_power_main_hand': 23})
+        item['extraStats'].update({'dex': 7, 'stamina_regen': 2650})
+        for level in range(1, 13):
             item.setdefault('enchantScaling', {}).setdefault(str(level), {}).update({
                 'attack_power_main_hand': 3 * level - 1,
-                'bonus_attack_power_main_hand': level - 1,
+                'bonus_attack_power_main_hand': max(0, level - 1),
                 'attack_power_off_hand': 3 * level - 1,
-                'bonus_attack_power_off_hand': level - 1,
+                'bonus_attack_power_off_hand': max(0, level - 1),
             })
             item.setdefault('extraEnchantScaling', {})[str(level)] = {
                 'dex': level // 2,
                 'stamina_regen': 500 * level,
                 'damage_reduction_penetration': 3 * level // 2,
             }
-
-        # Exact RU +12 tooltip supplied 2026-10-03: main 35–148,
-        # off-hand 44–166, DEX 13, stamina regen 8.65, penetration 22.
-        item['enchantScaling']['12'].update({
-            'attack_power_main_hand': 52,
-            'bonus_attack_power_main_hand': 15,
-        })
-        item['extraEnchantScaling']['12'].update({'dex': 8, 'stamina_regen': 6050})
     return items

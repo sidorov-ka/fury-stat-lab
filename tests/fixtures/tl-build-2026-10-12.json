@@ -1,0 +1,53 @@
+{
+  "source": "https://tl-build.ru/builder",
+  "observedAt": "2026-10-12",
+  "method": "Visible weapon tooltip, no traits or runes; +12 additionally matches user RU screenshot",
+  "weaponId": "crossbow_aa_t2_polymorph_001",
+  "rows": [
+    {
+      "level": 1,
+      "range": [
+        24,
+        104
+      ],
+      "dex": 7,
+      "staminaRegen": 3.15
+    },
+    {
+      "level": 9,
+      "range": [
+        32,
+        136
+      ],
+      "dex": 11,
+      "staminaRegen": 7.15
+    },
+    {
+      "level": 10,
+      "range": [
+        33,
+        140
+      ],
+      "dex": 12,
+      "staminaRegen": 7.65
+    },
+    {
+      "level": 11,
+      "range": [
+        34,
+        144
+      ],
+      "dex": 12,
+      "staminaRegen": 8.15
+    },
+    {
+      "level": 12,
+      "range": [
+        35,
+        148
+      ],
+      "dex": 13,
+      "staminaRegen": 8.65
+    }
+  ]
+}

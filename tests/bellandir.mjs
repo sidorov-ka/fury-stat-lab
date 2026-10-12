@@ -4,7 +4,7 @@ import {itemStats, weaponRange} from '../engine.js';
 const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
 const item=catalog.equipment.find(x=>x.id==='crossbow_aa_t2_polymorph_001');
 assert.equal(item.enchantMaxLevel,12);
-assert.deepEqual(weaponRange(item,9),[28,115]);
+assert.deepEqual(weaponRange(item,9),[32,136]);
 assert.deepEqual(weaponRange(item,12),[35,148]);
 for(const level of [10,11,12]){
  const stats=itemStats(item,level,[],catalog);
@@ -18,3 +18,11 @@ assert.equal(stats.damage_reduction_penetration,22);
 assert.equal(1+stats.bonus_attack_power_off_hand,44);
 assert.equal(stats.bonus_attack_power_off_hand+stats.attack_power_off_hand,166);
 for(const file of ['catalog.json','equipment.json'])assert.deepEqual(fs.readFileSync(new URL('../'+file,import.meta.url)),fs.readFileSync(new URL('../dist/'+file,import.meta.url)));
+
+const reference=JSON.parse(fs.readFileSync(new URL('./fixtures/tl-build-2026-10-12.json',import.meta.url)));
+for(const row of reference.rows){
+ const stats=itemStats(item,row.level,[],catalog);
+ assert.deepEqual(weaponRange(item,row.level),row.range,`TL Build +${row.level}`);
+ assert.equal(stats.dex,row.dex);
+ assert(Math.abs(stats.stamina_regen*.001-row.staminaRegen)<1e-9);
+}

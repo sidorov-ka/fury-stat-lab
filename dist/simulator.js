@@ -1,7 +1,7 @@
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=math-review-20261012-2';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=tl-build-comparison-20261012';
 
-import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=math-review-20261012-2';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=tl-build-comparison-20261012';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
 // Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.
@@ -128,7 +128,7 @@ export function models(catalog,state,overrides={}){
 export function coverage(state,catalog){
  const warnings=treeWarnings(state);
  warnings.push('Цель без уклонения, устойчивости к критам и мощным атакам; промахи, сопротивление ослаблениям и ответные атаки не моделируются. Это не проверенный DPS конкретного босса.');
- for(const entry of Object.values(state.items||{})){const item=catalog.equipment.find(i=>i.id===entry.id);if(item?.specialPerk)warnings.push(`${item.name} — ${item.specialPerk.name}: предметный эффект не моделируется.${item.id==='crossbow_aa_t2_polymorph_001'?' Не учтены яд Бел’Адир и его взрыв Бедственным словом.':''}`);if(item?.id==='crossbow_aa_t2_polymorph_001'&&[10,11].includes(entry.level))warnings.push('Бел’Адир +10/+11: прибавки заточки экстраполированы; точный RU-скриншот подтверждает только +12.');}
+ for(const entry of Object.values(state.items||{})){const item=catalog.equipment.find(i=>i.id===entry.id);if(item?.specialPerk)warnings.push(`${item.name} — ${item.specialPerk.name}: предметный эффект не моделируется.${item.id==='crossbow_aa_t2_polymorph_001'?' Не учтены яд Бел’Адир и его взрыв Бедственным словом.':''}`);if(item?.id==='crossbow_aa_t2_polymorph_001'&&[10,11].includes(entry.level))warnings.push('Бел’Адир +10/+11: значения сверены с TL Build; напрямую в RU-клиенте подтверждён только +12.');}
  if(Object.values(state.items||{}).some(entry=>catalog.equipment.find(i=>i.id===entry.id)?.setName))warnings.push('Комплекты: включены числовые строки порогов; условные и текстовые эффекты комплектов не моделируются.');
  if(state.active.includes(IDS.nature))warnings.push('Общее допущение — эпические умения ур. 5. Исключение: для постоянного Гнева природы нет подтверждённых коэффициентов ур. 5; временно сохранены данные скриншота RU ур. 4. Старая шестисекундная версия RUTL не используется.');
  if((state.passive||[]).includes(PASS.night))warnings.push('Дар небытия: днём прибавка исцеления входит в урон Луча погибели; ночью повышается периодический урон. Время суток задаётся в условиях боя.');

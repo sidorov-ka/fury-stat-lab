@@ -31,7 +31,7 @@ assert.deepEqual(run(weakening).logs.filter(e=>e.id===IDS.laser).map(e=>e.time),
 assert.equal(simulate({catalog,state,params:{...DEFAULTS,bonus:100},priority:[]}).total,0);
 const bella={...state,items:{weapon1:{id:'crossbow_aa_t2_polymorph_001',level:12,traits:[]}}};
 assert(coverage(bella,catalog).some(w=>w.includes('яд Бел’Адир')));
-assert(coverage({...bella,items:{weapon1:{...bella.items.weapon1,level:10}}},catalog).some(w=>w.includes('экстраполированы')));
+assert(coverage({...bella,items:{weapon1:{...bella.items.weapon1,level:10}}},catalog).some(w=>w.includes('сверены с TL Build')));
 // Independent reference: cooldown, defence, crit and bonus-damage ordering.
 near(expectedHit({...params,crossMin:100,crossMax:200,critR:1000,critDamage:20,defense:2500,bonus:25},'Crossbow',2,50),((350+450*1.2)/2)/2+25);
 console.log('Math review: passive stamina, day healing, attack speed, offhand critical cooldowns, beam incompatibility, absent weapon, coverage and independent hit arithmetic passed.');

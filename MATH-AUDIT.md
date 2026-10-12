@@ -32,7 +32,7 @@
 - Общий рейтинг усиления по монстрам учитывается в generic-цели. Общие бонусы
   пяти видов из мастерства учитываются один раз, а не суммируются пять раз.
 - В предупреждениях конкретной сборки видны неучтённые предметные эффекты,
-  яд Бел’Адир и его участие во взрыве, ограничения комплектов и экстраполяция +10/+11.
+  яд Бел’Адир и его участие во взрыве, ограничения комплектов и источники значений заточки +10/+11.
 
 ## Сверка источников
 
@@ -58,7 +58,7 @@ WTFOMG проверяют арифметику отдельного PvE-удар
 распределения. Промахи, устойчивость цели, вероятность ослаблений и
 ответные атаки не моделируются; скорость применения и скрытые PvE-множители
 не замерены в клиенте. «Гнев природы» остаётся RU эпическим 4 при остальных
-активных умениях 5. Бел’Адир +10/+11 экстраполированы.
+активных умениях 5. Бел’Адир +10/+11 сверены с TL Build; в RU-клиенте напрямую подтверждён +12.
 
 Остаётся нерешённым расхождение мудрости 70 в игре / 66 на присланном сайте:
 без сохранённой полной сборки и всех игровых бонусов точная причина неизвестна.
@@ -184,3 +184,55 @@ previous inferred +12 main-hand / DEX / stamina values. +10 and +11 still
 use extrapolation and require client verification. The screenshots also
 show WIS 70 in game versus 66 on the site; the complete build and chaos
 rune values are not provided, so that difference is not patched by guessing.
+
+
+# TL Build comparison — 12 October 2026
+
+Live comparison via https://tl-build.ru/calculator and https://tl-build.ru/builder.
+No public build was submitted. Web search returned cached v1.3; the live UI
+was v2.0. The calculator is a stat/chance tool, not a 300-second DPS simulator.
+
+## Matching formulas
+
+Defence K=2500; crit/heavy K=1000 after opposing rating; cooldown
+`1 / (1 + speed/100)`. Fury currently assumes zero enemy evasion/endurance/
+heavy avoidance, so it matches chance calculation only in that limit.
+TL Build separately describes healing crit K=6000 and heavy healing K=3000;
+Fury does not simulate direct healing skills, so these were not equated to DPS.
+
+## Confirmed Bellandir data correction
+
+| Enhancement | TL Build / corrected Fury range | DEX | Stamina regeneration |
+|---|---|---|---|
+| +1 | 24–104 | 7 | 3.15 |
+| +9 | 32–136 | 11 | 7.15 |
+| +10 | 33–140 | 12 | 7.65 |
+| +11 | 34–144 | 12 | 8.15 |
+| +12 | 35–148 | 13 | 8.65 |
+
++12 also matches the user's RU screenshot, including off-hand 44–166 and
+bonus damage 22. The earlier +12-only override concealed wrong base values
+at other levels. Main-hand base is now 79 spread / 23 base bonus, DEX 7,
+stamina raw 2650; normal enhancement curves produce all five independently
+observed cases. This supersedes the prior +10/+11 extrapolation and old base
+62/19, DEX 5 and stamina 2600. Reference: tests/fixtures/tl-build-2026-10-12.json.
+
+## Unresolved differences — no silent formula replacement
+
+At STR 41 without gear TL Build spent 44 out of 54 points (10 left);
+Fury spent 42. TL Build UI uses 20 invested points at cost 1, next 10 at
+cost 2, then cost 4. Fury uses 20 / 20 / rest. Need a RU-client allocation
+screenshot at this boundary before choosing which pricing rule is current.
+
+At SDB=1000 / SDR=700 the TL Build stat calculator reports 50% and 50%,
+with displayed net +0%. Fury's RUTL/WTFOMG PvE model yields ×0.75:
+`(1 + 1000/2000) * (1 - 700/1400)`. TL Build displays a difference of two
+percentages, not a full damage sample; converting net +0% to a final ×1
+is an interpretation. Neither that interpretation nor changing to it is
+independently confirmed in RU. The existing signed-rating alternative is
+a third formula, not the same as TL Build's percentage subtraction.
+
+TL Build exposes item resonance and common weapon-mastery unlocks and
+artifact slots, which Fury does not model. These can contribute to
+character-stat differences. No matching full user build was available,
+so this comparison does not validate the earlier WIS 70 vs 66 mismatch.
