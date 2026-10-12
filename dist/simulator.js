@@ -1,7 +1,7 @@
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=passive-sheet-1';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=math-review-20261012';
 
-import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=passive-sheet-1';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=math-review-20261012';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
 // Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.
@@ -20,7 +20,7 @@ export function passiveSheetEffects(state,catalog,mana){
  const advantage=has(PASS.ambi)&&masteryActive(state,'CR','Crossbow_High_Attack_Skill');
  return {revival,healingMultiplier:revenge?.7:1,baseDamagePercent:revenge?revival*.25:0,
   offMaxBonus:has(PASS.ambi)?value(PASS.ambi,'Макс. урон парного оружия ▲',40)+(advantage?30:0):0,
-  offChanceBonus:advantage?-4:0,bonus:has(PASS.bonus)?value(PASS.bonus,'Дополнит. урон ▲',13):0,
+  offChanceBonus:advantage?-4:0,bonus:has(PASS.bonus)?value(PASS.bonus,'Дополнит. урон ▲',13):0,staminaRegen:has(PASS.bonus)?value(PASS.bonus,'Восстановление выносливости',6):0,
   weaken:has('WP_CR_S_WeakenAccuracy')?value('WP_CR_S_WeakenAccuracy','Ослабление ▲',205):0};
 }
 export const DEFAULTS={rangeDamage:0,magicDamage:0,crossMin:0,crossMax:0,offMin:0,offMax:0,wandMin:0,wandMax:0,critR:0,critM:0,heavyR:0,heavyM:0,critDamage:0,boost:0,bonus:0,cooldown:0,speed:0,offhand:0,interval:0.5,mana:5175,regen:6,regenPeriod:10,efficiency:0,hp:5175,buffDuration:0,night:0,defense:0,defenseK:2500,ratingK:1000,species:0,pve:1,dotCrit:0,auto:1,animationFloor:0.25,latency:0,healing:0,sheetIncludesPassives:0,baseDamagePercent:0};
@@ -76,7 +76,7 @@ export function deriveStats(state,catalog){
  out.healing=(val('heal_modifier')+passive.revival)*passive.healingMultiplier;
  out.rangeDamage=(raw.range_damage_dealt_modifier||0)*.01;out.magicDamage=(raw.magic_damage_dealt_modifier||0)*.01;
  // This node gives the same rating against all five monster species; count it once.
- out.species+=Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(mastery[k+'_damage_amplification']||0)*.1));
+ out.species+=val('all_species_damage_amplification')+Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(raw[k+'_damage_amplification']||0)*(catalog.formats[k+'_damage_amplification']?.mul??.1)));
  return out;
 }
 // Character values always come from the build. Only fight assumptions may be overridden.
@@ -88,9 +88,13 @@ export function simulationParams(state,catalog,assumptions={}){
 }
 export function characterStats(state,catalog){
  const {raw}=rawCharacterStats(state,catalog),out={...raw},combat=deriveStats(state,catalog);
- for(const type of ['melee','range','magic'])for(const suffix of ['critical_attack','double_attack'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_'+suffix]||0);
- delete out.all_critical_attack;delete out.all_double_attack;
+ for(const suffix of ['accuracy','armor','evasion','critical_attack','double_attack','critical_defense','double_defense']){
+  for(const type of ['melee','range','magic'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_'+suffix]||0);
+  delete out['all_'+suffix];
+ }
+ for(const suffix of ['accuracy','tolerance']){for(const type of ['weaken','stun','petrification','sleep','silence','bind','blind'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_state_'+suffix]||0);const impulse=suffix==='accuracy'?'collide_amplification':'collide_resistance';out[impulse]=(raw[impulse]||0)+(raw['all_state_'+suffix]||0);delete out['all_state_'+suffix];}
  const passive=passiveSheetEffects(state,catalog,combat.mana);
+ out.stamina_regen=(out.stamina_regen||0)+passive.staminaRegen/(catalog.formats.stamina_regen?.mul||1);
  out.weaken_accuracy=(out.weaken_accuracy||0)+passive.weaken/(catalog.formats.weaken_accuracy?.mul||1);
  out.attack_power_modifier=(out.attack_power_modifier||0)+passive.baseDamagePercent/(catalog.formats.attack_power_modifier?.mul||.01);
  for(const [stat,key] of [['damage_reduction_penetration','bonus'],['heal_modifier','healing']])out[stat]=combat[key]/(catalog.formats[stat]?.mul||1);
@@ -123,10 +127,14 @@ export function models(catalog,state,overrides={}){
 }
 export function coverage(state,catalog){
  const warnings=treeWarnings(state);
+ warnings.push('Цель без уклонения, устойчивости к критам и мощным атакам; промахи, сопротивление ослаблениям и ответные атаки не моделируются. Это не проверенный DPS конкретного босса.');
+ for(const entry of Object.values(state.items||{})){const item=catalog.equipment.find(i=>i.id===entry.id);if(item?.specialPerk)warnings.push(`${item.name} — ${item.specialPerk.name}: предметный эффект не моделируется.${item.id==='crossbow_aa_t2_polymorph_001'?' Не учтены яд Бел’Адир и его взрыв Бедственным словом.':''}`);if(item?.id==='crossbow_aa_t2_polymorph_001'&&[10,11].includes(entry.level))warnings.push('Бел’Адир +10/+11: прибавки заточки экстраполированы; точный RU-скриншот подтверждает только +12.');}
+ if(Object.values(state.items||{}).some(entry=>catalog.equipment.find(i=>i.id===entry.id)?.setName))warnings.push('Комплекты: включены числовые строки порогов; условные и текстовые эффекты комплектов не моделируются.');
  if(state.active.includes(IDS.nature))warnings.push('Общее допущение — эпические умения ур. 5. Исключение: для постоянного Гнева природы нет подтверждённых коэффициентов ур. 5; временно сохранены данные скриншота RU ур. 4. Старая шестисекундная версия RUTL не используется.');
+ if((state.passive||[]).includes(PASS.night))warnings.push('Дар небытия: днём прибавка исцеления входит в урон Луча погибели; ночью повышается периодический урон. Время суток задаётся в условиях боя.');
  if(state.active.includes(IDS.touch))warnings.push('Глубокая скорбь: вероятность дополнительного уровня пока заменяется средним 1,5 уровня. Порог взрыва и достижение 3 уровней поэтому приближённые. Воспламенение не входит во взрыв.');
  if(state.active.includes(IDS.area))warnings.push('Ритуальный круг: блокировка действий взята из каталога (4 с); для Перста угасания отдельное время отсутствует. Его нужно замерить в RU.');
- if(state.passive.includes(PASS.thirst)&&state.active.includes(IDS.laser))warnings.push('Взаимодействие Жажды битвы с Лучом погибели не подтверждено: сейчас общий обработчик попаданий продлевает ослабления и общий обработчик откатов затрагивает луч. Это может завышать DPS.');
+ if(state.passive.includes(PASS.thirst)&&state.active.includes(IDS.laser))warnings.push('Жажда битвы: Луч погибели исключён из сокращения откатов и продления ослаблений этой пассивкой согласно несовместимости в описании. Отдельные эффекты Отрешённости остаются допущением модели.');
  if(state.active.includes(IDS.decay))warnings.push('Час преодоления (специализация 1) — бафф +80 на себя. Базовый Час отмщения и Час иссушения по монстру снижают сопротивление цели на 220. В модели RUTL сопротивление ограничено нулём; в альтернативе Rabubu29 допускается отрицательное. Поведение RU требует подтверждения. Длительность ▲ для личного баффа трактуется как +3 с — требует проверки RU.');
  if(state.active.includes(IDS.light))warnings.push('Свет доблести — +50 максимального урона на себя. Перенос начального удвоения защитной версии на атакующую не подтверждён: по умолчанию множитель 1, длительность окна 2 с; оба параметра редактируются. Направленный свет отключает начальное усиление.');
  if(state.active.includes(IDS.nature)){const specs=state.specs[IDS.nature]||[];if(!specs.length)warnings.push('Гнев природы: выбери стихию в специализациях; без стихии он не участвует в расчёте.');if(specs.some(s=>s.endsWith('_2')))warnings.push('Гнев природы, огонь: учтены заряд 21% и расход 23 маны. Урон и взаимодействия воспламенения не учтены: требуется описание «Огненных зарядов». DPS огненной сборки неполный.');if(specs.length>1)warnings.push('Гнев природы: перед боем включается первая выбранная стихия в порядке ветер → огонь → холод → молния; переключения в бою не моделируются.');}
@@ -149,8 +157,18 @@ export function expectedHit(p,weapon,coef,flat,{dot=false,skill=true,off=false,m
  const typeBonus=1+(magic?(p.magicDamage||0):(p.rangeDamage||0))/100;
  return Math.max(0,base*mult*(1+hv)*typeBonus*(1+chance(p.species,p.ratingK))*p.pve*skillMultiplier/(1+p.defense/p.defenseK)+(dot?0:p.bonus+bonus));
 }
+// Day/night affects combat healing, not the time-independent character sheet.
+export function combatHealing(state,catalog,params){
+ const day=(state.passive||[]).includes(PASS.night)&&!params.night;
+ const extra=day?passiveValue(state,catalog,PASS.night,'Эффективность исцеления ▲',36):0;
+ return params.healing+extra*passiveSheetEffects(state,catalog,params.mana).healingMultiplier;
+}
+export function intervalWithSpeedBonus(params,bonus){return params.interval*(1+params.speed/100)/(1+(params.speed+bonus)/100);}
+export function rapidCriticalCooldownReduction(params,offChance,offCritBonus=0){
+ return chance(params.critR,params.ratingK)+offChance*chance(params.critR+offCritBonus,params.ratingK);
+}
 export function simulate({catalog,state,params,overrides={},priority,burstStacks=3},detail=false){
- const p={...DEFAULTS,...BUFF_DEFAULTS,...params},all=models(catalog,state,overrides),byId=new Map(all.map(s=>[s.id,s]));
+ const p={...DEFAULTS,...BUFF_DEFAULTS,...params};p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,overrides),byId=new Map(all.map(s=>[s.id,s]));
  // "Несовместимые умения" в описании пассивки не запрещают держать оба навыка
  // на панели. «Луч погибели» продолжает работать сам по себе; взаимодействие
  // пассивки с его отдельными эффектами моделируется только там, где подтверждено.
@@ -171,7 +189,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
  const opts=(dot=false,off=false)=>({dot,off,maxBonus:lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:off&&has(PASS.ambi)?90:0,critDamageBonus:buffs.step>t?20:0,boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0),resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
  const offchance=(s)=>clamp(p.offhand/100+(buffs.ghost>t?1:0)+(s?.key==='shot'&&sp(s,3)?.3:0),0,1);
  const hitValue=(s,c,f,dot=false,mult=1)=>expectedHit(p,s.weapon,c,f,{...opts(dot),skillMultiplier:s.pve*mult});
- function reduce(amount){for(const s of list)if(s.key!=='ghost'||has(PASS.thirst))cd[s.id]=Math.max(t,cd[s.id]-amount);}
+ function reduce(amount){for(const s of list){if(s.key==='ghost'&&!has(PASS.thirst))continue;if(s.key==='laser'&&has(PASS.thirst)&&buffs.ghost<=t)continue;cd[s.id]=Math.max(t,cd[s.id]-amount);}}
  function weaken(stacks=1){
   if(!has(PASS.thirst)&&buffs.ghost<=t)return;
   const window=Math.floor(t);if(window!==procWindow){procWindow=window;procCount=0;}
@@ -189,7 +207,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
   const hits=count*(1+extra)*hitMultiplier;add(s.id,value,hits);
   if(markEnd>t&&!markExplosive){add('mark-hit',hitValue(markSource,.23,15)*hits);}
   if(projectile)natureProc(hits);
-  if(has(PASS.thirst)||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*hits;if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
+  if((has(PASS.thirst)&&s.key!=='laser')||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*hits;if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
   procGale(s,hits);
  }
  function enqueue(at,fn){pending.push({at,fn});pending.sort((a,b)=>a.at-b.at);}
@@ -219,7 +237,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
    case 'step':charges=Math.min(3,charges+1);buffs.step=t+duration(.5);if(has(PASS.adapt))buffs.adapt=t+duration(3);if(sp(s,1))buffs.wind=t+3;if(sp(s,3)&&cd[IDS.rapid]!==undefined)cd[IDS.rapid]=t;break;
    case 'nature':if(natureElement&&mana>=p.mana*.1)buffs.nature=Infinity;break;
    case 'ghost':buffs.ghost=t+duration(6);break;
-   case 'rapid':{const count=sp(s,2)?4:3,boost=weak(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,boost?1.7:1.5,boost?39:32,1,{mult});if(sp(s,4))cd[s.id]=Math.max(t,cd[s.id]-(s.cooldownSec+(sp(s,3)?3:0))*.1*chance(p.critR,p.ratingK)/(1+p.cooldown/100));});break;}
+   case 'rapid':{const count=sp(s,2)?4:3,boost=weak(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,boost?1.7:1.5,boost?39:32,1,{mult});if(sp(s,4))cd[s.id]=Math.max(t,cd[s.id]-(s.cooldownSec+(sp(s,3)?3:0))*.1*rapidCriticalCooldownReduction(p,offchance(s),has(PASS.ambi)?90:0)/(1+p.cooldown/100));});break;}
    case 'mana':hp-=450*(sp(s,1)?2:1);mana=Math.min(p.mana,mana+590*(sp(s,1)?2:1));break;
    case 'buck':direct(s,2.9,99);if(cd[IDS.step]!==undefined)cd[IDS.step]=Math.max(t,cd[IDS.step]-15);if(!sp(s,1)){slow=t+3;weaken();}break;
    case 'barrage':{const dur=Math.max(.5,(s.cast-s.hitDelay)/(1+p.speed/100));for(let i=0;i<32;i++)enqueue(t+i*dur/32,()=>direct(s,.27,17,1,{off:false,hitMultiplier:1+.5*offchance(s),mult:1+.08*Math.min(i,10)}));break;}
@@ -282,16 +300,16 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
    if(t+Math.min(cast,Math.max(.05,s.hitDelay/speed))>=300)continue;
    mana-=s.manaCost/(1+p.efficiency/100);minMana=Math.min(minMana,mana);
    let cooldown=s.cooldownSec;if(s.key==='laser'&&sp(s,3))cooldown-=6;if(s.key==='rapid'&&sp(s,3))cooldown+=3;if(s.key==='buck')cooldown+=sp(s,1)?-6:sp(s,2)?9:0;if(s.key==='burst'&&sp(s,3))cooldown-=6;if(s.key==='weak'&&sp(s,2))cooldown*=.8;if(s.key==='mana'&&sp(s,1))cooldown*=2;
-   if(has(PASS.night)&&p.night&&['touch','area','burst','decay','spread'].includes(s.key))cooldown*=.9;
+   if(has(PASS.night)&&p.night&&['touch','area','burst','decay','spread'].includes(s.key)&&!(s.key==='decay'&&sp(s,1)))cooldown*=.9;
    cd[s.id]=t+Math.max(.05,cooldown/(1+p.cooldown/100));busy=t+cast;counts[s.id]=(counts[s.id]||0)+1;
    if(detail)logs.push({time:+t.toFixed(2),id:s.id,name:s.key==='decay'?(sp(s,1)?'Час преодоления — на себя':'Час отмщения — на цель'):s.key==='light'?'Свет доблести — на себя':s.name,mana:Math.round(mana),duration:cast});
    enqueue(t+Math.min(cast,Math.max(.05,s.hitDelay/speed)),()=>effect(s));
   }else{
    if(unfunded)starved+=.05;
-   if(p.auto&&t+1e-7>=nextAuto){const s={id:'auto',weapon:'Crossbow',pve:1,key:'auto',specs:[]};const extra=offchance(s);const v=expectedHit(p,'Crossbow',1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()})+extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()});add('auto',v);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(has(PASS.thirst)||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*(1+extra);if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+p.interval;}
+   if(p.auto&&p.crossMax>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:'Crossbow',pve:1,key:'auto',specs:[]};const extra=offchance(s);const v=expectedHit(p,'Crossbow',1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()})+extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()});add('auto',v);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(has(PASS.thirst)||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*(1+extra);if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p,buffs.step>t?20:0);}
   }
  }
- return {total,dps:total/300,counts,damage,logs,damageEvents,effectEvents,bins,minMana,mana,hp,starved,natureMana,natureUptime,natureStops,natureElement,priority,burstStacks};
+ return {total,dps:total/300,counts,damage,logs,damageEvents,effectEvents,bins,minMana,mana,hp,starved,natureMana,natureUptime,natureStops,natureElement,healing:p.healing,priority,burstStacks};
 }
 function optimizeFixed(input,progress=()=>{}){
  const all=models(input.catalog,input.state,input.overrides).filter(s=>(s.key!=='light'||s.specs.includes(1))&&(s.key!=='nature'||s.specs.length>0));

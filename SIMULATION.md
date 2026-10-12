@@ -1,3 +1,13 @@
+# Math review update — 12 October 2026
+
+Current audit and known omissions: see MATH-AUDIT.md. Day healing is applied
+only in the combat simulation. Shared sheet stats are expanded into typed totals.
+Beam does not receive Thirst cooldown reductions or trigger its debuff extensions.
+Offhand critical events count towards Rapid Fire cooldown reduction; Step speed
+applies to auto-attacks. Weapon effects (including Bellandir poison) remain absent
+and are now disclosed per equipped item. This is an expected-value model, not a
+verified RU combat engine.
+
 # Fury Lab: experimental 300-second model
 
 ## Self-buff correction, 25 September 2026
