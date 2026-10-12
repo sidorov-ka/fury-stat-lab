@@ -45,3 +45,5 @@ for(const type of ['melee','range','magic']){near(combined[type+'_accuracy']-bas
 near(combined.weaken_accuracy-baseSheet.weaken_accuracy,4000);
 near(combined.collide_resistance-baseSheet.collide_resistance,2000);
 assert(!Object.hasOwn(combined,'all_accuracy'));near(deriveStats(aggregated,aggregateCatalog).species,10);
+
+assert.equal(simulate({catalog,state,params:{...DEFAULTS,bonus:100,mana:100000},priority:[IDS.rapid,IDS.touch,IDS.burst,IDS.laser]}).total,0,'missing weapons must not produce damage from skill flat components');
