@@ -1,13 +1,15 @@
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=tl-build-comparison-20261012';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=tl-build-comparison-20261012';
-import {setupSimulation} from './sim-ui.js?v=tl-build-comparison-20261012';
-import {createStore,mergeDefaults} from './storage.js';
-import {MASTERY_FIELDS,emptyMastery} from './mastery.js';
-import {TREES,normalizeTree} from './mastery-tree.js?v=tl-build-comparison-20261012';
-import {mountMastery} from './mastery-ui.js?v=tl-build-comparison-20261012';
-import {mountRunes} from './rune-ui.js';
-import {runeEffects,runeSlots} from './runes.js';
-import {ATTRS,SLOTS,traitLimit,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=tl-build-comparison-20261012';
+import {normalizeCommon,mountCommon} from './common-mastery.js?v=friendly-build-20261012';
+import {equipmentDraft,newTrait} from './equipment-defaults.js?v=friendly-build-20261012';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=friendly-build-20261012';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=friendly-build-20261012';
+import {setupSimulation} from './sim-ui.js?v=friendly-build-20261012';
+import {createStore,mergeDefaults} from './storage.js?v=friendly-build-20261012';
+import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=friendly-build-20261012';
+import {TREES,normalizeTree} from './mastery-tree.js?v=friendly-build-20261012';
+import {mountMastery} from './mastery-ui.js?v=friendly-build-20261012';
+import {mountRunes} from './rune-ui.js?v=friendly-build-20261012';
+import {runeEffects,runeSlots} from './runes.js?v=friendly-build-20261012';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=friendly-build-20261012';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -15,7 +17,7 @@ const rarity={Common:'#89929c',Uncommon:'#64ad84',Rare:'#739fe6',Rare2:'#739fe6'
 const gradeName={Common:'Обычный',Uncommon:'Необычный',Rare:'Редкий',Rare2:'Редкий',Epic:'Эпический',Heroic:'Героический',Legendary:'Легендарный'};
 let simulation;
 let catalog, itemMap,skillMap,selectedSkill=null,pick=null,previewId=null,draft=null;
-const emptyState=()=>({items:{},mastery:emptyMastery(),masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{},passiveLevels:{}});
+const emptyState=()=>({items:{},mastery:emptyMastery(),commonMastery:{level:0,selected:[]},masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{},passiveLevels:{}});
 let state=emptyState();
 const saveStatus=document.createElement('p');saveStatus.className='micro';saveStatus.setAttribute('role','status');document.querySelector('.topbar').after(saveStatus);
 let browserStorage;try{browserStorage=window.localStorage;}catch{browserStorage={getItem(){throw Error('unavailable')}};}
@@ -60,7 +62,7 @@ function renderAttrs(){
 }
 function renderAttributeRows(){
  const spent=spentAttributes(state.attrs),totals=totalAttributes(state,catalog);
- $('attr-note').textContent=`Уровень 55 · Потрачено ${spent} / ${ATTRIBUTE_BUDGET} · ${spent>ATTRIBUTE_BUDGET?'Превышение: '+(spent-ATTRIBUTE_BUDGET):'Осталось: '+(ATTRIBUTE_BUDGET-spent)}. База 10. Прибавки 1–20 стоят 1 очко, 21–40 — 2, далее — 4. Бонусы вещей не расходуют очки.`;
+ $('attr-note').textContent=`Потрачено ${spent} / ${ATTRIBUTE_BUDGET} очков · Осталось ${Math.max(0,ATTRIBUTE_BUDGET-spent)}`;
  $('attributes').innerHTML=ATTRS.map(([k,label])=>{const v=state.attrs[k],cost=attributeCost(v+1)-attributeCost(v),bonus=totals[k]-v,adjust=state.attributeAdjustments?.[k]||0;return `<div class="attribute-row"><b>${label}</b><div class="attribute-controls"><button data-attr-step="${k}" data-delta="-1" ${v<=10?'disabled':''} aria-label="Уменьшить ${label}">−</button><input type="number" min="10" step="1" value="${v}" data-attr="${k}" aria-label="${label} до бонусов"><button data-attr-step="${k}" data-delta="1" ${spent+cost>ATTRIBUTE_BUDGET?'disabled':''} aria-label="Увеличить ${label}">+</button></div><small>10 + ${v-10} вложено · ${attributeCost(v)} очк.</small><small>Бонусы ${bonus>=0?'+':''}${n(bonus)} → <strong>${n(totals[k])}</strong></small><small>Следующее +1: ${cost} очк.</small>${adjust?`<small>Перенесённая поправка: ${n(adjust)}. Проверь старый итог.</small>`:''}</div>`}).join('');
  const change=(k,value)=>{const old=state.attrs[k],v=Math.max(10,Math.min(200,Math.trunc(Number(value)||10))),next={...state.attrs,[k]:v};if(v>old&&spentAttributes(next)>ATTRIBUTE_BUDGET){toast('Не хватает очков характеристик');renderAttributeRows();return;}state.attrs=next;renderStats();};
  $('attributes').querySelectorAll('[data-attr]').forEach(el=>el.onchange=()=>change(el.dataset.attr,el.value));
@@ -72,18 +74,19 @@ function renderStats(){
  if(restored)profile.save('build',{state,weapon:$('weapon').value});
  simulation?.update();
  const stats=characterStats(state,catalog),entry=state.items[$('weapon').value],weapon=itemMap.get(entry?.id),combat=deriveStats(state,catalog),prefix=$('weapon').value==='weapon1'?'cross':'wand',range=weapon?[combat[prefix+'Min'],combat[prefix+'Max']]:null;
- $('damage-range').innerHTML=`<small>${escape(weapon?.name||'Оружие не выбрано')} · расчётный диапазон для боя</small><b>${range?range.map(n).join(' — '):'—'}</b>`;
+ $('damage-range').innerHTML=`<small>${escape(weapon?.name||'Оружие не выбрано')}</small><b>${range?range.map(n).join(' — '):'—'}</b>`;
  $('primary-stats').innerHTML=ATTRS.map(([k,label])=>`<div class="primary-stat"><small>${label}</small><b>${n(totalAttributes(state,catalog)[k])}</b></div>`).join('');
  const others=Object.fromEntries(Object.entries(stats).filter(([k])=>!ATTRS.some(([a])=>a.toLowerCase()===k.toLowerCase())&&!/_main_hand$|_off_hand$/.test(k)));
  $('stat-list').innerHTML=statRows(others)||'';
  if($('mastery-totals'))$('mastery-totals').innerHTML=MASTERY_FIELDS.map(([k,label])=>`<div class="stat-line"><span>${escape(label.replace(', п.п.',', %'))}</span><b>${n(combat[k])}</b></div>`).join('');
- let breakdown=$('stat-breakdown');if(!breakdown){breakdown=document.createElement('details');breakdown.id='stat-breakdown';document.querySelector('.totals').append(breakdown);breakdown.innerHTML='<summary>Из чего складываются характеристики</summary><p class="micro">Столбцы показывают изменение результата при последовательном добавлении источников слева направо. Пороги атрибутов входят в источник, который их открыл. Для интервала атаки учитывается порядок формулы.</p><div class="sim-table-wrap"></div>';}
+ let breakdown=$('stat-breakdown');if(!breakdown){breakdown=document.createElement('details');breakdown.id='stat-breakdown';document.querySelector('.totals').append(breakdown);breakdown.innerHTML='<summary>Из чего складываются характеристики</summary><div class="sim-table-wrap"></div>';}
  const b=statBreakdown(state,catalog),list=[...MASTERY_FIELDS,['interval','Интервал автоатаки, с'],['rangeDamage','Урон дальнего боя, %'],['species','Повышение урона по виду цели']];
  breakdown.querySelector('.sim-table-wrap').innerHTML=`<table><thead><tr><th>Характеристика</th>${b.labels.map(l=>`<th>${escape(l)}</th>`).join('')}<th>Итого</th></tr></thead><tbody>${list.map(([k,l])=>`<tr><td>${escape(l.replace(', п.п.',', %'))}</td>${b.values[k].map(v=>`<td>${v>0?'+':''}${Number(v.toFixed(3)).toLocaleString('ru-RU',{maximumFractionDigits:3})}</td>`).join('')}<td><b>${Number(b.total[k].toFixed(3)).toLocaleString('ru-RU',{maximumFractionDigits:3})}</b></td></tr>`).join('')}</tbody></table>`;
 }
 function renderMastery(){
  let panel=$("mastery-panel");if(!panel){panel=document.createElement("section");panel.id="mastery-panel";panel.className="panel";panel.style.margin="16px 0";document.querySelector(".totals").after(panel);}
  mountMastery(panel,()=>state,catalog,renderStats);
+ const commonHost=document.createElement("div");commonHost.className="common-mastery";panel.prepend(commonHost);mountCommon(commonHost,()=>state,renderStats);
 }
 function renderSkills(){
  renderStats();
@@ -99,7 +102,7 @@ function renderSkillDetail(){
  const s=selectedSkill&&skillMap.get(state[selectedSkill.type][selectedSkill.index]);
  if(!s){$('skill-detail').innerHTML='<div class="empty-detail">Выбери умение, чтобы увидеть его описание и трейты.</div>';return}
  const selected=state.specs[s.id]||[];
- $('skill-detail').innerHTML=`<div class="skill-detail-grid"><div><div class="detail-title">${image(s)}<div><h2>${escape(s.name)}</h2><span class="micro">${escape(s.sourceNote||'Описание из каталога RUTL')}</span></div></div>${skillMeta(s)}${s.category==='Passive'?`<label class="inline-label">Уровень пассивного умения<select id="passive-level" aria-label="Уровень пассивного умения">${[1,2,3,4,5].map(level=>`<option value="${level}" ${passiveLevel(state,s.id)===level?'selected':''}>Эпическое · ${level}</option>`).join('')}</select></label><p class="micro">Значения выбранного уровня: ${(s.levelProgression||[]).map(r=>escape(r.label+' '+r.values[passiveLevel(state,s.id)-1])).join(' · ')}. Описание ниже — текст каталога для 5-го уровня; условные эффекты смотри в ограничениях расчёта.</p>`:''}<p class="description">${escape(s.description)}</p>${s.levelProgression?.length?`<details><summary class="micro">Значения по уровням в источнике</summary>${s.levelProgression.map(r=>`<p class="description">${escape(r.label)}: ${escape(r.values.join(' → '))}</p>`).join('')}</details>`:''}<div class="skill-actions"><button id="replace-skill">Заменить</button><button id="remove-skill" class="quiet">Снять</button></div></div><div><h3>Специализации / трейты умения</h3><div class="spec-list">${s.specializations?.length?s.specializations.map(t=>`<label class="spec-row"><input type="checkbox" data-spec="${escape(t.id)}" ${selected.includes(t.id)?'checked':''}>${t.icon?`<img src="${escape(t.icon)}" alt="">`:'<span></span>'}<span><b>${escape(t.name)} · ${ROLE_LABELS[specializationRole(s.id,Number(t.id.split("_").at(-1)))]}</b><p>${escape(t.description)}</p></span><span class="cost">${n(t.cost)} оч.</span></label>`).join(''):'<p class="hint">У этого умения нет специализаций в каталоге.</p>'}</div><p class="micro" style="margin-top:10px">Описание базового умения показано отдельно от изменений специализаций. Зависимости между специализациями сверяй с описанием.</p></div></div>`;
+ $('skill-detail').innerHTML=`<div class="skill-detail-grid"><div><div class="detail-title">${image(s)}<div><h2>${escape(s.name)}</h2><span class="micro"></span></div></div>${skillMeta(s)}${s.category==='Passive'?`<label class="inline-label">Уровень пассивного умения<select id="passive-level" aria-label="Уровень пассивного умения">${[1,2,3,4,5].map(level=>`<option value="${level}" ${passiveLevel(state,s.id)===level?'selected':''}>Эпическое · ${level}</option>`).join('')}</select></label><p class="micro">Значения выбранного уровня: ${(s.levelProgression||[]).map(r=>escape(r.label+' '+r.values[passiveLevel(state,s.id)-1])).join(' · ')}. </p>`:''}<p class="description">${escape(s.description)}</p>${s.levelProgression?.length?`<details><summary class="micro">Значения по уровням в источнике</summary>${s.levelProgression.map(r=>`<p class="description">${escape(r.label)}: ${escape(r.values.join(' → '))}</p>`).join('')}</details>`:''}<div class="skill-actions"><button id="replace-skill">Заменить</button><button id="remove-skill" class="quiet">Снять</button></div></div><div><h3>Специализации</h3><div class="spec-list">${s.specializations?.length?s.specializations.map(t=>`<label class="spec-row"><input type="checkbox" data-spec="${escape(t.id)}" ${selected.includes(t.id)?'checked':''}>${t.icon?`<img src="${escape(t.icon)}" alt="">`:'<span></span>'}<span><b>${escape(t.name)}</b><p>${escape(t.description)}</p></span><span class="cost">${n(t.cost)} оч.</span></label>`).join(''):'<p class="hint">У этого умения нет специализаций в каталоге.</p>'}</div></div></div>`;
  if($('passive-level'))$('passive-level').onchange=e=>{state.passiveLevels??={};state.passiveLevels[s.id]=Number(e.target.value);renderSkills();renderSkillDetail();};
  $('replace-skill').onclick=()=>openSkill(selectedSkill.type,selectedSkill.index);
  $('remove-skill').onclick=()=>{removeSkill(selectedSkill.type,selectedSkill.index);renderSkills();renderSkillDetail()};
@@ -130,7 +133,7 @@ function preview(id){
  previewId=id;const item=pick.items.find(x=>x.id===id);if(!item)return;
  $('choose').disabled=false;$('picker-selection').textContent=item.name;$('picker-message').textContent='';$('picker-preview').scrollTop=0;
  if(pick.kind==='gear'){
-  const current=state.items[pick.slot];draft=current?.id===id?structuredClone(current):{id,level:0,traits:[]};renderItemPreview(item);
+  const current=state.items[pick.slot];draft=equipmentDraft(item,current);renderItemPreview(item);
  }else{
   $('picker-preview').innerHTML=`<div class="detail-title">${image(item)}<h3>${escape(item.name)}</h3></div>${skillMeta(item)}<p class="description">${escape(item.description)}</p><h3 style="font-size:14px">Специализации</h3>${(item.specializations||[]).map(t=>`<div class="perk"><b>${escape(t.name)} · ${n(t.cost)} оч.</b>${escape(t.description)}</div>`).join('')||'<p class="hint">Нет специализаций</p>'}`;
   $('choose').onclick=()=>{const duplicate=state[pick.type].indexOf(id);if(duplicate!==-1&&duplicate!==pick.index){$('picker-message').textContent='Это умение уже выбрано в слоте '+(duplicate+1)+'.';return}if(state[pick.type][pick.index]!==id)removeSkill(pick.type,pick.index);state[pick.type][pick.index]=id;selectedSkill={type:pick.type,index:pick.index};renderSkills();renderSkillDetail();$('picker').close()};
@@ -139,12 +142,14 @@ function preview(id){
 }
 function renderItemPreview(item){
  const limit=traitLimit(item.grade);
- $('picker-preview').innerHTML=`<div class="detail-title">${image(item)}<h3>${escape(item.name)}</h3></div><p class="description">${escape(item.description||'')}</p><label class="enhance">Усиление<input id="enhance" type="number" min="0" max="${item.enchantMaxLevel||0}" value="${draft.level}" aria-label="Уровень усиления"></label><div id="item-values"></div><h3 style="font-size:14px;margin-top:15px">Трейты предмета</h3><div class="traits">${limit&&item.traits?.length?Array.from({length:3},(_,i)=>{const t=draft.traits[i]||{id:'',level:1};return `<div class="trait-line"><select data-trait="${i}" aria-label="Трейт ${i+1}"><option value="">Без трейта</option>${item.traits.filter(k=>catalog.traits[k]).map(k=>`<option value="${escape(k)}" ${k===t.id?'selected':''}>${escape(statLabel(catalog.traits[k].stat))}</option>`).join('')}</select><input data-trait-level="${i}" type="number" min="1" max="${limit}" value="${t.level}" aria-label="Уровень трейта ${i+1}"></div>`}).join(''):'<p class="hint">Трейты недоступны.</p>'}</div>${item.specialPerk?`<div class="perk"><b>${escape(item.specialPerk.name)}</b>${escape(item.specialPerk.description)}<p class="micro">Условный эффект не включён в расчёт.</p></div>`:''}${item.setName?`<div class="perk">Комплект: ${escape(item.setName)}. Бонус комплекта пока не учитывается.</div>`:''}`;
- const updateValues=()=>{let values=itemStats(item,draft.level,draft.traits,catalog);if(item.slot==='Weapon'){const range=weaponRange(item,draft.level);$('item-values').innerHTML=`<div class="stat-line"><span>Урон оружия</span><b>${range.map(n).join(' — ')}</b></div>`+statRows(Object.fromEntries(Object.entries(values).filter(([k])=>!k.includes('attack_power'))))}else $('item-values').innerHTML=statRows(values)};
+ $('picker-preview').innerHTML=`<div class="detail-title">${image(item)}<h3>${escape(item.name)}</h3></div><p class="description">${escape(item.description||'')}</p><label class="enhance">Усиление<input id="enhance" type="number" min="0" max="${item.enchantMaxLevel||0}" value="${draft.level}" aria-label="Уровень усиления"></label><div id="item-values"></div><h3 style="font-size:14px;margin-top:15px">Трейты предмета</h3><div class="traits">${limit&&item.traits?.length?Array.from({length:3},(_,i)=>{const t=draft.traits[i]||{id:'',level:limit};return `<div class="trait-line"><select data-trait="${i}" aria-label="Трейт ${i+1}"><option value="">Без трейта</option>${item.traits.filter(k=>catalog.traits[k]).map(k=>`<option value="${escape(k)}" ${k===t.id?'selected':''}>${escape(statLabel(catalog.traits[k].stat))}</option>`).join('')}</select><input data-trait-level="${i}" type="number" min="1" max="${limit}" value="${t.level}" aria-label="Уровень трейта ${i+1}"></div>`}).join(''):'<p class="hint">Трейты недоступны.</p>'}</div>${item.specialPerk?`<div class="perk"><b>${escape(item.specialPerk.name)}</b>${escape(item.specialPerk.description)}<p class="micro">Условный эффект не включён в расчёт.</p></div>`:''}${item.setName?`<div class="perk">Комплект: ${escape(item.setName)}.</div>`:''}`;
+ const resonanceHost=document.createElement('div');resonanceHost.className='resonance-panel';$('picker-preview').append(resonanceHost);
+ const renderResonance=()=>{if(!item.resonanceEffects?.length){resonanceHost.innerHTML='';return;}const ready=resonanceReady(item,draft,catalog);resonanceHost.innerHTML=`<h3>Резонанс</h3><select id="item-resonance" aria-label="Резонанс предмета" ${ready?'':'disabled'}><option value="">Без резонанса</option>${item.resonanceEffects.map(r=>`<option value="${escape(r.id)}" ${draft.resonanceId===r.id?'selected':''}>${escape((r.stats||[]).map(v=>statLabel(v.stat)+' +'+format(v.stat,v.value)).join(' · '))}</option>`).join('')}</select>${ready?'':'<p class="micro">Нужны три трейта максимального уровня.</p>'}`;resonanceHost.querySelector('select').onchange=e=>{draft.resonanceId=e.target.value||null;updateValues();};};
+ const updateValues=()=>{renderResonance();let values=itemStats(item,draft.level,draft.traits,catalog,draft.resonanceId);if(item.slot==='Weapon'){const range=weaponRange(item,draft.level);$('item-values').innerHTML=`<div class="stat-line"><span>Урон оружия</span><b>${range.map(n).join(' — ')}</b></div>`+statRows(Object.fromEntries(Object.entries(values).filter(([k])=>!k.includes('attack_power'))))}else $('item-values').innerHTML=statRows(values)};
  updateValues();
  const runeHost=document.createElement('div');runeHost.className='rune-panel';$('picker-preview').append(runeHost);mountRunes(runeHost,item,draft,catalog,statRows,escape);
  $('enhance').oninput=$('enhance').onchange=e=>{draft.level=Math.max(0,Math.min(item.enchantMaxLevel||0,Math.trunc(Number(e.target.value)||0)));e.target.value=draft.level;updateValues()};
- $('picker-preview').querySelectorAll('[data-trait]').forEach(el=>el.onchange=()=>{const i=Number(el.dataset.trait);if(el.value&&draft.traits.some((t,j)=>j!==i&&t?.id===el.value)){el.value=draft.traits[i]?.id||'';$('picker-message').textContent='На предмете нельзя выбрать одинаковые трейты.';return}draft.traits[i]={id:el.value,level:Number($('picker-preview').querySelector(`[data-trait-level="${i}"]`).value)||1};$('picker-message').textContent='';updateValues()});
+ $('picker-preview').querySelectorAll('[data-trait]').forEach(el=>el.onchange=()=>{const i=Number(el.dataset.trait);if(el.value&&draft.traits.some((t,j)=>j!==i&&t?.id===el.value)){el.value=draft.traits[i]?.id||'';$('picker-message').textContent='На предмете нельзя выбрать одинаковые трейты.';return}draft.traits[i]=newTrait(item,el.value);$('picker-preview').querySelector(`[data-trait-level="${i}"]`).value=limit;$('picker-message').textContent='';updateValues()});
  $('picker-preview').querySelectorAll('[data-trait-level]').forEach(el=>el.onchange=()=>{const i=Number(el.dataset.traitLevel);el.value=Math.max(1,Math.min(limit,Math.trunc(Number(el.value)||1)));draft.traits[i]={id:draft.traits[i]?.id||'',level:Number(el.value)};updateValues()});
  $('choose').onclick=()=>{if(pick.slot.startsWith('ring')){const other=pick.slot==='ring1'?'ring2':'ring1';if(state.items[other]?.id===item.id){$('picker-message').textContent='Это кольцо уже надето во втором слоте.';return}}draft.traits=draft.traits.filter(t=>t?.id);state.items[pick.slot]=structuredClone(draft);renderGear();renderStats();$('picker').close()};
 }
@@ -155,9 +160,9 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=tl-build-comparison-20261012',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=friendly-build-20261012',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
-  if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};
+  if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};state.commonMastery=normalizeCommon(saved.state.commonMastery);
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);
    for(const [slot] of SLOTS){const entry=saved.state.items?.[slot];if(entry&&itemMap.has(entry.id)&&Number.isFinite(entry.level)&&Array.isArray(entry.traits))state.items[slot]=entry;}
    for(const type of ['active','passive','defensive'])state[type]=state[type].map(id=>skillMap.has(id)?id:null);
@@ -170,7 +175,7 @@ async function init(){
   renderGear();renderAttrs();renderStats();renderSkills();
   simulation=setupSimulation(()=>state,catalog,(ids,specs)=>{if(specs)state.specs=structuredClone(specs);state.active=[...ids,...Array(12-ids.length).fill(null)];selectedSkill=null;renderSkills();renderSkillDetail();},profile);
   restored=true;
-  $('source-note').textContent=`RUTL · снимок 24.09.2026 · ${catalog.equipment.length} предметов · ${catalog.skills.length} записей умений`;
+  $('source-note').textContent=`Fury Lab · Throne and Liberty RU`;
   $('loading').hidden=true;$('workspace').hidden=false;
  }catch(e){$('loading').textContent='Не удалось загрузить каталог. Обнови страницу, чтобы повторить загрузку.';console.error(e)}
 }

@@ -12,10 +12,10 @@ for(const {name,input,result} of rows){
  console.log(`${name}: Fury ${ours.toFixed(6)} / WTFOMG ${result.avg_dmg}`);
 }
 const p={...DEFAULTS,crossMin:100,crossMax:100,boost:700,resistance:400,resistanceModel:'difference'};
-assert.equal(expectedHit(p,'Crossbow',1,0),100*(1+300/1300));
-assert.equal(expectedHit({...p,boost:200},'Crossbow',1,0),100*(1-200/1200));
-assert.equal(expectedHit({...p,boost:0,resistance:0},'Crossbow',1,0,{resistanceDrop:220}),100*(1+220/1220));
-assert.equal(expectedHit({...p,resistanceModel:'rutl',boost:0,resistance:0},'Crossbow',1,0,{resistanceDrop:220}),100);
+assert.equal(expectedHit(p,'Crossbow',1,0),100*(1+700/1700)*(1-400/1100));
+assert.equal(expectedHit({...p,boost:200},'Crossbow',1,0),100*(1+200/1200)*(1-400/1100));
+assert.equal(expectedHit({...p,boost:0,resistance:0},'Crossbow',1,0,{resistanceDrop:220}),100);
+assert.equal(expectedHit({...p,resistanceModel:'rutl'},'Crossbow',1,0),expectedHit(p,'Crossbow',1,0),'Legacy formula setting cannot change the single supported calculation');
 const dot={...DEFAULTS,wandMin:100,wandMax:200,critM:1000,critDamage:20,bonus:25,dotCrit:1};
 assert.equal(expectedHit(dot,'Wand',1,0,{dot:true}),165,'DoT critical keeps average base and excludes bonus damage');
-console.log('External comparison and explicit alternative model: passed');
+console.log('External comparison and single calculation: passed');

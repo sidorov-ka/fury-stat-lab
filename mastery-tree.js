@@ -1,4 +1,5 @@
-import {TREES} from './mastery-data.js';
+import {commonStats} from './common-mastery.js?v=friendly-build-20261012';
+import {TREES} from './mastery-data.js?v=friendly-build-20261012';
 export {TREES};
 const parts=c=>({attackutil:['attack','util'],utildefense:['util','defense'],defensetactic:['defense','tactic'],tacticattack:['tactic','attack']}[c]||[c]);
 export const isAutomaticNode=n=>n.type==='synergy'&&n.max===1;
@@ -53,7 +54,7 @@ export function changeNode(tree,selected,id,delta){
  return {selected:normalizeTree(tree,{...selected,[id]:Math.max(0,Math.min(n.max,old+delta))}),error:''};
 }
 export function treeStats(state,weapon=null){
- const stats={};for(const [key,tree] of Object.entries(TREES)){if(weapon&&key!==weapon)continue;const selected=normalizeTree(tree,state.masteryTrees?.[key]);for(const n of tree.nodes)for(const r of nodeRows(n,selected[n.id]))if(Number.isFinite(r.value))stats[r.stat]=(stats[r.stat]||0)+r.value;}
+ const stats=weapon?{}:commonStats(state);for(const [key,tree] of Object.entries(TREES)){if(weapon&&key!==weapon)continue;const selected=normalizeTree(tree,state.masteryTrees?.[key]);for(const n of tree.nodes)for(const r of nodeRows(n,selected[n.id]))if(Number.isFinite(r.value))stats[r.stat]=(stats[r.stat]||0)+r.value;}
  return stats;
 }
 export function treeWarnings(state){

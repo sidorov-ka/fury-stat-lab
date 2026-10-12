@@ -1,10 +1,10 @@
-import {runeSlots,runeChoices,runeEffects} from './runes.js';
+import {runeSlots,runeChoices,runeEffects} from './runes.js?v=friendly-build-20261012';
 export function mountRunes(host,item,entry,catalog,statRows,escape){
  if(!runeSlots(item))return;
  const choices=runeChoices(item),types={Attack:'Атака · красная',Defense:'Защита · синяя',Assist:'Поддержка · жёлтая'},grades={kC:'Расколотая',kB:'Цельная',kA:'Редкая',kAA:'Превосходная'};
  entry.runes=Array.isArray(entry.runes)?entry.runes:[];
  const render=()=>{
- host.innerHTML='<h3>Руны</h3><p class="micro">Порядок ячеек определяет синергию. Значения и уровни — из каталога RUTL.</p>'+Array.from({length:runeSlots(item)},(_,i)=>{
+ host.innerHTML='<h3>Руны</h3><p class="micro">Порядок рун определяет синергию.</p>'+Array.from({length:runeSlots(item)},(_,i)=>{
   const s=entry.runes[i]||{},r=choices.find(r=>r.id===s.runeId);
   return `<div class="rune-editor" data-index="${i}"><label>Ячейка ${i+1}<select data-rune><option value="">Без руны</option>${choices.map(x=>`<option value="${x.id}" ${r?.id===x.id?'selected':''}>${types[x.type]} · ${grades[x.grade]}</option>`).join('')}</select></label>${r?`<label>Характеристика<select data-stat>${r.statPool.map(p=>`<option value="${p.stat}" ${s.stat===p.stat?'selected':''}>${escape(catalog.labels[p.stat]||p.stat)}</option>`).join('')}</select></label><label>Уровень · до ${r.maxLevel}<input data-level type="number" min="1" max="${r.maxLevel}" value="${s.level}"></label>`:''}</div>`;
  }).join('');

@@ -1,9 +1,9 @@
-import {treeStats} from './mastery-tree.js?v=tl-build-comparison-20261012';
-import {runeStats} from './runes.js';
+import {treeStats} from './mastery-tree.js?v=friendly-build-20261012';
+import {runeStats} from './runes.js?v=friendly-build-20261012';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
 export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
 export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
-export function itemStats(item,level=0,traits=[],catalog){
+export function itemStats(item,level=0,traits=[],catalog,resonanceId=null){
  const stats={}; const add=(k,v)=>{if(Number.isFinite(Number(v)))stats[k]=(stats[k]||0)+Number(v)};
  for(const [base,scale] of [['baseStats','enchantScaling'],['extraStats','extraEnchantScaling']]){
   for(const key of new Set([...Object.keys(item[base]||{}),...Object.keys(item[scale]?.[level]||{})])) add(key,Number(item[base]?.[key]||0)+Number(item[scale]?.[level]?.[key]||0));
@@ -17,6 +17,7 @@ export function itemStats(item,level=0,traits=[],catalog){
   const lv=Math.max(1,Math.min(limit,t.level||1));
   add(info.stat,info.curve?.length?Number(info.base||0)+Number(info.curve[lv-1]||0):Number(info.max??info.base??0));
  }
+ for(const [k,v] of Object.entries(resonanceStats(item,{traits,resonanceId},catalog)))add(k,v);
  return stats;
 }
 export function weaponRange(item,level=0){
@@ -31,7 +32,7 @@ export function gearStats(state,catalog){
  if(!state.excludeSetBonuses)for(const [k,v] of Object.entries(setStats(state,catalog)))out[k]=(out[k]||0)+v;
  for(const entry of Object.values(state.items)){
   const item=catalog.equipment.find(x=>x.id===entry.id);if(!item)continue;
-  for(const [k,v] of Object.entries(itemStats(item,entry.level,entry.traits,catalog))){
+  for(const [k,v] of Object.entries(itemStats(item,entry.level,entry.traits,catalog,entry.resonanceId))){
    if(/_main_hand$|_off_hand$/.test(k)||k==='off_hand_attack_chance')continue;
    out[k]=(out[k]||0)+v;
   }
@@ -65,5 +66,16 @@ export function setStats(state,catalog){
   const key=row.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());
   if(Number.isFinite(row.value))stats[key]=(stats[key]||0)+row.value;
  }
+ return stats;
+}
+
+export function resonanceReady(item,entry,catalog){
+ const limit=traitLimit(item.grade),traits=(entry.traits||[]).filter(t=>item.traits?.includes(t?.id)&&catalog.traits[t.id]);
+ return limit>0&&traits.length===3&&new Set(traits.map(t=>t.id)).size===3&&traits.every(t=>Number(t.level)>=limit);
+}
+export function resonanceStats(item,entry,catalog){
+ if(!resonanceReady(item,entry,catalog))return {};
+ const effect=item.resonanceEffects?.find(r=>r.id===entry.resonanceId),stats={};
+ for(const row of effect?.stats||[])if(Number.isFinite(row.value))stats[row.stat]=(stats[row.stat]||0)+row.value;
  return stats;
 }
