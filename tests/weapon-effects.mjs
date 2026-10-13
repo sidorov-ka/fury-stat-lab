@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {ProcDot} from '../weapon-effects.js';
-import {simulate,IDS,deriveStats,characterStats,statBreakdown} from '../simulator.js';
+import {simulate,IDS,deriveStats,characterStats,statBreakdown,simulationParams} from '../simulator.js';
 import {setStats} from '../engine.js';
 const near=(a,b)=>assert(Math.abs(a-b)<1e-7,`${a} != ${b}`);
 const d=new ProcDot(3);d.apply(0,.2,5);near(d.stacks(0),.2);near(d.remaining(0),1);near(d.tick(1),.2);near(d.remaining(1),.8);
@@ -10,6 +10,7 @@ const capped=new ProcDot(3);for(let i=0;i<4;i++)capped.apply(0,.5,5);near(capped
 const ttl=new ProcDot(3);ttl.apply(0,1,5);ttl.apply(4,1,5);near(ttl.remaining(4),18);near(ttl.stacks(9.05),0);
 const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
 const base={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};
+assert.equal(simulationParams(base,catalog).targetDistance,0);assert.equal(simulationParams(base,catalog).targetHealth,100);
 const params={crossMin:100,crossMax:100,wandMin:100,wandMax:100,critR:1000,auto:0,mana:1e6,regen:0};
 const equipped=id=>({...base,items:{weapon1:{id,level:0,traits:[]}}});
 const once=(state,priority,extra={})=>simulate({catalog,state,params,priority,overrides:Object.fromEntries(priority.map(id=>[id,{cooldownSec:999,cast:0,hitDelay:0}])),burstStacks:1,...extra},true);

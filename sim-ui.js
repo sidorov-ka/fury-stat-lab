@@ -1,5 +1,5 @@
-import {COMMON_PASSIVES} from './common-mastery.js?v=weapon-effects-20261013';
-import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=weapon-effects-20261013';
+import {COMMON_PASSIVES} from './common-mastery.js?v=weapon-effects-20261013-3';
+import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=weapon-effects-20261013-3';
 const fields=[
  ['baseDamagePercent','Базовый урон: прибавка от пассивок, %'],['rangeDamage','Урон дальнего боя, %'],['magicDamage','Урон магии, %'],
  ['selfDurationExtension','Час преодоления: Длительность ▲, с (гипотеза)'],
@@ -50,7 +50,7 @@ function warnings(){
   if(err.length){$('sim-status').textContent=[...new Set(err)].join(' ');$('sim-params').open=true;return;}
   const overrides={};
   runInput={catalog,state,params,overrides,mode,budget:Number($('sim-budget').value)};dirty=false;$('simulate').disabled=true;$('sim-cancel').hidden=false;$('sim-progress').hidden=false;$('sim-progress').max=runInput.budget;$('sim-progress').value=0;$('sim-status').textContent='Сравниваю ротации…';
-  try{worker=new Worker(new URL('./sim-worker.js?v=weapon-effects-20261013',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
+  try{worker=new Worker(new URL('./sim-worker.js?v=weapon-effects-20261013-3',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
   const finish=()=>{worker?.terminate();worker=null;$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;};
   worker.onerror=()=>{finish();$('sim-status').textContent='Ошибка расчёта. Проверь параметры и повтори запуск.';};
   worker.onmessage=e=>{const m=e.data;if(m.type==='progress'){$('sim-progress').value=m.done;$('sim-status').textContent=`${m.done} / ${m.budget} · лучший DPS ${num(m.dps)}`;}else if(m.type==='error'){finish();$('sim-status').textContent='Ошибка: '+m.message;}else{finish();result=m.result;renderResult();$('sim-status').textContent='Расчёт завершён.';}};worker.postMessage(runInput);

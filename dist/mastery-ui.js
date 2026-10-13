@@ -1,4 +1,4 @@
-import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=weapon-effects-20261013';
+import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=weapon-effects-20261013-3';
 const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png?v=centered-2',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png?v=centered-2'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number(v).toLocaleString('ru-RU',{maximumFractionDigits:2});
