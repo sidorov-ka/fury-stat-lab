@@ -1,5 +1,5 @@
-import {treeStats} from './mastery-tree.js?v=mastery-stable-20261013';
-import {runeStats} from './runes.js?v=mastery-stable-20261013';
+import {treeStats} from './mastery-tree.js?v=weapon-effects-20261013';
+import {runeStats} from './runes.js?v=weapon-effects-20261013';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
 export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
 export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
@@ -60,13 +60,40 @@ export function activeSets(state,catalog){
  }
  return [...groups.values()].map(g=>({name:g.name,count:g.count,bonuses:[...g.bonuses.values()].filter(b=>g.count>=b.pieces)}));
 }
+export function setPassives(state,catalog){
+ return state.excludeSetBonuses?[]:activeSets(state,catalog).flatMap(g=>g.bonuses.flatMap(b=>(b.passives||[]).map(p=>({...p,set:g.name,pieces:b.pieces}))));
+}
 export function setStats(state,catalog){
- const stats={};
- for(const group of activeSets(state,catalog))for(const bonus of group.bonuses)for(const row of bonus.stats||[]){
-  const key=row.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());
-  if(Number.isFinite(row.value))stats[key]=(stats[key]||0)+row.value;
+ const stats={},add=(k,v)=>stats[k]=(stats[k]||0)+v;
+ if(state.excludeSetBonuses)return stats;
+ for(const group of activeSets(state,catalog))for(const bonus of group.bonuses){
+  for(const row of bonus.stats||[]){
+   const key=row.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());
+   if(Number.isFinite(row.value)){if(key==='critical_damage_dealt_modifier')stats[key]=Math.max(stats[key]||0,row.value);else add(key,row.value);}
+  }
+  // These client passives have no numerical preview row. Never add a passive twice.
+  if(!(bonus.stats||[]).length)for(const p of bonus.passives||[]){
+   if(p.description==='Шанс атаки парным оружием повышается на 30%')add('off_hand_attack_chance_modifier',3000);
+   if(p.description==='Эффективность исцеления умениями +25%')add('heal_modifier',2500);
+   if(p.description==='Время действия ослабления +7,5%')add('debuff_given_duration_modifier',750);
+   if(p.description==='Блокирование щитом +10%')add('shield_block_chance',1000);
+  }
  }
  return stats;
+}
+// Evaluate after attributes and max HP/MP: these effects must see the completed build.
+export function conditionalSetStats(state,catalog,attributes,raw){
+ const out={},add=(k,v)=>out[k]=(out[k]||0)+v;
+ for(const p of setPassives(state,catalog)){
+  const id=p.id||p.clientSource?.locresId;
+  if(id==='Item_Passive_Set_leather_aa_003_1_Passive'||p.set==='set_aa_leather_003'&&p.pieces===2){if(attributes.dex>=30)add('skill_cooldown_modifier',800);}
+  if(id==='Item_Passive_Set_leather_aa_003_2_Passive'||p.set==='set_aa_leather_003'&&p.pieces===4)add('attack_speed_modifier',Math.floor(attributes.con/10)*200);
+  if(id==='Item_Passive_Set_fabric_aa_T2_001_2_Passive')add('skill_cooldown_modifier',Math.min(20,Math.floor((raw.cost_max||0)/1000))*100);
+  if(id==='Item_Passive_Set_plate_aa_T2_001_2_Passive')add('melee_double_attack',Math.min(240,Math.floor((raw.hp_max||0)/1000)*12)*10);
+  if(id==='Item_Passive_Set_plate_aa_T2_003_1_Talland')for(const type of ['melee','range','magic'])add(type+'_critical_defense',Math.floor(attributes.per/10)*450);
+  if(id==='Item_Passive_Set_plate_aa_T2_003_2_Talland'&&attributes.con>=50)add('main_weapon_base_damage',30);
+ }
+ return out;
 }
 
 export function resonanceReady(item,entry,catalog){

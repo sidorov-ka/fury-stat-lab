@@ -1,8 +1,9 @@
-import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=mastery-stable-20261013';
+import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=weapon-effects-20261013';
+import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=weapon-effects-20261013';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=mastery-stable-20261013';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=weapon-effects-20261013';
 
-import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=mastery-stable-20261013';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=weapon-effects-20261013';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
 // Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.
@@ -55,6 +56,7 @@ function rawCharacterStats(state,catalog){
   for(const [k,v] of Object.entries(row)){if(attr==='dex'&&k==='attack_speed_modifier'){dexPercent=Math.max(0,(v-(catalog.attributeStats.dex?.[10]?.attack_speed_modifier||0))*.01);continue;}if(typeof v==='number')raw[k]=(raw[k]||0)+v;else for(const weapon of ['Crossbow','Wand'])extras[weapon][k]=(extras[weapon][k]||0)+(v[weapon.toLowerCase()]||0);}
   for(const m of catalog.attributes.milestones||[])if(m.attribute===attr.toUpperCase()&&total>=m.count)for(const b of m.bonuses)raw[b.stat]=(raw[b.stat]||0)+b.value;
  }
+ for(const [k,v] of Object.entries(conditionalSetStats(state,catalog,attributes,raw)))raw[k]=(raw[k]||0)+v;
  return {raw,extras,dexPercent,mastery};
 }
 export function deriveStats(state,catalog){
@@ -68,6 +70,7 @@ export function deriveStats(state,catalog){
   out[prefix+'Min']=r[0]+minBonus;out[prefix+'Max']=r[1]+minBonus+spreadBonus;
   if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog,e.resonanceId);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus;out.offhand=(s.off_hand_attack_chance||0)*.01+val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed);}
  }
+ out.crossMin+=raw.main_weapon_base_damage||0;out.crossMax+=raw.main_weapon_base_damage||0;
  const passive=passiveSheetEffects(state,catalog,out.mana);
  out.offMax+=out.offMin?passive.offMaxBonus:0;out.offhand+=out.offMin?passive.offChanceBonus:0;
  out.bonus+=passive.bonus;out.baseDamagePercent=passive.baseDamagePercent;
@@ -81,7 +84,7 @@ export function deriveStats(state,catalog){
  return out;
 }
 // Character values always come from the build. Only fight assumptions may be overridden.
-export const COMBAT_ASSUMPTION_KEYS=['resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
+export const COMBAT_ASSUMPTION_KEYS=['targetDistance','targetHealth','resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
 export function simulationParams(state,catalog,assumptions={}){
  const params={...BUFF_DEFAULTS,...deriveStats(state,catalog),sheetIncludesPassives:1};
  for(const key of COMBAT_ASSUMPTION_KEYS)if(Object.hasOwn(assumptions,key))params[key]=assumptions[key];
@@ -129,8 +132,10 @@ export function models(catalog,state,overrides={}){
 export function coverage(state,catalog){
  const warnings=[...treeWarnings(state),...commonWarnings(state)];
  warnings.push('Цель без уклонения, устойчивости к критам и мощным атакам; промахи, сопротивление ослаблениям и ответные атаки не моделируются. Это не проверенный DPS конкретного босса.');
- for(const entry of Object.values(state.items||{})){const item=catalog.equipment.find(i=>i.id===entry.id);if(item?.specialPerk)warnings.push(`${item.name} — ${item.specialPerk.name}: предметный эффект не моделируется.${item.id==='crossbow_aa_t2_polymorph_001'?' Не учтены яд Бел’Адир и его взрыв Бедственным словом.':''}`);if(item?.id==='crossbow_aa_t2_polymorph_001'&&[10,11].includes(entry.level))warnings.push('Бел’Адир +10/+11: значения сверены с TL Build; напрямую в RU-клиенте подтверждён только +12.');}
- if(Object.values(state.items||{}).some(entry=>catalog.equipment.find(i=>i.id===entry.id)?.setName))warnings.push('Комплекты: включены числовые строки порогов; условные и текстовые эффекты комплектов не моделируются.');
+ for(const entry of Object.values(state.items||{})){const item=catalog.equipment.find(i=>i.id===entry.id);if(item?.specialPerk&&!WEAPON_EFFECTS[item.id])warnings.push(`${item.name} — ${item.specialPerk.name}: предметный эффект не моделируется.${item.id==='crossbow_aa_t2_polymorph_001'?' Не учтены яд Бел’Адир и его взрыв Бедственным словом.':''}`);if(item?.id==='crossbow_aa_t2_polymorph_001'&&[10,11].includes(entry.level))warnings.push('Бел’Адир +10/+11: значения сверены с TL Build; напрямую в RU-клиенте подтверждён только +12.');}
+ if(setPassives(state,catalog).some(p=>/блокирован|ближнем бою|здоровья 50%|критического удара персонаж восстанавливает/.test(p.description)))warnings.push('Защитные срабатывания комплектов и исцеление от критических ударов не моделируются в бою без ответных атак. Бонусы за ближние критические удары не действуют на арбалет/жезл.');
+ if(weaponEffects(state).has('bellandir'))warnings.push('Вероятностный яд Бел’Адир: срабатывания 20% при критическом попадании арбалетом, до 3 уровней, 110% в секунду на 5 с. Модель сохраняет фазу тиков при обновлении; поведение таймера необходимо проверить в RU.');
+ if(weaponEffects(state).has('rapid'))warnings.push('Дополнительный снаряд оружия: учтено одно попадание по цели. Рикошеты по другим противникам не входят в расчёт одной цели.');
  if(state.active.includes(IDS.nature))warnings.push('Общее допущение — эпические умения ур. 5. Исключение: для постоянного Гнева природы нет подтверждённых коэффициентов ур. 5; временно сохранены данные скриншота RU ур. 4. Старая шестисекундная версия RUTL не используется.');
  if((state.passive||[]).includes(PASS.night))warnings.push('Дар небытия: днём прибавка исцеления входит в урон Луча погибели; ночью повышается периодический урон. Время суток задаётся в условиях боя.');
  if(state.active.includes(IDS.touch))warnings.push('Глубокая скорбь: вероятность дополнительного уровня пока заменяется средним 1,5 уровня. Порог взрыва и достижение 3 уровней поэтому приближённые. Воспламенение не входит во взрыв.');
@@ -168,7 +173,17 @@ export function rapidCriticalCooldownReduction(params,offChance,offCritBonus=0){
  return chance(params.critR,params.ratingK)+offChance*chance(params.critR+offCritBonus,params.ratingK);
 }
 export function simulate({catalog,state,params,overrides={},priority,burstStacks=3},detail=false){
- const p={...DEFAULTS,...BUFF_DEFAULTS,...params};p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,overrides),byId=new Map(all.map(s=>[s.id,s]));
+ const p={...DEFAULTS,...BUFF_DEFAULTS,targetDistance:0,targetHealth:100,...params};
+ const weapons=weaponEffects(state),sets=setPassives(state,catalog),setIds=new Set(sets.map(x=>x.id||x.clientSource?.locresId));
+ const dotBase=setIds.has('Item_Passive_Set_fabric_aa_T2_002_1_Passive')?20:0,elder=setIds.has('Item_Passive_Set_fabric_aa_T2_001_1_Talland');let weakenCount=0,weaponBuffEnd=0,weaponBuffReady=0,braukaStacks=0;
+ const dotsFromWeapons=[...(weapons.has('bellandir')?[{id:'bellandir-poison',weapon:'Crossbow',c:1.1,duration:5,dot:new ProcDot(3),kind:'poison'}]:[]),...(weapons.has('bolt')?[{id:'weapon-poison',weapon:'Crossbow',c:.19,duration:9,dot:new ProcDot(),kind:'poison'}]:[]),...(weapons.has('tevent')?[{id:'tevent-curse',weapon:'Wand',c:.35,duration:30,dot:new ProcDot(),kind:'curse'}]:[])];
+ const exclusiveBase=Math.max(0,...sets.filter(x=>/Не суммируется|не суммируется/.test(x.description)&&/Критический урон/.test(x.description)).map(x=>Number(x.description.match(/на (?:\+)?(\d+)%/)?.[1]||0)));
+ const exclusiveCombat=Math.max(exclusiveBase,setIds.has('Item_Passive_Set_leather_ab_T2_001_1_Talland')&&p.targetDistance>5?25:0);
+ p.critDamage+=exclusiveCombat-exclusiveBase;
+ if(setIds.has('Item_Passive_Set_leather_aa_T2_002_2_Passive'))p.critDamage+=Math.min(25,Math.max(0,p.targetDistance));
+ if(sets.some(x=>/здоровья 50%/.test(x.description))&&p.targetHealth<=50){p.critR+=140;p.critM+=140;}
+ if(weapons.has('daySpeed')){const speed=p.night?6:12;p.interval=intervalWithSpeedBonus(p,speed);p.speed+=speed;}
+p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,overrides),byId=new Map(all.map(s=>[s.id,s]));
  // "Несовместимые умения" в описании пассивки не запрещают держать оба навыка
  // на панели. «Луч погибели» продолжает работать сам по себе; взаимодействие
  // пассивки с его отдельными эффектами моделируется только там, где подтверждено.
@@ -187,7 +202,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
  const duration=n=>n*(1+p.buffDuration/100),curseDuration=n=>n+(has(PASS.duration)?pv(PASS.duration,'Время действия проклятий ▲',3.3):0);
  const activeDot=key=>dots[key]&&dots[key].end>t;
  const dotStacks=()=>activeDot('touch')?dots.touch.stacks:0;
- const weak=()=>dotStacks()>0||activeDot('area')||buffs.decay>t||markEnd>t||slow>t;
+ const weakChance=()=>dotStacks()>0||activeDot('area')||buffs.decay>t||markEnd>t||slow>t?1:1-dotsFromWeapons.reduce((q,d)=>{d.dot.expire(t);return q*d.dot.empty;},1);
  const add=(id,value,hits=0)=>{if(t>=300||value<=0)return;total+=value;damage[id]=(damage[id]||0)+value;if(detail)damageEvents.push({time:+t.toFixed(2),id,value});bins[Math.min(29,Math.floor(t/10))]+=value;if(markEnd>t&&id!=='mark-explosion')markPool+=value;if(has(PASS.pact)&&(activeDot('touch')||activeDot('area')))hp=Math.min(p.hp,hp+value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100);};
  function flower(s){if(!common.has(COMMON_IDS.flower)||t<flowerReady||manaSpent+1e-7<p.mana*.1)return;manaSpent=0;flowerReady=t+6;counts[COMMON_IDS.flower]=(counts[COMMON_IDS.flower]||0)+1;add(COMMON_IDS.flower,hitValue(s,2.1,0));}
  function commonHit(s){
@@ -197,58 +212,80 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
   if(common.has(COMMON_IDS.spear)&&++commonHits>=7&&t>=spearReady){commonHits=0;spearReady=t+5;counts[COMMON_IDS.spear]=(counts[COMMON_IDS.spear]||0)+1;add(COMMON_IDS.spear,hitValue(s,2.4,0));}
   if(common.has(COMMON_IDS.dragon)&&mana>=p.mana*.6){const current=mana;spendMana(current*.04);counts[COMMON_IDS.dragon]=(counts[COMMON_IDS.dragon]||0)+1;add(COMMON_IDS.dragon,hitValue(s,1.4,current*.07));}
  }
- const opts=(dot=false,off=false)=>({dot,off,maxBonus:lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:off&&has(PASS.ambi)?90:0,critDamageBonus:buffs.step>t?20:0,boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0),resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
+ const opts=(dot=false,off=false)=>({dot,off,maxBonus:(weaponBuffEnd>t?25:0)+lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:off&&has(PASS.ambi)?90:0,critDamageBonus:buffs.step>t?20:0,boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0),resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
  const offchance=(s)=>clamp(p.offhand/100+(buffs.ghost>t?1:0)+(s?.key==='shot'&&sp(s,3)?.3:0),0,1);
  const hitValue=(s,c,f,dot=false,mult=1)=>expectedHit(p,s.weapon,c,f,{...opts(dot),skillMultiplier:s.pve*mult});
  function reduce(amount){for(const s of list){if(s.key==='ghost'&&!has(PASS.thirst))continue;if(s.key==='laser'&&has(PASS.thirst)&&buffs.ghost<=t)continue;cd[s.id]=Math.max(t,cd[s.id]-amount);}}
  function weaken(stacks=1){
+  weakenCount=Math.min(3,weakenCount+1);
   if(!has(PASS.thirst)&&buffs.ghost<=t)return;
   const window=Math.floor(t);if(window!==procWindow){procWindow=window;procCount=0;}
   if(procCount++<10)reduce(stacks>1?pv(PASS.thirst,'Время восстановления (2+ ур. ослабления) ▼',.072):pv(PASS.thirst,'Время восстановления ▼',.36));
  }
  function procGale(s,hits){
   if(!((s.key==='rapid'&&sp(s,1))||(s.key==='barrage'&&sp(s,3))||(s.key==='shot'&&sp(s,1))))return;
-  if(galeEnd<=t)gale=0;
-  const count=hits*((s.key==='shot'?2:1)+(buffs.wind>t?1:0));gale+=count;galeEnd=t+6;weaken(gale);
+  if(galeEnd<=t){gale=0;braukaStacks=0;}
+  const count=hits*((s.key==='shot'?2:1)+(buffs.wind>t?1:0));if(weapons.has('brauka')){braukaStacks+=count;while(braukaStacks>=25){braukaStacks-=25;add('brauka-explosion',hitValue(s,3.75,0));}}gale+=count;galeEnd=t+6;weaken(gale);
   while(gale>=10){gale-=10;add('gale',hitValue(s,1.5,30));}
  }
  function direct(s,c,f,count=1,{projectile=true,off=true,mult=1,hitMultiplier=1}={}){
   const extra=s.weapon==='Crossbow'&&off?offchance(s):0;
+  if(weapons.has('barrage')&&s.key==='barrage')mult*=1.15;
+  if(weapons.has('laser')&&s.key==='laser')mult*=1.25;
   const value=(hitValue(s,c,f,false,mult)+extra*expectedHit(p,s.weapon,c,f,{...opts(false,true),skillMultiplier:s.pve*mult}))*count*hitMultiplier;
-  const hits=count*(1+extra)*hitMultiplier;add(s.id,value,hits);
+  const hits=count*(1+extra)*hitMultiplier;add(s.id,value,hits);weaponHit(s,count,s.key==='barrage'?.5*offchance(s):extra);
+  if(weapons.has('rapid')&&s.key==='rapid'){add('weapon-projectile',hitValue(s,1.2,0)*count);procGale(s,count);}
+  if(weapons.has('laser')&&s.key==='laser'&&!activeDot('area'))putDot('area',{id:IDS.area,key:'area',weapon:'Wand',pve:1,specs:[],castToken:s.castToken},.65,73,9);
   if(markEnd>t&&!markExplosive){add('mark-hit',hitValue(markSource,.23,15)*hits);}
   if(projectile)natureProc(hits);
-  if((has(PASS.thirst)&&s.key!=='laser')||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*hits;if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
+  if((has(PASS.thirst)&&s.key!=='laser')||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*hits;for(const d of dotsFromWeapons)d.dot.extend(t,.05*hits);if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
   procGale(s,hits);commonHit(s);
  }
  function enqueue(at,fn){pending.push({at,fn});pending.sort((a,b)=>a.at-b.at);}
- function dotDamage(d){return hitValue(d.s,d.c,d.f,true)*d.stacks*(has(PASS.night)&&p.night?1+pv(PASS.night,'Периодический урон ▲',36)/100:1);}
+ const dotMultiplier=()=>1+Math.max(dotBase,elder?12+4*weakenCount:0)/100;
+ function dotDamage(d){return hitValue(d.s,d.c,d.f,true)*d.stacks*dotMultiplier()*(has(PASS.night)&&p.night?1+pv(PASS.night,'Периодический урон ▲',36)/100:1);}
+ function weaponHit(s,count=1,extra=0){
+  if(weapons.has('mana')&&s.key!=='auto'&&t>=weaponBuffReady){weaponBuffReady=t+30;weaponBuffEnd=t+duration(6);}
+  if(weaponBuffEnd>t)mana=Math.min(p.mana,mana+21*count*(1+extra));
+  if(s.weapon!=='Crossbow')return;
+  for(const d of dotsFromWeapons){if(d.kind!=='poison')continue;const q=d.id==='bellandir-poison'?.2*chance(p.critR,p.ratingK):.15;
+   if(d.id==='bellandir-poison')d.dot.hits(t,q,count,d.duration*debuffMultiplier());
+   const offQ=d.id==='bellandir-poison'?.2*chance(p.critR+(has(PASS.ambi)?90:0),p.ratingK):.15;d.dot.hits(t,offQ*extra,count,d.duration*debuffMultiplier());
+   const applications=count*((d.id==='bellandir-poison'?q:0)+offQ*extra);weakenCount=Math.min(3,weakenCount+applications);if(has(PASS.thirst)||buffs.ghost>t)reduce(applications*(d.dot.stacks(t)>1?.072:.36));
+  }
+ }
+ const debuffScale=1+(gearStats(state,catalog).debuff_given_duration_modifier||0)*.0001;
+ const debuffMultiplier=()=>debuffScale;
+ function curseProc(){if(weapons.has('tevent')){dotsFromWeapons.find(d=>d.kind==='curse').dot.apply(t,.15,curseDuration(30)*debuffMultiplier());weakenCount=Math.min(3,weakenCount+.15);if(has(PASS.thirst)||buffs.ghost>t)reduce(.15*.36);}}
  function putDot(key,s,c,f,seconds,stacks=1){
-  const previous=dots[key];dots[key]={s,c,f,end:t+curseDuration(seconds),next:previous&&previous.end>t?previous.next:t+1,stacks};weaken(stacks);commonHit(s);
+  const previous=dots[key];dots[key]={s,c,f,end:t+curseDuration(seconds)*debuffMultiplier(),next:previous&&previous.end>t?previous.next:t+1,stacks};weaken(stacks);commonHit(s);
+  curseProc();
  }
  function markBoom(){if(markPool>0)add('mark-explosion',markPool*(markExplosive?.4:.1));markPool=0;markEnd=0;}
  function effect(s){
   switch(s.key){
    case 'touch':{const old=dotStacks(),stacks=Math.min(3,old+(sp(s,3)?1.5:1));putDot('touch',s,.41,37,9+(sp(s,2)?3:0)+(old>=3?2:0),stacks);break;}
-   case 'area':putDot('area',s,sp(s,1)?.60:.65,sp(s,1)?22:73,9);if(sp(s,3))direct(s,2.6,0,1,{projectile:false,off:false});break;
+   case 'area':putDot('area',s,(sp(s,1)?.60:.65)*(weapons.has('area')?1.25:1),(sp(s,1)?22:73)*(weapons.has('area')?1.25:1),9);if(sp(s,3))direct(s,2.6*(weapons.has('area')?1.25:1),0,1,{projectile:false,off:false});break;
    case 'burst':{
     direct(s,4.2,272,1,{projectile:false,off:false});const stacks=dotStacks();
-    if(stacks||activeDot('area')){let rest=0;for(const d of Object.values(dots))if(d.end>t){const ticks=Math.max(0,Math.floor((d.end-d.next)+1e-8)+1);rest+=dotDamage(d)*ticks;}
+    const curseChance=stacks||activeDot('area')?1:1-dotsFromWeapons.filter(d=>d.kind==='curse').reduce((q,d)=>{d.dot.expire(t);return q*d.dot.empty;},1);
+    if(curseChance>0){let rest=0;for(const d of Object.values(dots))if(d.end>t){const ticks=Math.max(0,Math.floor((d.end-d.next)+1e-8)+1);rest+=dotDamage(d)*ticks;}
+     for(const d of dotsFromWeapons){const value=expectedHit(p,d.weapon,d.c,0,{...opts(true)})*dotMultiplier()*(has(PASS.night)&&p.night?1+pv(PASS.night,'Периодический урон ▲',36)/100:1)*d.dot.remaining(t)*(d.kind==='poison'?curseChance:1);add(d.id+'-explosion',value*(1+(sp(s,2)?.10:.05)*stacks)*(sp(s,1)?.5:1));if(!sp(s,1)){if(d.kind==='poison')d.dot.consume(curseChance);else d.dot.clear();}}
      add('curse-explosion',rest*(1+(sp(s,2)?.10:.05)*stacks)*(sp(s,1)?.5:1));if(!sp(s,1))for(const d of Object.values(dots))d.end=t;
     }break;}
    case 'decay':{
     const self=sp(s,1),key=self?'selfBoost':'decay';
     buffs[key]=t+(self?duration(9+(sp(s,2)?p.selfDurationExtension:0)):curseDuration(9+(sp(s,2)?3:0)));
-    if(!self)weaken();
+    if(!self){weaken();curseProc();}
     if(detail)effectEvents.push({time:t,end:buffs[key],id:s.id,target:self?'self':'enemy',stat:self?'skillBoost':'skillResistance',value:self?p.selfSkillBoost:-p.targetResistanceDrop});
     break;
    }
-   case 'spread':if(sp(s,3))direct(s,2*(Number(!!activeDot('touch'))+Number(!!activeDot('area'))+Number(buffs.decay>t)),0,1,{projectile:false,off:false});if(sp(s,1)){for(const d of Object.values(dots))if(d.end>t)d.end+=5;if(buffs.decay>t)buffs.decay+=5;}break;
+   case 'spread':curseProc();if(sp(s,3))direct(s,2*(Number(!!activeDot('touch'))+Number(!!activeDot('area'))+Number(buffs.decay>t)),0,1,{projectile:false,off:false});if(sp(s,1)){for(const d of Object.values(dots))if(d.end>t)d.end+=5;for(const d of dotsFromWeapons)if(d.kind==='curse')d.dot.extend(t,5);if(buffs.decay>t)buffs.decay+=5;}break;
    case 'mark':if(markEnd>t)markBoom();direct(s,2.8,109);markEnd=t+3;markExplosive=sp(s,2);markSource=s;markPool=0;weaken();break;
-   case 'step':charges=Math.min(3,charges+1);buffs.step=t+duration(.5);if(has(PASS.adapt))buffs.adapt=t+duration(3);if(sp(s,1))buffs.wind=t+3;if(sp(s,3)&&cd[IDS.rapid]!==undefined)cd[IDS.rapid]=t;break;
+   case 'step':charges=Math.min(3,charges+1);buffs.step=t+duration(.5);if(has(PASS.adapt))buffs.adapt=t+duration(3);if(sp(s,1))buffs.wind=t+3;if((sp(s,3)||weapons.has('step'))&&cd[IDS.rapid]!==undefined)cd[IDS.rapid]=t;break;
    case 'nature':if(natureElement&&mana>=p.mana*.1)buffs.nature=Infinity;break;
    case 'ghost':buffs.ghost=t+duration(6);break;
-   case 'rapid':{const count=sp(s,2)?4:3,boost=weak(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,boost?1.7:1.5,boost?39:32,1,{mult});if(sp(s,4))cd[s.id]=Math.max(t,cd[s.id]-(s.cooldownSec+(sp(s,3)?3:0))*.1*rapidCriticalCooldownReduction(p,offchance(s),has(PASS.ambi)?90:0)/(1+p.cooldown/100));});break;}
+   case 'rapid':{const count=sp(s,2)?4:3,boost=weakChance(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,1.5+.2*boost,32+7*boost,1,{mult});if(sp(s,4))cd[s.id]=Math.max(t,cd[s.id]-(s.cooldownSec+(sp(s,3)?3:0))*.1*rapidCriticalCooldownReduction(p,offchance(s),has(PASS.ambi)?90:0)/(1+p.cooldown/100));});break;}
    case 'mana':hp-=450*(sp(s,1)?2:1);mana=Math.min(p.mana,mana+590*(sp(s,1)?2:1));break;
    case 'buck':direct(s,2.9,99);if(cd[IDS.step]!==undefined)cd[IDS.step]=Math.max(t,cd[IDS.step]-15);if(!sp(s,1)){slow=t+3;weaken();}break;
    case 'barrage':{const dur=Math.max(.5,(s.cast-s.hitDelay)/(1+p.speed/100));for(let i=0;i<32;i++)enqueue(t+i*dur/32,()=>direct(s,.27,17,1,{off:false,hitMultiplier:1+.5*offchance(s),mult:1+.08*Math.min(i,10)}));break;}
@@ -301,6 +338,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
   t=tick*.05;mana=Math.min(p.mana,mana+p.regen/p.regenPeriod*.05);
   if(buffs.nature>t&&mana<p.mana*.1){buffs.nature=0;natureStops++;}if(buffs.nature>t)natureUptime+=.05;
   if(markEnd&&markEnd<=t)markBoom();
+  for(const d of dotsFromWeapons){const ticks=d.dot.tick(t);if(ticks)add(d.id,expectedHit(p,d.weapon,d.c,0,{...opts(true)})*ticks*dotMultiplier()*(has(PASS.night)&&p.night?1+pv(PASS.night,'Периодический урон ▲',36)/100:1));}
   while(pending.length&&pending[0].at<=t+1e-7)pending.shift().fn();
   for(const d of Object.values(dots))if(d.next<=t+1e-7&&d.next<=d.end+1e-7){add(d.s.id,dotDamage(d));flower(d.s);d.next+=1;}
   if(common.has(COMMON_IDS.crisis)&&hp<p.hp*.5&&t>=crisisReady){crisisEnd=t+5;crisisReady=t+60;}
@@ -319,7 +357,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
    enqueue(t+Math.min(cast,Math.max(.05,s.hitDelay/speed)),()=>effect(s));
   }else{
    if(unfunded)starved+=.05;
-   if(p.auto&&p.crossMax>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:'Crossbow',pve:1,key:'auto',specs:[]};const extra=offchance(s);const v=expectedHit(p,'Crossbow',1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()})+extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()});add('auto',v);flower(s);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(has(PASS.thirst)||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*(1+extra);if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p,(buffs.step>t?20:0)+(crisisEnd>t?20:0));}
+   if(p.auto&&p.crossMax>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:'Crossbow',pve:1,key:'auto',specs:[]};const extra=offchance(s);const v=expectedHit(p,'Crossbow',1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()})+extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()});add('auto',v);weaponHit(s,1,extra);flower(s);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(has(PASS.thirst)||buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t)d.end+=.05*(1+extra);for(const d of dotsFromWeapons)d.dot.extend(t,.05*(1+extra));if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p,(buffs.step>t?20:0)+(crisisEnd>t?20:0));}
   }
  }
  return {total,dps:total/300,counts,damage,logs,damageEvents,effectEvents,bins,minMana,mana,hp,starved,natureMana,natureUptime,natureStops,natureElement,healing:p.healing,priority,burstStacks};

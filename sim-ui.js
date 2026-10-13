@@ -1,9 +1,9 @@
-import {COMMON_PASSIVES} from './common-mastery.js?v=mastery-stable-20261013';
-import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=mastery-stable-20261013';
+import {COMMON_PASSIVES} from './common-mastery.js?v=weapon-effects-20261013';
+import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=weapon-effects-20261013';
 const fields=[
  ['baseDamagePercent','Базовый урон: прибавка от пассивок, %'],['rangeDamage','Урон дальнего боя, %'],['magicDamage','Урон магии, %'],
  ['selfDurationExtension','Час преодоления: Длительность ▲, с (гипотеза)'],
- ['resistance','Сопротивление умениям цели'],['selfSkillBoost','Час преодоления: повышение урона умений'],['targetResistanceDrop','Час отмщения: снижение сопротивления'],['lightMaxBonus','Свет доблести: максимальный урон'],['lightOpeningMultiplier','Свет доблести: начальный множитель (гипотеза)'],['lightOpeningSeconds','Свет доблести: окно усиления, с'],
+ ['targetDistance','Дистанция до цели, м'],['targetHealth','Здоровье цели, %'],['resistance','Сопротивление умениям цели'],['selfSkillBoost','Час преодоления: повышение урона умений'],['targetResistanceDrop','Час отмщения: снижение сопротивления'],['lightMaxBonus','Свет доблести: максимальный урон'],['lightOpeningMultiplier','Свет доблести: начальный множитель (гипотеза)'],['lightOpeningSeconds','Свет доблести: окно усиления, с'],
  ['crossMin','Арбалет: мин. урон'],['crossMax','Арбалет: макс. урон'],['offMin','Парный арбалет: мин. урон'],['offMax','Парный арбалет: макс. урон'],['wandMin','Жезл: мин. урон'],['wandMax','Жезл: макс. урон'],
  ['critR','Крит. удар: дальний бой'],['critM','Крит. удар: магия'],['heavyR','Мощная атака: дальний бой'],['heavyM','Мощная атака: магия'],
  ['critDamage','Критический урон, %'],['boost','Повышение урона умений'],['bonus','Дополнительный урон'],['offhand','Атака парным оружием, %'],
@@ -12,7 +12,7 @@ const fields=[
  ['species','Повышение урона по типу цели'],['pve','Общий множитель PvE'],['defense','Защита манекена'],['defenseK','Константа защиты'],['ratingK','Константа рейтингов'],['animationFloor','Минимум на действие, с'],['latency','Задержка между действиями, с']];
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=n=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:1});
-const names={'auto':'Автоатака арбалета','gale':'Взрыв «Шквал»','mark-hit':'Метка: попадания','mark-explosion':'Взрыв метки','nature-hit':'Гнев природы: снаряды','nature-lightning':'Гнев природы: молния','curse-explosion':'Взрыв оставшегося урона проклятий'};
+const names={'bellandir-poison':'Яд Бел’Адир','bellandir-poison-explosion':'Бел’Адир: взрыв яда','weapon-poison':'Отравленный болт','weapon-poison-explosion':'Взрыв отравленного болта','tevent-curse':'Мор Тевента','tevent-curse-explosion':'Взрыв мора Тевента','brauka-explosion':'Взрыв Брауки','weapon-projectile':'Дополнительный снаряд оружия','auto':'Автоатака арбалета','gale':'Взрыв «Шквал»','mark-hit':'Метка: попадания','mark-explosion':'Взрыв метки','nature-hit':'Гнев природы: снаряды','nature-lightning':'Гнев природы: молния','curse-explosion':'Взрыв оставшегося урона проклятий'};
 export function setupSimulation(getState,catalog,apply,profile){
  const controlIds=['sim-mode','sim-budget','sim-night','sim-auto'];
  let assumptions={},worker=null,result=null,runInput=null,dirty=false,lastState=JSON.stringify(getState());
@@ -24,7 +24,7 @@ export function setupSimulation(getState,catalog,apply,profile){
  <details><summary>Характеристики для расчёта</summary><div id="sim-character-fields" class="sim-fields"></div></details>
  <details><summary>Особенности расчёта</summary><p class="micro">Средний DPS по неподвижной цели. Арбалет в руках. Поиск выбирает лучший из проверенных вариантов.</p><div id="sim-coverage"></div></details>
  <div class="sim-actions"><button id="simulate" class="equip-button">Рассчитать DPS</button><button id="sim-cancel" hidden>Остановить</button><span id="sim-status" role="status" aria-live="polite"></span></div><progress id="sim-progress" value="0" max="180" hidden></progress><div id="sim-result"></div>`;
- const publicConditions=['defense','resistance','latency'];
+ const publicConditions=['defense','resistance','latency','targetDistance','targetHealth'];
  function renderFields(){
   const p=simulationParams(getState(),catalog,assumptions);
   $('sim-character-fields').innerHTML=fields.filter(([key])=>!COMBAT_ASSUMPTION_KEYS.includes(key)).map(([key,label])=>`<div class="stat-line"><span>${esc(label)}</span><b>${num(p[key])}</b></div>`).join('');
@@ -50,7 +50,7 @@ function warnings(){
   if(err.length){$('sim-status').textContent=[...new Set(err)].join(' ');$('sim-params').open=true;return;}
   const overrides={};
   runInput={catalog,state,params,overrides,mode,budget:Number($('sim-budget').value)};dirty=false;$('simulate').disabled=true;$('sim-cancel').hidden=false;$('sim-progress').hidden=false;$('sim-progress').max=runInput.budget;$('sim-progress').value=0;$('sim-status').textContent='Сравниваю ротации…';
-  try{worker=new Worker(new URL('./sim-worker.js?v=mastery-stable-20261013',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
+  try{worker=new Worker(new URL('./sim-worker.js?v=weapon-effects-20261013',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
   const finish=()=>{worker?.terminate();worker=null;$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;};
   worker.onerror=()=>{finish();$('sim-status').textContent='Ошибка расчёта. Проверь параметры и повтори запуск.';};
   worker.onmessage=e=>{const m=e.data;if(m.type==='progress'){$('sim-progress').value=m.done;$('sim-status').textContent=`${m.done} / ${m.budget} · лучший DPS ${num(m.dps)}`;}else if(m.type==='error'){finish();$('sim-status').textContent='Ошибка: '+m.message;}else{finish();result=m.result;renderResult();$('sim-status').textContent='Расчёт завершён.';}};worker.postMessage(runInput);

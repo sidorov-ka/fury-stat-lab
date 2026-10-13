@@ -1,15 +1,16 @@
-import {normalizeCommon,mountCommon} from './common-mastery.js?v=mastery-stable-20261013-2';
-import {equipmentDraft,newTrait} from './equipment-defaults.js?v=mastery-stable-20261013';
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=mastery-stable-20261013';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=mastery-stable-20261013';
-import {setupSimulation} from './sim-ui.js?v=mastery-stable-20261013';
-import {createStore,mergeDefaults} from './storage.js?v=mastery-stable-20261013';
-import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=mastery-stable-20261013';
-import {TREES,normalizeTree} from './mastery-tree.js?v=mastery-stable-20261013';
-import {mountMastery} from './mastery-ui.js?v=mastery-stable-20261013';
+import {WEAPON_EFFECTS} from './weapon-effects.js?v=weapon-effects-20261013';
+import {normalizeCommon,mountCommon} from './common-mastery.js?v=weapon-effects-20261013-2';
+import {equipmentDraft,newTrait} from './equipment-defaults.js?v=weapon-effects-20261013';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=weapon-effects-20261013';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=weapon-effects-20261013';
+import {setupSimulation} from './sim-ui.js?v=weapon-effects-20261013';
+import {createStore,mergeDefaults} from './storage.js?v=weapon-effects-20261013';
+import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=weapon-effects-20261013';
+import {TREES,normalizeTree} from './mastery-tree.js?v=weapon-effects-20261013';
+import {mountMastery} from './mastery-ui.js?v=weapon-effects-20261013';
 import {mountRunes} from './rune-ui.js?v=rune-compact-20261013';
 import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=rune-picker-20261013';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=mastery-stable-20261013';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=weapon-effects-20261013';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -57,6 +58,8 @@ function renderGear(){
   return [`<div class="gear-synergy-row"><b>${escape(label)}</b><span>${synergy.map(({stat,value})=>`${escape(statLabel(stat))}: ${value>0?'+':''}${escape(format(stat,value))}`).join(' · ')}</span></div>`];
  });
  $('gear-grid').insertAdjacentHTML('beforeend',`<div class="gear-synergies"><h3>Синергия трёх рун</h3>${synergies.join('')||'<p class="micro">Нет активных сочетаний. Выбери три руны в подходящем порядке.</p>'}<p class="micro">Эти бонусы уже включены в характеристики рун.</p></div>`);
+ const sets=activeSets(state,catalog).filter(g=>g.bonuses.length);
+ if(sets.length)$('gear-grid').insertAdjacentHTML('beforeend',`<details class="gear-synergies"><summary>Бонусы комплектов</summary>${sets.map(g=>`<div class="perk"><b>${escape(g.name)} · ${g.count} предмета</b>${g.bonuses.map(b=>`<p class="micro">${b.pieces} предмета: ${b.passives?.length?b.passives.map(p=>escape(p.description)).join(' '):(b.stats||[]).map(r=>{const k=r.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());return escape(statLabel(k))+': '+escape(format(k,r.value));}).join(' · ')}</p>`).join('')}</div>`).join('')}</details>`);
  $('gear-grid').querySelectorAll('[data-gear]').forEach(b=>b.onclick=()=>openGear(b.dataset.gear));
 }
 function renderAttrs(){
@@ -145,7 +148,7 @@ function preview(id){
 }
 function renderItemPreview(item){
  const limit=traitLimit(item.grade);
- $('picker-preview').innerHTML=`<div class="detail-title">${image(item)}<h3>${escape(item.name)}</h3></div><p class="description">${escape(item.description||'')}</p><label class="enhance">Усиление<input id="enhance" type="number" min="0" max="${item.enchantMaxLevel||0}" value="${draft.level}" aria-label="Уровень усиления"></label><div id="item-values"></div><h3 style="font-size:14px;margin-top:15px">Трейты предмета</h3><div class="traits">${limit&&item.traits?.length?Array.from({length:3},(_,i)=>{const t=draft.traits[i]||{id:'',level:limit};return `<div class="trait-line"><select data-trait="${i}" aria-label="Трейт ${i+1}"><option value="">Без трейта</option>${item.traits.filter(k=>catalog.traits[k]).map(k=>`<option value="${escape(k)}" ${k===t.id?'selected':''}>${escape(statLabel(catalog.traits[k].stat))}</option>`).join('')}</select><input data-trait-level="${i}" type="number" min="1" max="${limit}" value="${t.level}" aria-label="Уровень трейта ${i+1}"></div>`}).join(''):'<p class="hint">Трейты недоступны.</p>'}</div>${item.specialPerk?`<div class="perk"><b>${escape(item.specialPerk.name)}</b>${escape(item.specialPerk.description)}<p class="micro">Условный эффект не включён в расчёт.</p></div>`:''}${item.setName?`<div class="perk">Комплект: ${escape(item.setName)}.</div>`:''}`;
+ $('picker-preview').innerHTML=`<div class="detail-title">${image(item)}<h3>${escape(item.name)}</h3></div><p class="description">${escape(item.description||'')}</p><label class="enhance">Усиление<input id="enhance" type="number" min="0" max="${item.enchantMaxLevel||0}" value="${draft.level}" aria-label="Уровень усиления"></label><div id="item-values"></div><h3 style="font-size:14px;margin-top:15px">Трейты предмета</h3><div class="traits">${limit&&item.traits?.length?Array.from({length:3},(_,i)=>{const t=draft.traits[i]||{id:'',level:limit};return `<div class="trait-line"><select data-trait="${i}" aria-label="Трейт ${i+1}"><option value="">Без трейта</option>${item.traits.filter(k=>catalog.traits[k]).map(k=>`<option value="${escape(k)}" ${k===t.id?'selected':''}>${escape(statLabel(catalog.traits[k].stat))}</option>`).join('')}</select><input data-trait-level="${i}" type="number" min="1" max="${limit}" value="${t.level}" aria-label="Уровень трейта ${i+1}"></div>`}).join(''):'<p class="hint">Трейты недоступны.</p>'}</div>${item.specialPerk?`<div class="perk"><b>${escape(item.specialPerk.name)}</b>${escape(item.specialPerk.description)}<p class="micro">${WEAPON_EFFECTS[item.id]?'Учтён в расчёте DPS.':'Не участвует в расчёте DPS.'}</p></div>`:''}${item.setName?`<div class="perk">Комплект: ${escape(item.setName)}.</div>`:''}`;
  const resonanceHost=document.createElement('div');resonanceHost.className='resonance-panel';$('picker-preview').querySelector('.traits').append(resonanceHost);
  const renderResonance=()=>{if(!item.resonanceEffects?.length){resonanceHost.innerHTML='';return;}const ready=resonanceReady(item,draft,catalog);resonanceHost.innerHTML=`<div class="trait-line resonance-trait"><select id="item-resonance" aria-label="Резонанс предмета" ${ready?'':'disabled'}><option value="">Без резонанса</option>${item.resonanceEffects.map(r=>`<option value="${escape(r.id)}" ${draft.resonanceId===r.id?'selected':''}>${escape((r.stats||[]).map(v=>statLabel(v.stat)+' +'+format(v.stat,v.value)).join(' · '))}</option>`).join('')}</select><span class="resonance-tag" title="Резонанс">Р</span></div>${ready?'':'<p class="micro">Нужны три трейта максимального уровня.</p>'}`;resonanceHost.querySelector('select').onchange=e=>{draft.resonanceId=e.target.value||null;updateValues();};};
  const updateValues=()=>{renderResonance();let values=itemStats(item,draft.level,draft.traits,catalog,draft.resonanceId);if(item.slot==='Weapon'){const range=weaponRange(item,draft.level);$('item-values').innerHTML=`<div class="stat-line"><span>Урон оружия</span><b>${range.map(n).join(' — ')}</b></div>`+statRows(Object.fromEntries(Object.entries(values).filter(([k])=>!k.includes('attack_power'))))}else $('item-values').innerHTML=statRows(values)};
@@ -163,7 +166,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=mastery-stable-20261013',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=weapon-effects-20261013',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};state.commonMastery=normalizeCommon(saved.state.commonMastery);
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);
