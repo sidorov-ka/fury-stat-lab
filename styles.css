@@ -129,3 +129,5 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:85px}
 @media(max-width:500px){.compact-rune-row{grid-template-columns:115px minmax(0,1fr) 20px;gap:5px}.compact-rune-kind summary{gap:4px;padding:5px}.compact-rune-kind img{width:27px;height:27px}.compact-rune-row>select{font-size:11px}.compact-rune-synergy{gap:8px}}
 
 .compact-rune-kind[data-rune-slot="1"] .compact-rune-options,.compact-rune-kind[data-rune-slot="2"] .compact-rune-options{top:auto;bottom:calc(100% + 3px)}
+
+.compact-rune-kind .compact-rune-options{top:auto;bottom:calc(100% + 3px)}
