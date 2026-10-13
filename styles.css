@@ -131,3 +131,6 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:85px}
 .compact-rune-kind[data-rune-slot="1"] .compact-rune-options,.compact-rune-kind[data-rune-slot="2"] .compact-rune-options{top:auto;bottom:calc(100% + 3px)}
 
 .compact-rune-kind .compact-rune-options{top:auto;bottom:calc(100% + 3px)}
+
+/* Resonance is the fourth equipment property. */
+.gear-trait.gear-resonance,.gear-trait.gear-resonance>b{color:#f39bcf}.gear-resonance.inactive{opacity:.55}.gear-resonance small{font-size:9px}.traits .resonance-panel{padding:0;margin:0}.resonance-trait select{color:#f39bcf;border-color:#845574;background:#251a29}.resonance-trait select option{color:#f6d6eb;background:#251a29}.resonance-tag{display:flex;align-items:center;justify-content:center;border:1px solid #845574;border-radius:7px;background:#251a29;color:#f39bcf;font-size:13px}.resonance-panel .micro{margin:5px 0 0;font-size:11px}.compact-rune-kind summary{gap:4px;white-space:nowrap}
