@@ -14,6 +14,14 @@ export class ProcDot{
  refreshEvents(){this.nextTick=Infinity;this.expires=Infinity;for(const d of this.states){this.nextTick=Math.min(this.nextTick,d.next);this.expires=Math.min(this.expires,d.end);}}
  expire(t){if(t<=this.expires+1e-7)return;this.states=this.states.filter(d=>{if(d.end<t-1e-7){this.empty+=d.weight;return false;}return true;});this.refreshEvents();}
  apply(t,probability,duration){this.expire(t);const q=Math.max(0,Math.min(1,probability));if(!q)return 0;const rows=[];if(this.empty*q>0)rows.push({weight:this.empty*q,stacks:1,end:t+duration,next:t+1});this.empty*=1-q;for(const d of this.states){if(q<1)rows.push({...d,weight:d.weight*(1-q)});rows.push({...d,weight:d.weight*q,stacks:Math.min(this.cap,d.stacks+1),end:t+duration});}this.merge(rows);return q;}
+ // A curse application adds one level, or two on the specialization proc.
+ // Both outcomes share the same application roll; caps operate on each branch.
+ applyLevels(t,probability,duration,extraProbability=0,capRefreshBonus=0){
+  this.expire(t);const q=Math.max(0,Math.min(1,probability)),r=Math.max(0,Math.min(1,extraProbability));if(!q)return;
+  const rows=[],add=(d,weight,added)=>{if(weight>0)rows.push({weight,stacks:Math.min(this.cap,d.stacks+added),end:t+duration+(d.stacks===this.cap?capRefreshBonus:0),next:d.next});};
+  const empty={stacks:0,next:t+1};add(empty,this.empty*q*(1-r),1);add(empty,this.empty*q*r,2);this.empty*=1-q;
+  for(const d of this.states){if(q<1)rows.push({...d,weight:d.weight*(1-q)});add(d,d.weight*q*(1-r),1);add(d,d.weight*q*r,2);}this.merge(rows);
+ }
  // Optional offhand hits are a Bernoulli event as well as the proc itself.
  hits(t,probability,count,duration){const whole=Math.floor(count);for(let i=0;i<whole;i++)this.apply(t,probability,duration);if(count>whole)this.apply(t,probability*(count-whole),duration);}
  tick(t){if(t+1e-7<this.nextTick){this.expire(t);return 0;}let stacks=0;for(const d of this.states)if(d.next<=t+1e-7&&d.next<=d.end+1e-7){stacks+=d.weight*d.stacks;d.next+=1;}this.expire(t);this.refreshEvents();return stacks;}

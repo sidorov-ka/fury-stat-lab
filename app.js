@@ -1,16 +1,16 @@
-import {WEAPON_EFFECTS} from './weapon-effects.js?v=t2-mechanics-20261013';
-import {normalizeCommon,mountCommon} from './common-mastery.js?v=t2-mechanics-20261013-2';
-import {equipmentDraft,newTrait} from './equipment-defaults.js?v=t2-mechanics-20261013';
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=t2-mechanics-20261013';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=t2-mechanics-20261013';
-import {setupSimulation} from './sim-ui.js?v=t2-mechanics-20261013';
-import {createStore,mergeDefaults} from './storage.js?v=t2-mechanics-20261013';
-import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=t2-mechanics-20261013';
-import {TREES,normalizeTree} from './mastery-tree.js?v=t2-mechanics-20261013';
-import {mountMastery} from './mastery-ui.js?v=t2-mechanics-20261013';
+import {WEAPON_EFFECTS} from './weapon-effects.js?v=t2-chance-20261013';
+import {normalizeCommon,mountCommon} from './common-mastery.js?v=t2-chance-20261013-2';
+import {equipmentDraft,newTrait} from './equipment-defaults.js?v=t2-chance-20261013';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=t2-chance-20261013';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=t2-chance-20261013';
+import {setupSimulation} from './sim-ui.js?v=t2-chance-20261013';
+import {createStore,mergeDefaults} from './storage.js?v=t2-chance-20261013';
+import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=t2-chance-20261013';
+import {TREES,normalizeTree} from './mastery-tree.js?v=t2-chance-20261013';
+import {mountMastery} from './mastery-ui.js?v=t2-chance-20261013';
 import {mountRunes} from './rune-ui.js?v=rune-compact-20261013';
 import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=rune-picker-20261013';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=t2-mechanics-20261013';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=t2-chance-20261013';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -166,7 +166,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=t2-mechanics-20261013',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=t2-chance-20261013',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};state.commonMastery=normalizeCommon(saved.state.commonMastery);
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);

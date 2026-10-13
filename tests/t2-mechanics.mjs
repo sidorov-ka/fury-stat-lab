@@ -52,3 +52,14 @@ const spark=simulate({catalog:c,state:sparkState,params:{...p,auto:1,mainWeapon:
 const covenantState={...state,passive:['WP_WA_GR_S_HealEffectUpWhenSkillDamageTaken'],masteryTrees:{WA_GR:{...paid,Wand_High_Tactic_11:10,Wand_High_Tactic_10:10}}};assert(masteryEffects(covenantState).Wand_High_Tac_Skill);
 const covenant=st=>simulate({catalog:c,state:st,params:{...p,incomingDps:1,enemyAttacks:1},priority:[IDS.touch],overrides:{[IDS.touch]:{cooldownSec:999,cast:0,hitDelay:0}}});assert(covenant(covenantState).damage[IDS.touch]>covenant({...covenantState,passive:[]}).damage[IDS.touch]);near(masteryRun(covenantState).damage[IDS.touch],masteryRun({...covenantState,passive:[]}).damage[IDS.touch]);
 console.log('Conditional integration: Corrupting Hit needs wand autoattacks; Dark Covenant needs Holy Vow and incoming skill attacks.');
+
+const {ProcDot}=await import('../weapon-effects.js');
+const sorrow=new ProcDot(3);sorrow.applyLevels(0,1,9,.5,2);near(sorrow.stacks(0),1.5);sorrow.applyLevels(6,1,9,.5,2);near(sorrow.stacks(6),2.75);near(sorrow.states.filter(s=>s.stacks===3).reduce((n,s)=>n+s.weight,0),.75);sorrow.applyLevels(12,1,9,.5,2);near(sorrow.stacks(12),3);
+const misses=new ProcDot(3);misses.applyLevels(0,.5,9,.5,2);near(misses.stacks(0),.75);near(misses.empty,.5);
+const galeState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.rapid]:traits(IDS.rapid,[1,2])}};
+const galeRun=simulate({catalog:c,state:galeState,params:{...p,critR:0,critM:0},priority:[IDS.rapid],overrides:{[IDS.rapid]:{cast:0,hitDelay:0}}},true);
+near(galeRun.logs[1].time,4.6); // Four separate one-level weaken applications: 6 - 4 * .36.
+const cappedState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.barrage]:traits(IDS.barrage,[3])}};
+const cappedRun=simulate({catalog:c,state:cappedState,params:{...p,critR:0,critM:0},priority:[IDS.barrage],overrides:{[IDS.barrage]:{cast:.25,hitDelay:0,cooldownSec:10}}},true);
+assert(cappedRun.logs[1].time>=6.4,'32 rapid weakens cannot bypass the ten-per-second limit');
+console.log('Proc regression: 50% extra curse is capped per outcome; existing Gale stacks do not change the next proc reduction; all weaken sources share the cap.');

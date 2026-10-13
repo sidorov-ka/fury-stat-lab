@@ -25,7 +25,7 @@ This is an expected single-target, 300-second model. Matching character statisti
 
 - The RU movement record has zero castTime; the 1-second leap animation is the user's observation translated into an editable default, not an instrumented measurement. Other cast/hit delays come from RU records.
 - Bellandir refresh retains tick phase. ProcDot keeps discrete probability branches, stack caps and refresh expiry. Very small branches below 1e-12 are discarded into the empty branch.
-- Deep Sorrow uses an expected 1.5 added stacks; rotation thresholds act on expected stacks. Temporary fractional buff stacks use their duration window, not a guaranteed maximum.
+- Deep Sorrow uses discrete 50% branches capped independently at three levels: two successful applications give a mean 2.75 levels (75% at three), not a guaranteed three. Tick phases, expiry and cap-refresh bonus are retained per branch. Rotation thresholds still act on expected levels. Temporary fractional buff stacks use their duration window, not a guaranteed maximum.
 - Paid text-only mastery coefficients use proportional rank scaling where the source lacks a per-rank table.
 - Dark Covenant uses Holy Vow's level-specific numerical value for converted skill-boost rating and periodic percentage. It requires incoming skill attacks. Its exact conversion units need a client measurement.
 - Dark Apostle uses the corresponding heal's coefficient when no separate transformed RU coefficient exists. Its Clay replacement uses Life Fountain's 90% +82 per-second coefficient. Vitalism uses the same coefficient for its otherwise unspecified healing area.
@@ -36,3 +36,7 @@ This is an expected single-target, 300-second model. Matching character statisti
 ## Validation
 
 `npm test` covers 20 suites, including seven external fixed formula fixtures, damage conservation, no double counting, passive levels, three selected trait levels versus maximum, rune/resonance eligibility, legal mastery normalization, set threshold removal, deterministic optimization replay and retention of the input build. New T2 integration checks isolate Abyssal Burst, Black Magic and Vampiric Onslaught using a legal paid mastery tree. These checks establish internal/source consistency, not an exact in-game encounter match.
+
+## Follow-up: proc/cooldown audit
+
+Battle Thirst now uses levels added by the specific weaken event rather than the total existing Gale/curse stack count. Poison and Tevent applications pass through the same ten-per-second proc limiter as other weakening sources. Fire/cold secondary weakening enters this limiter too. Critical Quick Fire reduction still uses critical probability rather than treating every hit as a critical. Heavy attacks increase expected damage and do not themselves reset cooldowns.

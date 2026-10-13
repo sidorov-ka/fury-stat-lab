@@ -1,5 +1,5 @@
-import {commonStats} from './common-mastery.js?v=t2-mechanics-20261013';
-import {TREES} from './mastery-data.js?v=t2-mechanics-20261013';
+import {commonStats} from './common-mastery.js?v=t2-chance-20261013';
+import {TREES} from './mastery-data.js?v=t2-chance-20261013';
 export {TREES};
 const parts=c=>({attackutil:['attack','util'],utildefense:['util','defense'],defensetactic:['defense','tactic'],tacticattack:['tactic','attack']}[c]||[c]);
 export const isAutomaticNode=n=>n.type==='synergy'&&n.max===1;
