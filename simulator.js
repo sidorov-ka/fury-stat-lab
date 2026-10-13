@@ -1,8 +1,8 @@
-import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=friendly-build-20261012';
+import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=mastery-stable-20261013';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=friendly-build-20261012';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes} from './engine.js?v=mastery-stable-20261013';
 
-import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=friendly-build-20261012';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=mastery-stable-20261013';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
 // Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.

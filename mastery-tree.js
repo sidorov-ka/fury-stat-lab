@@ -1,5 +1,5 @@
-import {commonStats} from './common-mastery.js?v=friendly-build-20261012';
-import {TREES} from './mastery-data.js?v=friendly-build-20261012';
+import {commonStats} from './common-mastery.js?v=mastery-stable-20261013';
+import {TREES} from './mastery-data.js?v=mastery-stable-20261013';
 export {TREES};
 const parts=c=>({attackutil:['attack','util'],utildefense:['util','defense'],defensetactic:['defense','tactic'],tacticattack:['tactic','attack']}[c]||[c]);
 export const isAutomaticNode=n=>n.type==='synergy'&&n.max===1;
@@ -7,9 +7,9 @@ const free=isAutomaticNode;
 export const SHEET_MASTERY_NODES=new Set(['Wand_High_Attack_Skill','Crossbow_High_Attack_Skill']);
 // Boundary diamonds count in both sectors; other shapes count in their quadrant.
 const pointParts=n=>{const categories=parts(n.category);if(categories.length<2||n.shape==='diamond')return categories;const angle=Math.atan2(n.y-500,n.x-500)*180/Math.PI;const sector=angle>=-90&&angle<0?'attack':angle>=0&&angle<90?'tactic':angle>=90&&angle<=180?'defense':'util';return [categories.includes(sector)?sector:categories[0]];};
-function allowedAutomatic(tree,selected,ring){
- const s=summary(tree,selected),order=Object.keys(selected);
- const candidates=tree.nodes.filter(n=>free(n)&&n.ring===ring).map(n=>({n,points:Math.max(...parts(n.category).map(c=>s.sectors[ring+':'+c]||0)),order:selected[n.id]?order.indexOf(n.id):Infinity})).filter(x=>x.points>=(x.n.required||20));
+function allowedAutomatic(tree,selected,ring,preferred=Object.keys(selected)){
+ const s=summary(tree,selected),order=preferred;
+ const candidates=tree.nodes.filter(n=>free(n)&&n.ring===ring).map(n=>({n,points:Math.max(...parts(n.category).map(c=>s.sectors[ring+':'+c]||0)),order:order.includes(n.id)?order.indexOf(n.id):Infinity})).filter(x=>x.points>=(x.n.required||20));
  candidates.sort((a,b)=>a.order-b.order||b.points-a.points||tree.nodes.indexOf(a.n)-tree.nodes.indexOf(b.n));
  return new Set(candidates.slice(0,2).map(x=>x.n.id));
 }
@@ -35,9 +35,12 @@ export function lockReason(tree,n,selected={}){
 }
 export function normalizeTree(tree,selected={}){
  const out={};let spent=0;
- // Saved automatic flags are never authoritative: derive them from paid nodes.
+ // Existing automatic choices select between eligible sectors. They
+ // never bypass thresholds. Keep them when another sector reaches its cap.
+ const preferred=Object.keys(selected||{}).filter(id=>selected[id]>0&&tree.nodes.some(n=>n.id===id&&free(n)));
+ // Derive eligibility from paid nodes, independently of saved automatic flags.
  for(const [id,value] of Object.entries(selected||{})){const n=tree.nodes.find(n=>n.id===id);if(!n||free(n))continue;const l=Math.max(0,Math.min(n.max,Math.trunc(Number(value)||0),200-spent));if(l){out[id]=l;spent+=l;}}
- const syncAutomatic=()=>{const rings=[...new Set(tree.nodes.filter(free).map(n=>n.ring))];for(const ring of rings){const allowed=allowedAutomatic(tree,out,ring);for(const n of tree.nodes.filter(n=>free(n)&&n.ring===ring)){if(allowed.has(n.id))out[n.id]=1;else delete out[n.id];}}};
+ const syncAutomatic=()=>{const rings=[...new Set(tree.nodes.filter(free).map(n=>n.ring))];for(const ring of rings){const allowed=allowedAutomatic(tree,out,ring,preferred);for(const n of tree.nodes.filter(n=>free(n)&&n.ring===ring)){if(allowed.has(n.id))out[n.id]=1;else delete out[n.id];}}};
  for(let pass=0;pass<tree.nodes.length;pass++){
   syncAutomatic();let changed=false;
   for(const n of tree.nodes)if(!free(n)&&out[n.id]&&lockReason(tree,n,out)){delete out[n.id];changed=true;}

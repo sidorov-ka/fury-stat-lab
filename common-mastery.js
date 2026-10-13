@@ -1,4 +1,4 @@
-import {COMMON_PASSIVES} from './common-mastery-data.js?v=friendly-build-20261012';
+import {COMMON_PASSIVES} from './common-mastery-data.js?v=mastery-stable-20261013';
 export {COMMON_PASSIVES};
 export const COMMON_IDS={spear:'WM_Common_SKILL_002',crisis:'WM_Common_SKILL_001',dragon:'WM_Common_SKILL_008',reserve:'WM_Common_SKILL_007',flower:'WM_Common_SKILL_009'};
 export function normalizeCommon(value={}){
