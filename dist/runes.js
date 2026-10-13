@@ -1,4 +1,4 @@
-import {RUNE_DATA as data} from './rune-data.js?v=weapon-effects-20261013-3';
+import {RUNE_DATA as data} from './rune-data.js?v=t2-mechanics-20261013';
 const grades=['kC','kB','kA','kAA'];
 export const runeSlots=item=>Math.min(3,Math.max(0,Number(item?.runeSlots)||0));
 export const runeChoices=item=>data.runes.filter(r=>r.slot===item.slot&&r.type!=='All');

@@ -1,4 +1,4 @@
-import {COMMON_PASSIVES} from './common-mastery-data.js?v=weapon-effects-20261013-3';
+import {COMMON_PASSIVES} from './common-mastery-data.js?v=t2-mechanics-20261013';
 export {COMMON_PASSIVES};
 export const COMMON_IDS={spear:'WM_Common_SKILL_002',crisis:'WM_Common_SKILL_001',dragon:'WM_Common_SKILL_008',reserve:'WM_Common_SKILL_007',flower:'WM_Common_SKILL_009'};
 export function normalizeCommon(value={}){
@@ -8,7 +8,7 @@ export function normalizeCommon(value={}){
 }
 export const commonSelection=state=>normalizeCommon(state.commonMastery).selected.filter(Boolean);
 export function commonStats(state){return commonSelection(state).includes(COMMON_IDS.reserve)?{str:1,dex:1,int:1,per:1,con:1}:{};}
-export function commonWarnings(state){return COMMON_PASSIVES.filter(p=>commonSelection(state).includes(p.id)&&!Object.values(COMMON_IDS).includes(p.id)).map(p=>`${p.name}: условный эффект пока не включён в DPS.`);}
+export function commonWarnings(state){return commonSelection(state).filter(id=>!Object.values(COMMON_IDS).includes(id)).map(id=>`${COMMON_PASSIVES.find(p=>p.id===id)?.name}: эффект зависит от условий боя и включается при выполнении условия.`);}
 export function mountCommon(host,getState,onChange){
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function render(){const state=getState(),value=normalizeCommon(state.commonMastery);state.commonMastery=value;
