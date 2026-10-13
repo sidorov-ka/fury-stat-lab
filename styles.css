@@ -134,3 +134,21 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:85px}
 
 /* Resonance is the fourth equipment property. */
 .gear-trait.gear-resonance,.gear-trait.gear-resonance>b{color:#f39bcf}.gear-resonance.inactive{opacity:.55}.gear-resonance small{font-size:9px}.traits .resonance-panel{padding:0;margin:0}.resonance-trait select{color:#f39bcf;border-color:#845574;background:#251a29}.resonance-trait select option{color:#f6d6eb;background:#251a29}.resonance-tag{display:flex;align-items:center;justify-content:center;border:1px solid #845574;border-radius:7px;background:#251a29;color:#f39bcf;font-size:13px}.resonance-panel .micro{margin:5px 0 0;font-size:11px}.compact-rune-kind summary{gap:4px;white-space:nowrap}
+
+/* One shared grid cell keeps rune synergy and set bonuses in normal document flow. */
+.gear-bonuses{grid-column:1/-1;grid-row:5;min-width:0;align-self:start;border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
+.gear-bonuses .gear-synergies{margin:0;padding:0;border:0;grid-row:auto}
+.gear-sets{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.gear-sets>summary{cursor:pointer;color:var(--gold);font-size:14px}
+.gear-sets .perk{overflow-wrap:anywhere}
+.gear-synergy-row{align-items:start;line-height:1.5}
+.gear-synergy-row span{overflow-wrap:anywhere}
+/* Keep the journal header fixed while its list scrolls independently. */
+.battle-log{overflow:hidden}
+.battle-log>h3,.battle-log>.micro{flex-shrink:0}
+.battle-log .rotation-log{overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;scrollbar-width:auto;scrollbar-color:#677e9d #0b131f;padding-right:8px}
+.battle-log .rotation-log::-webkit-scrollbar{width:10px}
+.battle-log .rotation-log::-webkit-scrollbar-track{background:#0b131f;border-radius:8px}
+.battle-log .rotation-log::-webkit-scrollbar-thumb{background:#677e9d;border:2px solid #0b131f;border-radius:8px}
+.battle-log .rotation-action{min-width:0;overflow-wrap:anywhere}
+.battle-log .rotation-mana{margin-left:auto;flex-shrink:0}

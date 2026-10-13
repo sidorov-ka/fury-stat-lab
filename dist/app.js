@@ -3,7 +3,7 @@ import {normalizeCommon,mountCommon} from './common-mastery.js?v=weapon-effects-
 import {equipmentDraft,newTrait} from './equipment-defaults.js?v=weapon-effects-20261013-3';
 import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=weapon-effects-20261013-3';
 import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=weapon-effects-20261013-3';
-import {setupSimulation} from './sim-ui.js?v=weapon-effects-20261013-3';
+import {setupSimulation} from './sim-ui.js?v=layout-scroll-20261013';
 import {createStore,mergeDefaults} from './storage.js?v=weapon-effects-20261013-3';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=weapon-effects-20261013-3';
 import {TREES,normalizeTree} from './mastery-tree.js?v=weapon-effects-20261013-3';
@@ -57,9 +57,9 @@ function renderGear(){
   const {synergy}=runeEffects(item,entry,catalog);if(!synergy.length)return [];
   return [`<div class="gear-synergy-row"><b>${escape(label)}</b><span>${synergy.map(({stat,value})=>`${escape(statLabel(stat))}: ${value>0?'+':''}${escape(format(stat,value))}`).join(' · ')}</span></div>`];
  });
- $('gear-grid').insertAdjacentHTML('beforeend',`<div class="gear-synergies"><h3>Синергия трёх рун</h3>${synergies.join('')||'<p class="micro">Нет активных сочетаний. Выбери три руны в подходящем порядке.</p>'}<p class="micro">Эти бонусы уже включены в характеристики рун.</p></div>`);
  const sets=activeSets(state,catalog).filter(g=>g.bonuses.length);
- if(sets.length)$('gear-grid').insertAdjacentHTML('beforeend',`<details class="gear-synergies"><summary>Бонусы комплектов</summary>${sets.map(g=>`<div class="perk"><b>${escape(g.name)} · ${g.count} предмета</b>${g.bonuses.map(b=>`<p class="micro">${b.pieces} предмета: ${b.passives?.length?b.passives.map(p=>escape(p.description)).join(' '):(b.stats||[]).map(r=>{const k=r.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());return escape(statLabel(k))+': '+escape(format(k,r.value));}).join(' · ')}</p>`).join('')}</div>`).join('')}</details>`);
+ const setBonuses=sets.length?`<details class="gear-sets"><summary>Бонусы комплектов</summary>${sets.map(g=>`<div class="perk"><b>${escape(g.name)} · ${g.count} предмета</b>${g.bonuses.map(b=>`<p class="micro">${b.pieces} предмета: ${b.passives?.length?b.passives.map(p=>escape(p.description)).join(' '):(b.stats||[]).map(r=>{const k=r.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());return escape(statLabel(k))+': '+escape(format(k,r.value));}).join(' · ')}</p>`).join('')}</div>`).join('')}</details>`:'';
+ $('gear-grid').insertAdjacentHTML('beforeend',`<div class="gear-bonuses"><section class="gear-synergies" aria-label="Синергия рун экипировки"><h3>Синергия трёх рун</h3>${synergies.join('')||'<p class="micro">Нет активных сочетаний. Выбери три руны в подходящем порядке.</p>'}</section>${setBonuses}</div>`);
  $('gear-grid').querySelectorAll('[data-gear]').forEach(b=>b.onclick=()=>openGear(b.dataset.gear));
 }
 function renderAttrs(){

@@ -29,3 +29,17 @@ const excluded=run([COMMON_IDS.spear,COMMON_IDS.dragon],[IDS.laser]);assert.equa
 const flower=run([COMMON_IDS.flower],[IDS.rapid],{mana:1000,regen:10000});assert(flower.counts[COMMON_IDS.flower]>0);const events=flower.damageEvents.filter(e=>e.id===COMMON_IDS.flower);for(let i=1;i<events.length;i++)assert(events[i].time-events[i-1].time>=5.99);
 for(const result of [spear,dragon,flower])assert(Math.abs(Object.values(result.damage).reduce((a,b)=>a+b,0)-result.total)<1e-6);
 console.log('Max defaults, saved levels, resonance activation, common unlocks/attributes, once-per-cast procs, exclusions, mana and cooldowns passed.');
+// A manually reduced trait must survive editing/reload and feed the actual level into DPS.
+const bell=catalog.equipment.find(i=>i.id==='crossbow_aa_t2_polymorph_001');
+const level3={id:bell.id,level:12,traits:[{id:'kAllCriticalAttack',level:3}]};
+const level4={...level3,traits:[{id:'kAllCriticalAttack',level:4}]};
+const crit3=deriveStats({...state,items:{weapon1:level3}},catalog),crit4=deriveStats({...state,items:{weapon1:level4}},catalog);
+assert.equal(crit4.critR-crit3.critR,20,'RU trait level 3 gives +60 crit; level 4 gives +80');
+assert.equal(crit4.critM-crit3.critM,20);
+const restoredLevel3=JSON.parse(JSON.stringify(level3));
+assert.equal(equipmentDraft(bell,restoredLevel3).traits[0].level,3);
+assert.deepEqual(deriveStats({...state,items:{weapon1:restoredLevel3}},catalog),crit3);
+const ordinaryThree={...level4,traits:bell.traits.slice(0,3).map(id=>({id,level:4}))};
+const forbiddenFourth={...ordinaryThree,traits:[...ordinaryThree.traits,{id:bell.traits[3],level:4}]};
+assert.deepEqual(deriveStats({...state,items:{weapon1:forbiddenFourth}},catalog),deriveStats({...state,items:{weapon1:ordinaryThree}},catalog),'a fourth ordinary trait cannot enter the calculation');
+console.log('Trait levels: manual level 3 survives editing/reload and contributes +60 instead of +80; three ordinary slots only.');
