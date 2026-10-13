@@ -1,4 +1,4 @@
-import {TREES,normalizeTree} from './mastery-tree.js?v=t2-chance-20261013';
+import {TREES,normalizeTree} from './mastery-tree.js?v=t2-cooldown-20261013';
 export function masteryEffects(state){
  const out={};for(const [key,tree] of Object.entries(TREES)){const selected=normalizeTree(tree,state.masteryTrees?.[key]);for(const n of tree.nodes)if(selected[n.id])out[n.id]=n.type==='synergy'?1:selected[n.id]/n.max;}return out;
 }

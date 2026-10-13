@@ -39,4 +39,9 @@ This is an expected single-target, 300-second model. Matching character statisti
 
 ## Follow-up: proc/cooldown audit
 
-Battle Thirst now uses levels added by the specific weaken event rather than the total existing Gale/curse stack count. Poison and Tevent applications pass through the same ten-per-second proc limiter as other weakening sources. Fire/cold secondary weakening enters this limiter too. Critical Quick Fire reduction still uses critical probability rather than treating every hit as a critical. Heavy attacks increase expected damage and do not themselves reset cooldowns.
+Correction: the prior interpretation of Battle Thirst was wrong. For stacking weakens, the first level uses .36 s and the second/subsequent levels use .072 s. The RU Selfless Diffusion description explicitly disambiguates this. Bernoulli DoTs weight first-level versus repeated-level applications by their state probabilities. Poison and Tevent applications pass through the same ten-per-second proc limiter as other weakening sources. Fire/cold secondary weakening enters this limiter too. Critical Quick Fire reduction still uses critical probability rather than treating every hit as a critical. Heavy attacks increase expected damage and do not themselves reset cooldowns.
+
+
+### Nature source correction
+
+The previous import wrongly reused Fireball's 80% application probability and 12-second burn lifetime for Nature fire. The retained RU Epic-4 Nature tooltip says 30% and 3 seconds. Only the per-tick burning coefficient (3.4% +15) is taken from Fireball, not its triggering probability or lifetime. Wind uses Nature's 30% application and cold uses 62.5%, not guaranteed procs. A per-cast cooldown ledger now attributes every weakening reduction that made Curse Burst available. No arbitrary minimum Curse Burst interval is introduced to fit a result.
