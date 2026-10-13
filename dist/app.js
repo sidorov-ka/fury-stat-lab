@@ -7,8 +7,8 @@ import {createStore,mergeDefaults} from './storage.js?v=friendly-build-20261012'
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=friendly-build-20261012';
 import {TREES,normalizeTree} from './mastery-tree.js?v=friendly-build-20261012';
 import {mountMastery} from './mastery-ui.js?v=friendly-build-20261012';
-import {mountRunes} from './rune-ui.js?v=friendly-build-20261012';
-import {runeEffects,runeSlots} from './runes.js?v=friendly-build-20261012';
+import {mountRunes} from './rune-ui.js?v=rune-picker-20261013';
+import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=rune-picker-20261013';
 import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=friendly-build-20261012';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -35,7 +35,7 @@ function gearRunes(item,entry){
  if(!runeSlots(item))return '';
  const {selected}=runeEffects(item,entry,catalog);
  return `<span class="gear-runes">${selected.map((r,i)=>{
-  const label=r?`${r.name} · ${statLabel(entry.runes[i].stat)} · ур. ${r.level}`:`Ячейка руны ${i+1} пуста`;
+  const label=r?`${r.name} · ${statLabel(entry.runes[i].stat)}`:`Ячейка руны ${i+1} пуста`;
   return `<span class="gear-rune ${r?'filled':''}" title="${escape(label)}">${r?`<img src="icons/runes/${escape(r.thumbnail.split('/').at(-1))}" alt="${escape(label)}">`:'<span aria-hidden="true">·</span>'}</span>`;
  }).join('')}</span>`;
 }
@@ -172,9 +172,10 @@ async function init(){
    if(saved.state.attributeVersion!==1){delete state.attributeVersion;migrateAttributes(state,catalog);}
    if(['weapon1','weapon2'].includes(saved.weapon))$('weapon').value=saved.weapon;
   }
+  for(const entry of Object.values(state.items)){const item=itemMap.get(entry.id);if(item&&runeSlots(item))entry.runes=normalizeMaxRunes(item,entry);}
   renderGear();renderAttrs();renderStats();renderSkills();
   simulation=setupSimulation(()=>state,catalog,(ids,specs)=>{if(specs)state.specs=structuredClone(specs);state.active=[...ids,...Array(12-ids.length).fill(null)];selectedSkill=null;renderSkills();renderSkillDetail();},profile);
-  restored=true;
+  restored=true;profile.save('build',{state,weapon:$('weapon').value});
   $('source-note').textContent=`Fury Lab · Throne and Liberty RU`;
   $('loading').hidden=true;$('workspace').hidden=false;
  }catch(e){$('loading').textContent='Не удалось загрузить каталог. Обнови страницу, чтобы повторить загрузку.';console.error(e)}

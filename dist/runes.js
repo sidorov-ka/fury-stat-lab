@@ -28,3 +28,20 @@ export function runeStats(state,catalog){
   for(const [k,v] of Object.entries(runeEffects(item,entry,catalog).stats))out[k]=(out[k]||0)+v;
  }return out;
 }
+
+export const FIXED_RUNE_LEVEL=80;
+export const maxRuneChoices=item=>runeChoices(item).filter(r=>r.grade==='kAA'&&r.maxLevel>=FIXED_RUNE_LEVEL);
+export function maxRuneSelection(item,type,stat){
+ const rune=maxRuneChoices(item).find(r=>r.type===type);if(!rune)return null;
+ return {runeId:rune.id,stat:rune.statPool.some(p=>p.stat===stat)?stat:rune.statPool[0].stat,level:FIXED_RUNE_LEVEL};
+}
+export function normalizeMaxRunes(item,entry){
+ const choices=runeChoices(item);
+ return Array.from({length:runeSlots(item)},(_,i)=>{const saved=entry?.runes?.[i],r=choices.find(r=>r.id===saved?.runeId);return r&&r.statPool.some(p=>p.stat===saved.stat)?maxRuneSelection(item,r.type,saved.stat):null;});
+}
+export function runeSynergies(item){return Object.entries(data.synergy[item.slot]?.kAA||{}).map(([order,stats])=>({order,types:order.split('-'),stats}));}
+export function applyRuneSynergy(item,entry,order){
+ const synergy=runeSynergies(item).find(r=>r.order===order);if(!synergy||runeSlots(item)!==3)return normalizeMaxRunes(item,entry);
+ const old=normalizeMaxRunes(item,entry),byType=new Map(old.filter(Boolean).map(s=>[runeChoices(item).find(r=>r.id===s.runeId).type,s.stat]));
+ return synergy.types.map(type=>maxRuneSelection(item,type,byType.get(type)));
+}
