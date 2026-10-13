@@ -7,7 +7,7 @@ import {createStore,mergeDefaults} from './storage.js?v=friendly-build-20261012'
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=friendly-build-20261012';
 import {TREES,normalizeTree} from './mastery-tree.js?v=friendly-build-20261012';
 import {mountMastery} from './mastery-ui.js?v=friendly-build-20261012';
-import {mountRunes} from './rune-ui.js?v=rune-properties-20261013';
+import {mountRunes} from './rune-ui.js?v=rune-compact-20261013';
 import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=rune-picker-20261013';
 import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes} from './engine.js?v=friendly-build-20261012';
 const $=id=>document.getElementById(id);
