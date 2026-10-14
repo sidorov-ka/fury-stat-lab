@@ -236,3 +236,19 @@ TL Build exposes item resonance and common weapon-mastery unlocks and
 artifact slots, which Fury does not model. These can contribute to
 character-stat differences. No matching full user build was available,
 so this comparison does not validate the earlier WIS 70 vs 66 mismatch.
+
+
+## RU October 6, 2026 patch (implemented October 14)
+
+Sources: [official RU patch](https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya), and TL Build's six RU-client earring records, served by `/api/equipment` and its October data module. The original snapshot and exact applied skill fields are preserved in `docs/ru-october-earrings.json` and `docs/ru-october-skills.json`. These are the six RU release items, without later global upgrades.
+
+- One earring slot; enhancement +12, three ordinary traits with four actual ranks, three level-80 runes and synergy. No invented resonance pool for earrings.
+- Directional ratings remain separate on the sheet; the chosen combat direction activates only matching ratings. Boss-only rune ratings/bonus damage activate only against bosses.
+- Back attacks add three percentage points to hit/critical probability (capped at 100%), our interpretation of the official 3% wording. Directional heavy chance does not receive this baseline bonus.
+- Ghost Walk Adaptation chooses a direction by expected hit damage per weapon while its buff is active; it does not grant all three directions together or remain active after expiry. Assumes equal target defenses by direction until provided separately.
+- Decay gains its 200% direct hit from side/back; Weak Point's conditional crit-damage buff gains 3 points when applied from side/back; Blood Pact healing gains 10%. Akman projectiles require Ghost Walk.
+- DEX 80 milestone grants +9 bonus damage, replacing stale +18. Existing weapon, Nature and Curse Burst user-confirmed values are preserved.
+
+Remaining scope: the shield's new specialization describes defensive directional ratings; incoming DPS is already post-mitigation, so these ratings must not reduce that input again. Repeated Swift Healing actions are not yet modelled as a complete healing rotation; its updated description alone is not a claim that healing chains are verified.
+
+Validation: all 21 test files pass; October regression checks cover hand-calculated +12 earring totals, actual trait ranks, directional activation, boss rune gating, best direction and expiry, Decay damage and the 80 DEX milestone.

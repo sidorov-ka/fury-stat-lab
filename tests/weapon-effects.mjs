@@ -28,7 +28,8 @@ const bolt=equipped('crossbow_a_t2_nomal_004');assert(!once(bolt,[IDS.weak]).dam
 const tevent={...base,items:{weapon2:{id:'wand_aa_t2_polymorph_001',level:0,traits:[]}}};near(once(tevent,[IDS.touch]).damage['tevent-curse'],.15*30*35);
 const circle=once(equipped('wand_a_t2_nomal_001'),[IDS.area]);const normalCircle=once(base,[IDS.area]);near(circle.damage[IDS.area]/normalCircle.damage[IDS.area],1.25);
 const barrage=once(equipped('crossbow_a_t3_Arthropod_001'),[IDS.barrage]);near(barrage.damage[IDS.barrage]/once(base,[IDS.barrage]).damage[IDS.barrage],1.15);
-const missile=once(equipped('crossbow_aa_t5_boss_003'),[IDS.rapid]);near(missile.damage['weapon-projectile'],3*120);
+assert(!once(equipped('crossbow_aa_t5_boss_003'),[IDS.rapid]).damage['weapon-projectile'],'October Akman proc requires Selfless Diffusion');
+const missile=once(equipped('crossbow_aa_t5_boss_003'),[IDS.ghost,IDS.rapid]);near(missile.damage['weapon-projectile'],3*120);
 function setBuild(name,count){const pieces=catalog.equipment.filter(i=>i.setName===name).slice(0,count);assert.equal(pieces.length,count);return {...base,items:Object.fromEntries(pieces.map((i,n)=>['p'+n,{id:i.id,level:0,traits:[]}]))};}
 const wolf=setBuild('Память призрачного волка',4);near(setStats(wolf,catalog).off_hand_attack_chance_modifier,3000);
 const tree=setBuild('Комплект Дитя Мирового древа',4);const bare=deriveStats({...tree,excludeSetBonuses:true},catalog),full=deriveStats(tree,catalog);near(full.cooldown-bare.cooldown,Math.min(20,Math.floor(full.mana/1000)));assert.deepEqual(statBreakdown(tree,catalog).total,full);

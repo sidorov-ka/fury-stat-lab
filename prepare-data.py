@@ -1,5 +1,6 @@
 import json, urllib.request, concurrent.futures, pathlib, hashlib, time
 from ru_catalog_overrides import apply_ru_overrides
+from ru_october_overrides import apply_october_overrides
 ROOT = pathlib.Path(__file__).parent / 'dist'
 ASSETS = ROOT / 'icons'
 ASSETS.mkdir(exist_ok=True)
@@ -34,7 +35,7 @@ for x in items+skills:
     x['thumbnail'] = icons.get(x.get('thumbnail'))
 for x in skills:
     for s in x.get('specializations',[]): s['icon'] = icons.get(s.get('icon'))
-fields = ['id','name','description','thumbnail','slot','category','grade','tier','baseStats','extraStats','enchantMaxLevel','enchantScaling','extraEnchantScaling','traits','specialPerk','setName','setBonuses','resonanceEffects']
+fields = ['id','name','description','thumbnail','sourceThumbnail','slot','category','grade','tier','baseStats','extraStats','enchantMaxLevel','enchantScaling','extraEnchantScaling','traits','specialPerk','setName','setBonuses','resonanceEffects','runeSlots']
 payload = {'source':'https://rutl.org/builder','retrievedAt':'2026-09-24','equipment':[{k:x.get(k) for k in fields} for x in items], 'skills':skills, 'traits':read('traits'),'labels':read('stat-labels')['stats'],'formats':read('stat-format'),'attributeStats':read('attribute-stats'),'attributes':read('attributes')}
-(ROOT/'catalog.json').write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')))
+(ROOT/'catalog.json').write_text(json.dumps(apply_october_overrides(payload),ensure_ascii=False,separators=(',',':')))
 print(json.dumps({'items':len(items),'skills':len(skills),'icons':len(icons),'missing':[p for p,v in icons.items() if v is None]}),flush=True)

@@ -1,5 +1,5 @@
-import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=t2-cooldown-20261013';
-const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png?v=centered-2',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png?v=centered-2'};
+import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=ru-october-20261014';
+const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png?v=ru-october-20261014',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png?v=ru-october-20261014'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number(v).toLocaleString('ru-RU',{maximumFractionDigits:2});
 const colors={common:'#a3adba',uncommon:'#64ad84',rare:'#739fe6',epic:'#b68bea'};

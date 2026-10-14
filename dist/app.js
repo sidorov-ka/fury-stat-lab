@@ -1,21 +1,21 @@
-import {WEAPON_EFFECTS} from './weapon-effects.js?v=t2-cooldown-20261013';
-import {normalizeCommon,mountCommon} from './common-mastery.js?v=t2-cooldown-20261013-2';
-import {equipmentDraft,newTrait} from './equipment-defaults.js?v=t2-cooldown-20261013';
-import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=t2-cooldown-20261013';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=t2-cooldown-20261013';
-import {setupSimulation} from './sim-ui.js?v=t2-cooldown-20261013-2';
-import {createStore,mergeDefaults} from './storage.js?v=t2-cooldown-20261013';
-import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=t2-cooldown-20261013';
-import {TREES,normalizeTree} from './mastery-tree.js?v=t2-cooldown-20261013';
-import {mountMastery} from './mastery-ui.js?v=t2-cooldown-20261013';
-import {mountRunes} from './rune-ui.js?v=rune-compact-20261013';
-import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=rune-picker-20261013';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=t2-cooldown-20261013';
+import {WEAPON_EFFECTS} from './weapon-effects.js?v=ru-october-20261014';
+import {normalizeCommon,mountCommon} from './common-mastery.js?v=ru-october-20261014';
+import {equipmentDraft,newTrait} from './equipment-defaults.js?v=ru-october-20261014';
+import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=ru-october-20261014';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=ru-october-20261014';
+import {setupSimulation} from './sim-ui.js?v=ru-october-20261014';
+import {createStore,mergeDefaults} from './storage.js?v=ru-october-20261014';
+import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=ru-october-20261014';
+import {TREES,normalizeTree} from './mastery-tree.js?v=ru-october-20261014';
+import {mountMastery} from './mastery-ui.js?v=ru-october-20261014';
+import {mountRunes} from './rune-ui.js?v=ru-october-20261014';
+import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=ru-october-20261014';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=ru-october-20261014';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
-const rarity={Common:'#89929c',Uncommon:'#64ad84',Rare:'#739fe6',Rare2:'#739fe6',Epic:'#b68bea',Heroic:'#da9374',Legendary:'#edb970'};
-const gradeName={Common:'Обычный',Uncommon:'Необычный',Rare:'Редкий',Rare2:'Редкий',Epic:'Эпический',Heroic:'Героический',Legendary:'Легендарный'};
+const rarity={Common:'#89929c',Uncommon:'#64ad84',Rare:'#739fe6',Rare2:'#739fe6',Epic2:'#b68bea',Epic:'#b68bea',Heroic:'#da9374',Legendary:'#edb970'};
+const gradeName={Common:'Обычный',Uncommon:'Необычный',Rare:'Редкий',Rare2:'Редкий',Epic2:'Эпический II',Epic:'Эпический',Heroic:'Героический',Legendary:'Легендарный'};
 let simulation;
 let catalog, itemMap,skillMap,selectedSkill=null,pick=null,previewId=null,draft=null;
 const emptyState=()=>({items:{},mastery:emptyMastery(),commonMastery:{level:0,selected:[]},masteryTrees:{CR:{},WA_GR:{}},attributeVersion:1,characterLevel:55,attributeAdjustments:{},attrMode:'base',attrs:{str:10,dex:10,Int:10,per:10,con:10},active:Array(12).fill(null),passive:Array(8).fill(null),defensive:[null],specs:{},passiveLevels:{}});
@@ -51,7 +51,7 @@ function gearTraits(item,entry){
 }
 function renderGear(){
  $('gear-grid').innerHTML='<div class="gear-upper">'+SLOTS.map(([k,label])=>{const e=state.items[k],item=itemMap.get(e?.id);return `${k==='necklace'?'</div><div class="gear-lower">':''}<button class="gear-slot ${k.startsWith('weapon')?'weapon-slot':''}" data-gear="${k}" title="${escape(item?.name||label)}" aria-label="${escape(label+(item?': '+item.name:': выбрать предмет'))}"><span class="gear-visual"><span class="gear-rune-row">${gearRunes(item,e)}</span>${item?icon(item,e?.level?'+'+e.level:''):emptyGearIcon(k)}</span>${gearTraits(item,e)}<span class="slot-caption">${label}${k.startsWith('weapon')?`<strong>${escape(item?.name||'Выбрать')}</strong>`:''}</span></button>`}).join('')+'</div>';
- $('gear-count').textContent=Object.keys(state.items).length+' / 13';
+ $('gear-count').textContent=Object.keys(state.items).length+' / '+SLOTS.length;
  const synergies=SLOTS.flatMap(([key,label])=>{
   const entry=state.items[key],item=itemMap.get(entry?.id);if(!item)return [];
   const {synergy}=runeEffects(item,entry,catalog);if(!synergy.length)return [];
@@ -166,7 +166,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=t2-cooldown-20261013',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=ru-october-20261014',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};state.commonMastery=normalizeCommon(saved.state.commonMastery);
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);

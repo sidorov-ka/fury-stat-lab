@@ -1,8 +1,8 @@
-import {treeStats} from './mastery-tree.js?v=t2-cooldown-20261013';
-import {runeStats} from './runes.js?v=t2-cooldown-20261013';
+import {treeStats} from './mastery-tree.js?v=ru-october-20261014';
+import {runeStats} from './runes.js?v=ru-october-20261014';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
-export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
-export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
+export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['earring','Серьги','Earring'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
+export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
 export function itemStats(item,level=0,traits=[],catalog,resonanceId=null){
  const stats={}; const add=(k,v)=>{if(Number.isFinite(Number(v)))stats[k]=(stats[k]||0)+Number(v)};
  for(const [base,scale] of [['baseStats','enchantScaling'],['extraStats','extraEnchantScaling']]){

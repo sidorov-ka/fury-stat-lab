@@ -1,3 +1,3 @@
-import {traitLimit} from './engine.js?v=t2-cooldown-20261013';
+import {traitLimit} from './engine.js?v=ru-october-20261014';
 export function equipmentDraft(item,current){return current?.id===item.id?structuredClone(current):{id:item.id,level:Number(item.enchantMaxLevel)||0,traits:[]};}
 export const newTrait=(item,id)=>({id,level:traitLimit(item.grade)});

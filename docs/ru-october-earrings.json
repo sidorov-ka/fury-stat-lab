@@ -1,0 +1,1026 @@
+{
+  "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+  "items": [
+    {
+      "id": "earring_preview_october_1745381465",
+      "name": "Серьги призрачного изящества",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00051.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "cost_consumption_modifier": 300,
+        "dex": 4,
+        "front_evasion": 560
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "cost_consumption_modifier": 50,
+          "front_evasion": 90
+        },
+        "10": {
+          "cost_consumption_modifier": 500,
+          "dex": 2,
+          "front_evasion": 900
+        },
+        "11": {
+          "cost_consumption_modifier": 550,
+          "dex": 2,
+          "front_evasion": 990
+        },
+        "12": {
+          "cost_consumption_modifier": 600,
+          "dex": 3,
+          "front_evasion": 1080
+        },
+        "2": {
+          "cost_consumption_modifier": 100,
+          "front_evasion": 180
+        },
+        "3": {
+          "cost_consumption_modifier": 150,
+          "front_evasion": 270
+        },
+        "4": {
+          "cost_consumption_modifier": 200,
+          "dex": 1,
+          "front_evasion": 360
+        },
+        "5": {
+          "cost_consumption_modifier": 250,
+          "dex": 1,
+          "front_evasion": 450
+        },
+        "6": {
+          "cost_consumption_modifier": 300,
+          "dex": 1,
+          "front_evasion": 540
+        },
+        "7": {
+          "cost_consumption_modifier": 350,
+          "dex": 1,
+          "front_evasion": 630
+        },
+        "8": {
+          "cost_consumption_modifier": 400,
+          "dex": 2,
+          "front_evasion": 720
+        },
+        "9": {
+          "cost_consumption_modifier": 450,
+          "dex": 2,
+          "front_evasion": 810
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:front_accuracy",
+        "october:earring-trait:front_critical_attack",
+        "october:earring-trait:front_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381465",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Тайные покои одержимости (4★)",
+          "Крафт: 400 Монет приключений: Преданность"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t2_normal_001"
+      },
+      "nativeId": "ear_aa_t2_normal_001"
+    },
+    {
+      "id": "earring_preview_october_1745381466",
+      "name": "Серьги нетленного величия",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00052.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "Int": 4,
+        "cost_regen": 11250,
+        "front_damage_reduction": 13
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "cost_regen": 3700,
+          "front_damage_reduction": 1
+        },
+        "10": {
+          "Int": 2,
+          "cost_regen": 37500,
+          "front_damage_reduction": 11
+        },
+        "11": {
+          "Int": 2,
+          "cost_regen": 41200,
+          "front_damage_reduction": 12
+        },
+        "12": {
+          "Int": 3,
+          "cost_regen": 45000,
+          "front_damage_reduction": 13
+        },
+        "2": {
+          "cost_regen": 7500,
+          "front_damage_reduction": 2
+        },
+        "3": {
+          "cost_regen": 11200,
+          "front_damage_reduction": 3
+        },
+        "4": {
+          "Int": 1,
+          "cost_regen": 15000,
+          "front_damage_reduction": 4
+        },
+        "5": {
+          "Int": 1,
+          "cost_regen": 18700,
+          "front_damage_reduction": 5
+        },
+        "6": {
+          "Int": 1,
+          "cost_regen": 22500,
+          "front_damage_reduction": 6
+        },
+        "7": {
+          "Int": 1,
+          "cost_regen": 26200,
+          "front_damage_reduction": 7
+        },
+        "8": {
+          "Int": 2,
+          "cost_regen": 30000,
+          "front_damage_reduction": 9
+        },
+        "9": {
+          "Int": 2,
+          "cost_regen": 33700,
+          "front_damage_reduction": 10
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:back_accuracy",
+        "october:earring-trait:back_critical_attack",
+        "october:earring-trait:back_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381466",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Тайные покои одержимости (4★)",
+          "Крафт: 400 Монет приключений: Преданность"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t2_normal_002"
+      },
+      "nativeId": "ear_aa_t2_normal_002"
+    },
+    {
+      "id": "earring_preview_october_1745381461",
+      "name": "Гранитные слёзы",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00001.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "con": 2,
+        "front_critical_defense": 560,
+        "front_damage_reduction": 5,
+        "str": 2
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "front_critical_defense": 90,
+          "front_damage_reduction": 1
+        },
+        "10": {
+          "con": 2,
+          "front_critical_defense": 900,
+          "front_damage_reduction": 11,
+          "str": 2
+        },
+        "11": {
+          "con": 2,
+          "front_critical_defense": 990,
+          "front_damage_reduction": 12,
+          "str": 2
+        },
+        "12": {
+          "con": 3,
+          "front_critical_defense": 1080,
+          "front_damage_reduction": 13,
+          "str": 3
+        },
+        "2": {
+          "front_critical_defense": 180,
+          "front_damage_reduction": 2
+        },
+        "3": {
+          "front_critical_defense": 270,
+          "front_damage_reduction": 3
+        },
+        "4": {
+          "con": 1,
+          "front_critical_defense": 360,
+          "front_damage_reduction": 4,
+          "str": 1
+        },
+        "5": {
+          "con": 1,
+          "front_critical_defense": 450,
+          "front_damage_reduction": 5,
+          "str": 1
+        },
+        "6": {
+          "con": 1,
+          "front_critical_defense": 540,
+          "front_damage_reduction": 6,
+          "str": 1
+        },
+        "7": {
+          "con": 1,
+          "front_critical_defense": 630,
+          "front_damage_reduction": 7,
+          "str": 1
+        },
+        "8": {
+          "con": 2,
+          "front_critical_defense": 720,
+          "front_damage_reduction": 9,
+          "str": 2
+        },
+        "9": {
+          "con": 2,
+          "front_critical_defense": 810,
+          "front_damage_reduction": 10,
+          "str": 2
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:front_accuracy",
+        "october:earring-trait:front_critical_attack",
+        "october:earring-trait:front_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381461",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Ларец покорителя Небулы",
+          "Гримтург",
+          "Эксодус",
+          "Иллюзион"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t1_normal_001"
+      },
+      "nativeId": "ear_aa_t1_normal_001"
+    },
+    {
+      "id": "earring_preview_october_1745381462",
+      "name": "Серьги кровавого заката",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00004.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "dex": 1,
+        "front_evasion": 430,
+        "per": 3,
+        "side_double_defense": 430
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "front_evasion": 90,
+          "side_double_defense": 90
+        },
+        "10": {
+          "dex": 2,
+          "front_evasion": 900,
+          "per": 2,
+          "side_double_defense": 900
+        },
+        "11": {
+          "dex": 2,
+          "front_evasion": 990,
+          "per": 2,
+          "side_double_defense": 990
+        },
+        "12": {
+          "dex": 3,
+          "front_evasion": 1080,
+          "per": 3,
+          "side_double_defense": 1080
+        },
+        "2": {
+          "front_evasion": 180,
+          "side_double_defense": 180
+        },
+        "3": {
+          "front_evasion": 270,
+          "side_double_defense": 270
+        },
+        "4": {
+          "dex": 1,
+          "front_evasion": 360,
+          "per": 1,
+          "side_double_defense": 360
+        },
+        "5": {
+          "dex": 1,
+          "front_evasion": 450,
+          "per": 1,
+          "side_double_defense": 450
+        },
+        "6": {
+          "dex": 1,
+          "front_evasion": 540,
+          "per": 1,
+          "side_double_defense": 540
+        },
+        "7": {
+          "dex": 1,
+          "front_evasion": 630,
+          "per": 1,
+          "side_double_defense": 630
+        },
+        "8": {
+          "dex": 2,
+          "front_evasion": 720,
+          "per": 2,
+          "side_double_defense": 720
+        },
+        "9": {
+          "dex": 2,
+          "front_evasion": 810,
+          "per": 2,
+          "side_double_defense": 810
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:back_accuracy",
+        "october:earring-trait:back_critical_attack",
+        "october:earring-trait:back_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381462",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Ларец покорителя Небулы",
+          "Гримтург",
+          "Эксодус",
+          "Иллюзион"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t1_normal_002"
+      },
+      "nativeId": "ear_aa_t1_normal_002"
+    },
+    {
+      "id": "earring_preview_october_1745381463",
+      "name": "Серьги первозданной воли",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00002.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "Int": 3,
+        "front_double_defense": 250,
+        "per": 1,
+        "side_evasion": 620
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "front_double_defense": 90,
+          "side_evasion": 90
+        },
+        "10": {
+          "Int": 2,
+          "front_double_defense": 900,
+          "per": 2,
+          "side_evasion": 900
+        },
+        "11": {
+          "Int": 2,
+          "front_double_defense": 990,
+          "per": 2,
+          "side_evasion": 990
+        },
+        "12": {
+          "Int": 3,
+          "front_double_defense": 1080,
+          "per": 3,
+          "side_evasion": 1080
+        },
+        "2": {
+          "front_double_defense": 180,
+          "side_evasion": 180
+        },
+        "3": {
+          "front_double_defense": 270,
+          "side_evasion": 270
+        },
+        "4": {
+          "Int": 1,
+          "front_double_defense": 360,
+          "per": 1,
+          "side_evasion": 360
+        },
+        "5": {
+          "Int": 1,
+          "front_double_defense": 450,
+          "per": 1,
+          "side_evasion": 450
+        },
+        "6": {
+          "Int": 1,
+          "front_double_defense": 540,
+          "per": 1,
+          "side_evasion": 540
+        },
+        "7": {
+          "Int": 1,
+          "front_double_defense": 630,
+          "per": 1,
+          "side_evasion": 630
+        },
+        "8": {
+          "Int": 2,
+          "front_double_defense": 720,
+          "per": 2,
+          "side_evasion": 720
+        },
+        "9": {
+          "Int": 2,
+          "front_double_defense": 810,
+          "per": 2,
+          "side_evasion": 810
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:back_accuracy",
+        "october:earring-trait:back_critical_attack",
+        "october:earring-trait:back_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381463",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Исполин Браук"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t1_normal_003"
+      },
+      "nativeId": "ear_aa_t1_normal_003"
+    },
+    {
+      "id": "earring_preview_october_1745381464",
+      "name": "Серьги мерцающей росы",
+      "description": "",
+      "thumbnail": "/Icons/Equipment/Earring/it_p_earring_00003.webp",
+      "slot": "Earring",
+      "category": "Earring",
+      "grade": "Epic2",
+      "tier": "T2",
+      "requiredLevel": 1,
+      "baseStats": {
+        "magic_armor": 240
+      },
+      "extraStats": {
+        "Int": 1,
+        "front_critical_defense": 310,
+        "side_damage_reduction": 10,
+        "str": 3
+      },
+      "enchantMaxLevel": 12,
+      "enchantScaling": {
+        "0": {},
+        "1": {
+          "magic_armor": 10
+        },
+        "10": {
+          "magic_armor": 100
+        },
+        "11": {
+          "magic_armor": 110
+        },
+        "12": {
+          "magic_armor": 120
+        },
+        "2": {
+          "magic_armor": 20
+        },
+        "3": {
+          "magic_armor": 30
+        },
+        "4": {
+          "magic_armor": 40
+        },
+        "5": {
+          "magic_armor": 50
+        },
+        "6": {
+          "magic_armor": 60
+        },
+        "7": {
+          "magic_armor": 70
+        },
+        "8": {
+          "magic_armor": 80
+        },
+        "9": {
+          "magic_armor": 90
+        }
+      },
+      "extraEnchantScaling": {
+        "0": {},
+        "1": {
+          "front_critical_defense": 90,
+          "side_damage_reduction": 1
+        },
+        "10": {
+          "Int": 2,
+          "front_critical_defense": 900,
+          "side_damage_reduction": 11,
+          "str": 2
+        },
+        "11": {
+          "Int": 2,
+          "front_critical_defense": 990,
+          "side_damage_reduction": 12,
+          "str": 2
+        },
+        "12": {
+          "Int": 3,
+          "front_critical_defense": 1080,
+          "side_damage_reduction": 13,
+          "str": 3
+        },
+        "2": {
+          "front_critical_defense": 180,
+          "side_damage_reduction": 2
+        },
+        "3": {
+          "front_critical_defense": 270,
+          "side_damage_reduction": 3
+        },
+        "4": {
+          "Int": 1,
+          "front_critical_defense": 360,
+          "side_damage_reduction": 4,
+          "str": 1
+        },
+        "5": {
+          "Int": 1,
+          "front_critical_defense": 450,
+          "side_damage_reduction": 5,
+          "str": 1
+        },
+        "6": {
+          "Int": 1,
+          "front_critical_defense": 540,
+          "side_damage_reduction": 6,
+          "str": 1
+        },
+        "7": {
+          "Int": 1,
+          "front_critical_defense": 630,
+          "side_damage_reduction": 7,
+          "str": 1
+        },
+        "8": {
+          "Int": 2,
+          "front_critical_defense": 720,
+          "side_damage_reduction": 9,
+          "str": 2
+        },
+        "9": {
+          "Int": 2,
+          "front_critical_defense": 810,
+          "side_damage_reduction": 10,
+          "str": 2
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "october:earring-trait:front_accuracy",
+        "october:earring-trait:front_critical_attack",
+        "october:earring-trait:front_double_attack",
+        "october:earring-trait:side_accuracy",
+        "october:earring-trait:side_critical_attack",
+        "october:earring-trait:side_double_attack"
+      ],
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "preview": {
+        "region": "RU",
+        "ruVerified": true,
+        "externalId": "1745381464",
+        "sourceUrl": "https://throneandliberty.ru/news/103-opisanie-oktyabrskogo-obnovleniya",
+        "sources": [
+          "Делуз Ноа"
+        ],
+        "plannedReleaseDate": "2026-10-06",
+        "verifiedAt": "2026-10-06",
+        "nativeId": "ear_aa_t1_normal_004"
+      },
+      "nativeId": "ear_aa_t1_normal_004"
+    }
+  ],
+  "traits": {
+    "october:earring-trait:front_accuracy": {
+      "stat": "front_accuracy",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kFrontAllAccuracy"
+    },
+    "october:earring-trait:front_critical_attack": {
+      "stat": "front_critical_attack",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kFrontAllCriticalAttack"
+    },
+    "october:earring-trait:front_double_attack": {
+      "stat": "front_double_attack",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kFrontAllDoubleAttack"
+    },
+    "october:earring-trait:side_accuracy": {
+      "stat": "side_accuracy",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kSideAllAccuracy"
+    },
+    "october:earring-trait:side_critical_attack": {
+      "stat": "side_critical_attack",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kSideAllCriticalAttack"
+    },
+    "october:earring-trait:side_double_attack": {
+      "stat": "side_double_attack",
+      "base": 0,
+      "curve": [
+        300,
+        600,
+        900,
+        1200
+      ],
+      "nativeTraitId": "kSideAllDoubleAttack"
+    },
+    "october:earring-trait:back_accuracy": {
+      "stat": "back_accuracy",
+      "base": 0,
+      "curve": [
+        400,
+        800,
+        1200,
+        1600
+      ],
+      "nativeTraitId": "kRearAllAccuracy"
+    },
+    "october:earring-trait:back_critical_attack": {
+      "stat": "back_critical_attack",
+      "base": 0,
+      "curve": [
+        400,
+        800,
+        1200,
+        1600
+      ],
+      "nativeTraitId": "kRearAllCriticalAttack"
+    },
+    "october:earring-trait:back_double_attack": {
+      "stat": "back_double_attack",
+      "base": 0,
+      "curve": [
+        400,
+        800,
+        1200,
+        1600
+      ],
+      "nativeTraitId": "kRearAllDoubleAttack"
+    }
+  },
+  "verifiedAt": "2026-10-06",
+  "source": "mounted RU client C:/VKPlay/Throne and Liberty/TL/Content/Paks"
+}

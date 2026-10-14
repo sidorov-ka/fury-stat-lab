@@ -1,10 +1,11 @@
-import {masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=t2-cooldown-20261013';
-import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=t2-cooldown-20261013';
-import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=t2-cooldown-20261013';
+import {combatRatings} from './position-combat.js?v=ru-october-20261014';
+import {masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=ru-october-20261014';
+import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=ru-october-20261014';
+import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=ru-october-20261014';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=t2-cooldown-20261013';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=ru-october-20261014';
 
-import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=t2-cooldown-20261013';
+import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=ru-october-20261014';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser',wind:'WP_CR_D_RobShot',heal:'WP_WA_GR_S_Heal',healAll:'WP_WA_GR_S_HealAll',sleep:'WP_WA_GR_S_Sleep',healField:'WP_WA_GR_S_HealField',shield:'WP_WA_GR_S_MagicShield'};
 export const PASS={thirst:'WP_CR_CR_S_WeakenAttackBonus',adapt:'WP_CR_CR_S_PeaceTimeBuff',ambi:'WP_CR_S_OffHandMaxDmg',bonus:'WP_CR_S_CriticalAttack',duration:'WP_WA_GR_S_CurseDuration',night:'WP_WA_GR_S_DayHealNightCurse',pact:'WP_WA_GR_S_CurseAttackHeal'};
 // Stored levels are Epic 1–5; missing levels retain the previous Epic 5 default.
@@ -26,16 +27,16 @@ export function passiveSheetEffects(state,catalog,mana){
   offChanceBonus:advantage?-4:0,bonus:has(PASS.bonus)?value(PASS.bonus,'Дополнит. урон ▲',13):0,staminaRegen:has(PASS.bonus)?value(PASS.bonus,'Восстановление выносливости',6):0,
   weaken:has('WP_CR_S_WeakenAccuracy')?value('WP_CR_S_WeakenAccuracy','Ослабление ▲',205):0};
 }
-export const DEFAULTS={stepDuration:1,accuracyR:0,accuracyM:0,weaken:0,evasion:0,endurance:0,heavyEvasion:0,weakenResistance:0,controlImmune:1,giantBlessing:0,enemyMana:0,incomingDps:0,furyInterval:0,enemyAttacks:0,moving:0,killInterval:0,targetDistance:0,targetHealth:100,rangeDamage:0,magicDamage:0,crossMin:0,crossMax:0,offMin:0,offMax:0,wandMin:0,wandMax:0,critR:0,critM:0,heavyR:0,heavyM:0,critDamage:0,boost:0,bonus:0,cooldown:0,speed:0,offhand:0,interval:0.5,mana:5175,regen:6,regenPeriod:10,efficiency:0,hp:5175,buffDuration:0,night:0,defense:0,defenseK:2500,ratingK:1000,species:0,pve:1,dotCrit:1,auto:1,animationFloor:0.25,latency:0,healing:0,sheetIncludesPassives:0,baseDamagePercent:0};
+export const DEFAULTS={targetIsBoss:0,stepDuration:1,accuracyR:0,accuracyM:0,weaken:0,evasion:0,endurance:0,heavyEvasion:0,weakenResistance:0,controlImmune:1,giantBlessing:0,enemyMana:0,incomingDps:0,furyInterval:0,enemyAttacks:0,moving:0,killInterval:0,targetDistance:0,targetHealth:100,rangeDamage:0,magicDamage:0,crossMin:0,crossMax:0,offMin:0,offMax:0,wandMin:0,wandMax:0,critR:0,critM:0,heavyR:0,heavyM:0,critDamage:0,boost:0,bonus:0,cooldown:0,speed:0,offhand:0,interval:0.5,mana:5175,regen:6,regenPeriod:10,efficiency:0,hp:5175,buffDuration:0,night:0,defense:0,defenseK:2500,ratingK:1000,species:0,pve:1,dotCrit:1,auto:1,animationFloor:0.25,latency:0,healing:0,sheetIncludesPassives:0,baseDamagePercent:0};
 export const SCREENSHOT={crossMin:87,crossMax:400,offMin:71,offMax:376,wandMin:166,wandMax:491,offhand:32.8,healing:3.6,critR:1371.2,critM:1437.2,heavyR:337,heavyM:409,critDamage:9,boost:130.5,bonus:25,cooldown:43.8,speed:27.66,interval:0.340,mana:12523,regen:661.75,efficiency:41.51,hp:16613,buffDuration:33.25};
-export const SUPPORTED_SPECS={mark:[1,2,3],step:[1,2,3,4],nature:[1,2,3,4],rapid:[1,2,3,4],mana:[1,2,3],ghost:[2,3],buck:[1,2],barrage:[3],shot:[1,2,3],weak:[1,2],trap:[1,2,3],touch:[1,2,3],decay:[1,2,3],burst:[1,2,3],area:[1,2,3],spread:[1,2,3],light:[1,2,3],laser:[1,2,3,4],wind:[1,2],heal:[1,2,3,4],healAll:[1,2,3],sleep:[1,2,3],healField:[1,2,3],shield:[1,2]};
+export const SUPPORTED_SPECS={mark:[1,2,3],step:[1,2,3,4],nature:[1,2,3,4],rapid:[1,2,3,4],mana:[1,2,3],ghost:[2,3,4],buck:[1,2],barrage:[3],shot:[1,2,3],weak:[1,2],trap:[1,2,3],touch:[1,2,3],decay:[1,2,3],burst:[1,2,3],area:[1,2,3],spread:[1,2,3],light:[1,2,3],laser:[1,2,3,4],wind:[1,2],heal:[1,2,3,4],healAll:[1,2,3],sleep:[1,2,3],healField:[1,2,3],shield:[1,2,3]};
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export const BUFF_DEFAULTS={resistance:0,selfSkillBoost:80,selfDurationExtension:3,targetResistanceDrop:220,lightMaxBonus:50,lightOpeningMultiplier:1,lightOpeningSeconds:2};
 export const ROLE_LABELS={DPS:'Урон',cooldown:'Откат',resource:'Ресурс',utility:'Вспомогательный',defensive:'Защита',unsupported:'Не подтверждён'};
 export function lightBonusAt(time,start,end,directed,params){return time>=start&&time<end?params.lightMaxBonus*(!directed&&time<start+params.lightOpeningSeconds?params.lightOpeningMultiplier:1):0;}
 export function specializationRole(id,n){
  const key=Object.keys(IDS).find(k=>IDS[k]===id);
- const roles={wind:['utility','resource'],heal:['resource','resource','utility','resource'],healAll:['DPS','utility','utility'],sleep:['utility','utility','utility'],healField:['resource','utility','resource'],shield:['defensive','utility'],mark:['utility','DPS','utility'],step:['DPS','cooldown','cooldown','defensive'],nature:['DPS','DPS','DPS','DPS'],rapid:['DPS','DPS','DPS','cooldown'],mana:['resource','utility','utility'],ghost:['defensive','defensive','utility'],buck:['cooldown','utility'],barrage:['unsupported','unsupported','DPS'],shot:['DPS','DPS','DPS'],weak:['utility','cooldown'],trap:['utility','utility','utility'],touch:['utility','DPS','DPS'],decay:['DPS','DPS','utility'],burst:['DPS','DPS','cooldown'],area:['DPS','DPS','DPS'],spread:['DPS','utility','DPS'],light:['DPS','utility','DPS'],laser:['utility','utility','cooldown','DPS']};
+ const roles={wind:['utility','resource'],heal:['resource','resource','utility','resource'],healAll:['DPS','utility','utility'],sleep:['utility','utility','utility'],healField:['resource','utility','resource'],shield:['defensive','utility','defensive'],mark:['utility','DPS','utility'],step:['DPS','cooldown','cooldown','defensive'],nature:['DPS','DPS','DPS','DPS'],rapid:['DPS','DPS','DPS','cooldown'],mana:['resource','utility','utility'],ghost:['defensive','defensive','utility','DPS'],buck:['cooldown','utility'],barrage:['unsupported','unsupported','DPS'],shot:['DPS','DPS','DPS'],weak:['utility','cooldown'],trap:['utility','utility','utility'],touch:['utility','DPS','DPS'],decay:['DPS','DPS','utility'],burst:['DPS','DPS','cooldown'],area:['DPS','DPS','DPS'],spread:['DPS','utility','DPS'],light:['DPS','utility','DPS'],laser:['utility','utility','cooldown','DPS']};
  return roles[key]?.[n-1]||'unsupported';
 }
 export function specializationUtility(catalog,specs){return catalog.skills.reduce((sum,s)=>sum+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)&&['utility','defensive'].includes(specializationRole(s.id,Number(t.id.split('_').at(-1))))).reduce((n,t)=>n+t.cost,0),0);}
@@ -66,6 +67,9 @@ export function deriveStats(state,catalog){
 
  const val=k=>(raw[k]||0)*(catalog.formats[k]?.mul??1);
  const out={...DEFAULTS,accuracyR:val('all_accuracy')+val('range_accuracy'),accuracyM:val('all_accuracy')+val('magic_accuracy'),weaken:val('all_state_accuracy')+val('weaken_accuracy'),critR:val('all_critical_attack')+val('range_critical_attack'),critM:val('all_critical_attack')+val('magic_critical_attack'),heavyR:val('all_double_attack')+val('range_double_attack'),heavyM:val('all_double_attack')+val('magic_double_attack'),critDamage:val('critical_damage_dealt_modifier'),boost:val('skill_power_amplification'),bonus:val('damage_reduction_penetration'),cooldown:val('skill_cooldown_modifier'),speed:val('attack_speed_modifier'),mana:val('cost_max'),regen:val('cost_regen'),efficiency:val('cost_consumption_modifier'),hp:val('hp_max'),buffDuration:val('buff_given_duration_modifier')};
+ for(const position of ['front','side','back'])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out[position+name]=val(position+'_'+stat);
+ for(const [suffix,type] of [['R','range'],['M','magic']])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out['boss'+name+suffix]=val('boss_all_'+stat)+val('boss_'+type+'_'+stat);
+ out.bossBonus=val('boss_bonus_attack_power');out.bossBoost=val('boss_skill_power_amplification');
  for(const [slot,weapon,prefix] of [['weapon1','Crossbow','cross'],['weapon2','Wand','wand']]){
   const e=state.items[slot],item=catalog.equipment.find(x=>x.id===e?.id);if(!item)continue;
   const r=weaponRange(item,e.level),x=extras[weapon];
@@ -89,9 +93,9 @@ export function deriveStats(state,catalog){
  return out;
 }
 // Character values always come from the build. Only fight assumptions may be overridden.
-export const COMBAT_ASSUMPTION_KEYS=['controlImmune','giantBlessing','enemyMana','stepDuration','mainWeapon','evasion','endurance','heavyEvasion','weakenResistance','incomingDps','furyInterval','enemyAttacks','moving','killInterval','targetDistance','targetHealth','resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
+export const COMBAT_ASSUMPTION_KEYS=['attackPosition','targetIsBoss','controlImmune','giantBlessing','enemyMana','stepDuration','mainWeapon','evasion','endurance','heavyEvasion','weakenResistance','incomingDps','furyInterval','enemyAttacks','moving','killInterval','targetDistance','targetHealth','resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
 export function simulationParams(state,catalog,assumptions={}){
- const params={mainWeapon:'Crossbow',...BUFF_DEFAULTS,...deriveStats(state,catalog),sheetIncludesPassives:1};
+ const params={mainWeapon:'Crossbow',attackPosition:'front',...BUFF_DEFAULTS,...deriveStats(state,catalog),targetIsBoss:1,sheetIncludesPassives:1};
  for(const key of COMBAT_ASSUMPTION_KEYS)if(Object.hasOwn(assumptions,key))params[key]=assumptions[key];
  return params;
 }
@@ -151,20 +155,20 @@ export function coverage(state,catalog){
  return warnings;
 }
 
-export function expectedHit(p,weapon,coef,flat,{accuracyBonus=0,resistanceProbability=1,baseDamageBonus=0,typeDamageBonus=0,forceCrit=false,dot=false,skill=true,off=false,maxBonus=0,critBonus=0,critDamageBonus=0,boostBonus=0,resistanceDrop=0,bonus=0,skillMultiplier=1}={}){
+export function expectedHit(p,weapon,coef,flat,{position=p.attackPosition||'front',accuracyBonus=0,resistanceProbability=1,baseDamageBonus=0,typeDamageBonus=0,forceCrit=false,dot=false,skill=true,off=false,maxBonus=0,critBonus=0,critDamageBonus=0,boostBonus=0,resistanceDrop=0,bonus=0,skillMultiplier=1}={}){
  const magic=weapon==='Wand',lo=magic?p.wandMin:off&&p.offMax>0?p.offMin:p.crossMin,hi=(magic?p.wandMax:off&&p.offMax>0?p.offMax:p.crossMax)+maxBonus;
- const cr=forceCrit?1:chance((magic?p.critM:p.critR)+critBonus-(p.endurance||0),p.ratingK),hv=chance((magic?p.heavyM:p.heavyR)-(p.heavyEvasion||0),p.ratingK);
- const hitChance=dot?1:1-chance((p.evasion||0)-(magic?(p.accuracyM||0):(p.accuracyR||0))-accuracyBonus,p.ratingK);
+ const ratings=combatRatings(p,weapon,position,critBonus,accuracyBonus),cr=forceCrit?1:ratings.critical,hv=ratings.heavy;
+ const hitChance=dot?1:ratings.hit;
  const damageScale=1+baseDamageBonus/100;const avg=(lo+hi)/2*damageScale,cd=1+(p.critDamage+critDamageBonus)/100;
- const glancing=dot?0:chance((p.endurance||0)-((magic?p.critM:p.critR)+critBonus),p.ratingK);const normal=(coef*avg+flat)*(1-glancing)+(coef*lo*damageScale+flat)*glancing,critical=(coef*(dot?avg:hi*damageScale)+flat)*cd;
+ const glancing=dot?0:ratings.glancing;const normal=(coef*avg+flat)*(1-glancing)+(coef*lo*damageScale+flat)*glancing,critical=(coef*(dot?avg:hi*damageScale)+flat)*cd;
  const base=dot&&!p.dotCrit?normal:normal*(1-cr)+critical*cr;
  const rawResistance=(p.resistance||0)-resistanceDrop;
  const resistance=rawResistance;
  // Independent amplification and resistance factors; validated against PvE fixtures.
  const resistFactor=(1-resistanceProbability)*(1-signedChance(p.resistance||0,700))+resistanceProbability*(1-signedChance(resistance,700));
- const mult=!skill?1:(1+chance(p.boost+boostBonus,p.ratingK))*resistFactor;
+ const mult=!skill?1:(1+chance(p.boost+boostBonus+(p.targetIsBoss?p.bossBoost||0:0),p.ratingK))*resistFactor;
  const typeBonus=1+typeDamageBonus/100+(magic?(p.magicDamage||0):(p.rangeDamage||0))/100;
- return hitChance*Math.max(0,base*mult*(1+hv)*typeBonus*(1+chance(p.species,p.ratingK))*p.pve*skillMultiplier/(1+p.defense/p.defenseK)+(dot?0:p.bonus+bonus));
+ return hitChance*Math.max(0,base*mult*(1+hv)*typeBonus*(1+chance(p.species,p.ratingK))*p.pve*skillMultiplier/(1+p.defense/p.defenseK)+(dot?0:p.bonus+bonus+(p.targetIsBoss?p.bossBonus||0:0)));
 }
 // Day/night affects combat healing, not the time-independent character sheet.
 export function combatHealing(state,catalog,params){
@@ -178,7 +182,7 @@ export function rapidCriticalCooldownReduction(params,offChance,offCritBonus=0){
  return chance(params.critR,params.ratingK)+offChance*chance(params.critR+offCritBonus,params.ratingK);
 }
 export function simulate({catalog,state,params,overrides={},priority,burstStacks=3},detail=false){
- const p={mainWeapon:'Crossbow',...DEFAULTS,...BUFF_DEFAULTS,targetDistance:0,targetHealth:100,...params};
+ const p={mainWeapon:'Crossbow',attackPosition:'front',...DEFAULTS,...BUFF_DEFAULTS,targetDistance:0,targetHealth:100,...params};
  const mx=masteryEffects(state),hasMx=id=>Boolean(mx[id]),rank=id=>mx[id]||0;
  const ordinaryDotBonus=.05*rank('Wand_Rare_Attack_01'),curseDotBonus=(hasMx('Wand_Rare_Attack_Skill')?.15:0)-.12*rank('Wand_Hero_Tactic_04');
  if((state.passive||[]).includes('WP_CR_CR_S_DistanceRangeAcc')){const perMeter=passiveValue(state,catalog,'WP_CR_CR_S_DistanceRangeAcc','Меткость (магия) ▲',20);p.accuracyR+=40+perMeter*p.targetDistance;p.accuracyM+=40+perMeter*p.targetDistance;p.weaken+=5*p.targetDistance;}
@@ -200,7 +204,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  // пассивки с его отдельными эффектами моделируется только там, где подтверждено.
  const list=priority.map(id=>byId.get(id)).filter(Boolean),has=id=>state.passive.includes(id),sp=(s,n)=>s.specs.includes(n);
  const cd=Object.fromEntries(list.map(s=>[s.id,0])),counts={},damage={},logs=[],damageEvents=[],bins=Array(30).fill(0),pending=[],cooldownCycles=[];
- let total=0,t=0,busy=0,nextAuto=0,fieldEnd=0,fieldSource=null,fieldNext=0,viperEnd=0,viperReady=4,sleepEnd=0,sleepHits=0,weakEnd=0,killEnd=0,corruptionStacks=0,corruptionEnd=0,spiritStacks=0,spiritEnd=0,critBuffEnd=0,battleSpeedEnd=0,battleSpeed=0,healShield=0,healShieldEnd=0,shieldBuffEnd=0,commonShield=0,commonShieldEnd=0,killProcReady=0,accuracyBuffEnd=0,accuracyBuffStacks=0,holyStacks=0,holyEnd=0,commonControlStacks=0,commonControlEnd=0,commonControlReady=0,lightningEnd=0,lightningReady=10,janiceEnd=0,healProcReady=0,vitalityEnd=0,vitalityReady=0,shieldCommonReady=0,healthySince=0,defenseWaveReady=0,defenseTimes=[],survivalReady=0,manaDrainReady=0,enemyMana=p.enemyMana,mana=p.mana,hp=p.hp,minMana=mana,starved=0,charges=0,gale=0,galeEnd=0,slow=0;
+ let total=0,t=0,busy=0,nextAuto=0,fieldEnd=0,fieldSource=null,fieldNext=0,viperEnd=0,viperReady=4,sleepEnd=0,sleepHits=0,weakCritBonus=21,weakEnd=0,killEnd=0,corruptionStacks=0,corruptionEnd=0,spiritStacks=0,spiritEnd=0,critBuffEnd=0,battleSpeedEnd=0,battleSpeed=0,healShield=0,healShieldEnd=0,shieldBuffEnd=0,commonShield=0,commonShieldEnd=0,killProcReady=0,accuracyBuffEnd=0,accuracyBuffStacks=0,holyStacks=0,holyEnd=0,commonControlStacks=0,commonControlEnd=0,commonControlReady=0,lightningEnd=0,lightningReady=10,janiceEnd=0,healProcReady=0,vitalityEnd=0,vitalityReady=0,shieldCommonReady=0,healthySince=0,defenseWaveReady=0,defenseTimes=[],survivalReady=0,manaDrainReady=0,enemyMana=p.enemyMana,mana=p.mana,hp=p.hp,minMana=mana,starved=0,charges=0,gale=0,galeEnd=0,slow=0;
  const natureSkill=list.find(s=>s.key==='nature'),natureElement=natureSkill?.specs.slice().sort((a,b)=>a-b)[0]||0;
  const common=new Set(commonSelection(state));let commonHits=0,spearReady=0,flowerReady=0,manaSpent=0,castSerial=0,crisisEnd=0,crisisReady=0;
  const commonCasts=new Set();let stepCharges=(list.find(s=>s.key==='step')?.specs.includes(2)?2:1),stepChargeMax=stepCharges,stepChargeReady=0;
@@ -209,7 +213,10 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  const debuffScale=1+(gearStats(state,catalog).debuff_given_duration_modifier||0)*.0001;
  const wp=(base,curse=false)=>weakenProbability(base,p.weaken,p.weakenResistance,curse&&state.passive.includes(PASS.duration)?pv(PASS.duration,'Вероятность наложения проклятий ▲',4)/100:0);
  const accuracyBonus=()=> (accuracyBuffEnd>t?accuracyBuffStacks*30:0)+(mana<=p.mana*.4&&hasMx('Crossbow_High_Tac_Skill')&&has(PASS.bonus)?150:0);
- const hitRate=s=>1-chance(p.evasion-(s.weapon==='Wand'?p.accuracyM:p.accuracyR)-accuracyBonus(),p.ratingK);
+ const combatPosition=()=>buffs.ghost>t&&byId.get(IDS.ghost)?.specs.includes(4)?'best':p.attackPosition;
+ const hitRate=s=>combatRatings(p,s.weapon,combatPosition(),0,accuracyBonus()).hit;
+ const criticalRate=(weapon,bonus=0)=>combatRatings(p,weapon,combatPosition(),bonus).critical;
+ const flank=weapon=>combatRatings(p,weapon,combatPosition()).position!=='front';
  const extendWeaken=seconds=>{for(const d of Object.values(dots))if(d.end>t){d.end+=seconds;d.dot?.extend(t,seconds);}for(const d of [...dotsFromWeapons,...extraDots])d.dot.extend(t,seconds);if(buffs.decay>t)buffs.decay+=seconds;if(markEnd>t)markEnd+=seconds;};
  const spendMana=amount=>{mana=Math.max(0,mana-amount);manaSpent+=amount;minMana=Math.min(minMana,mana);};
  let natureMana=0,natureUptime=0,natureStops=0;
@@ -227,7 +234,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  const holyBonus=()=>holyEnd>t?pv('WP_WA_GR_S_HealEffectUpWhenSkillDamageTaken','Эффективность исцеления ▲',15)*holyStacks:0;
  const weakChance=()=>dotStacks()>0||activeDot('area')||buffs.decay>t||markEnd>t||slow>t?1:1-dotsFromWeapons.reduce((q,d)=>{d.dot.expire(t);return q*d.dot.empty;},1);
  let pactAdding=false;
- const add=(id,value,hits=0)=>{if(t>=300||value<=0)return;total+=value;damage[id]=(damage[id]||0)+value;if(detail)damageEvents.push({time:+t.toFixed(2),id,value});bins[Math.min(29,Math.floor(t/10))]+=value;if(markEnd>t&&id!=='mark-explosion')markPool+=value;if(has(PASS.pact)&&(activeDot('touch')||activeDot('area'))){if(hasMx('Wand_Normal_Attack_Skill')&&!pactAdding){pactAdding=true;add('vampiric-onslaught',value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100);pactAdding=false;}else if(!hasMx('Wand_Normal_Attack_Skill'))hp=Math.min(p.hp,hp+value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100);}};
+ const add=(id,value,hits=0)=>{if(t>=300||value<=0)return;total+=value;damage[id]=(damage[id]||0)+value;if(detail)damageEvents.push({time:+t.toFixed(2),id,value});bins[Math.min(29,Math.floor(t/10))]+=value;if(markEnd>t&&id!=='mark-explosion')markPool+=value;if(has(PASS.pact)&&(activeDot('touch')||activeDot('area'))){if(hasMx('Wand_Normal_Attack_Skill')&&!pactAdding){pactAdding=true;add('vampiric-onslaught',value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100);pactAdding=false;}else if(!hasMx('Wand_Normal_Attack_Skill'))hp=Math.min(p.hp,hp+value*pv(PASS.pact,'Исцеление при нанесении урона ▲',17.4)/100*(flank('Wand')?1.1:1));}};
  function flower(s){if(!common.has(COMMON_IDS.flower)||t<flowerReady||manaSpent+1e-7<p.mana*.1)return;manaSpent=0;flowerReady=t+6;counts[COMMON_IDS.flower]=(counts[COMMON_IDS.flower]||0)+1;add(COMMON_IDS.flower,hitValue({...s,weapon:p.mainWeapon},2.1,0));}
  function commonHit(s){
   flower(s);
@@ -237,7 +244,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(common.has(COMMON_IDS.spear)&&++commonHits>=7&&t>=spearReady){commonHits=0;spearReady=t+5;counts[COMMON_IDS.spear]=(counts[COMMON_IDS.spear]||0)+1;add(COMMON_IDS.spear,hitValue({...s,weapon:p.mainWeapon},2.4,0));}
   if(common.has(COMMON_IDS.dragon)&&mana>=p.mana*.6){const current=mana;spendMana(current*.04);counts[COMMON_IDS.dragon]=(counts[COMMON_IDS.dragon]||0)+1;add(COMMON_IDS.dragon,hitValue({...s,weapon:p.mainWeapon},1.4,current*.07));}
  }
- const opts=(dot=false,off=false)=>({accuracyBonus:accuracyBonus(),baseDamageBonus:(janiceEnd>t?3.2:0)+(spiritEnd>t&&hasMx('Wand_Normal_Util_Skill')?pv('WP_WA_GR_S_SupportAllyCostRegenUp','Эффективность исцеления ▲',8.2)*spiritStacks:0),forceCrit:!dot&&sleepEnd>t&&sleepHits>0,dot,off,maxBonus:(weaponBuffEnd>t?25:0)+(killEnd>t?pv('WP_WA_GR_S_CurseKillBonus','Урон ▲',40)*corruptionStacks:0)+lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:(off&&has(PASS.ambi)?90:0)+(critBuffEnd>t?100:0)+(mana<=p.mana*.4&&hasMx('Crossbow_High_Tac_Skill')&&has(PASS.bonus)?150:0),critDamageBonus:(buffs.step>t?20:0)+(weakEnd>t?21:0),boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0)+(hasMx('Wand_High_Tac_Skill')?holyBonus():0),resistanceProbability:buffs.decay>t?decayProbability:1,resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
+ const opts=(dot=false,off=false)=>({position:combatPosition(),accuracyBonus:accuracyBonus(),baseDamageBonus:(janiceEnd>t?3.2:0)+(spiritEnd>t&&hasMx('Wand_Normal_Util_Skill')?pv('WP_WA_GR_S_SupportAllyCostRegenUp','Эффективность исцеления ▲',8.2)*spiritStacks:0),forceCrit:!dot&&sleepEnd>t&&sleepHits>0,dot,off,maxBonus:(weaponBuffEnd>t?25:0)+(killEnd>t?pv('WP_WA_GR_S_CurseKillBonus','Урон ▲',40)*corruptionStacks:0)+lightBonusAt(t,lightStarted,buffs.light,lightDirected,p)+(off&&has(PASS.ambi)&&!p.sheetIncludesPassives?pv(PASS.ambi,'Макс. урон парного оружия ▲',40):0),critBonus:(off&&has(PASS.ambi)?90:0)+(critBuffEnd>t?100:0)+(mana<=p.mana*.4&&hasMx('Crossbow_High_Tac_Skill')&&has(PASS.bonus)?150:0),critDamageBonus:(buffs.step>t?20:0)+(weakEnd>t?weakCritBonus:0),boostBonus:(buffs.selfBoost>t?p.selfSkillBoost:0)+(buffs.adapt>t?19:0)+(hasMx('Wand_High_Tac_Skill')?holyBonus():0),resistanceProbability:buffs.decay>t?decayProbability:1,resistanceDrop:buffs.decay>t?p.targetResistanceDrop:0,bonus:(has(PASS.bonus)&&!p.sheetIncludesPassives?pv(PASS.bonus,'Дополнит. урон ▲',13):0)+(buffs.adapt>t?pv(PASS.adapt,'Дополнит. урон ▲',26):0)});
  const offchance=(s)=>clamp(p.offhand/100+(mana<=p.mana*.3&&hasMx('Crossbow_High_Util_Skill')?.2:0)+(buffs.ghost>t?1:0)+(s?.key==='shot'&&sp(s,3)?.3:0),0,1);
  const hitValue=(s,c,f,dot=false,mult=1)=>expectedHit(p,s.weapon,c,f,{...opts(dot),skillMultiplier:s.pve*mult*(s.weapon==='Crossbow'&&p.targetHealth<=30&&hasMx('Crossbow_Rare_Attack_Skill')?1.05:1)*(s.weapon==='Wand'&&hasMx('Wand_Normal_Tac_Skill')&&corruptionEnd>t?1+.024*corruptionStacks:1)});
  const cycleById=new Map();
@@ -261,7 +268,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(weapons.has('laser')&&s.key==='laser')mult*=1.25;
   const value=(hitValue(s,c,f,false,mult)+extra*expectedHit(p,s.weapon,c,f,{...opts(false,true),skillMultiplier:s.pve*mult}))*count*hitMultiplier;
   const hits=count*(1+extra)*hitMultiplier*hitRate(s);add(s.id,value,hits);weaponHit(s,count*hitRate(s),s.key==='barrage'?.5*offchance(s):extra);
-  if(weapons.has('rapid')&&s.key==='rapid'){add('weapon-projectile',hitValue(s,1.2,0)*count);procGale(s,count);}
+  if(weapons.has('rapid')&&s.key==='rapid'&&buffs.ghost>t){add('weapon-projectile',hitValue(s,1.2,0)*count);procGale(s,count);}
   if(weapons.has('laser')&&s.key==='laser'&&!activeDot('area'))putDot('area',{id:IDS.area,key:'area',weapon:'Wand',pve:1,specs:[],castToken:s.castToken},.65,73,9);
   if(markEnd>t&&!markExplosive){add('mark-hit',hitValue(markSource,.23,15)*hits);}
   if(projectile)natureProc(hits);
@@ -275,9 +282,9 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(weapons.has('mana')&&s.key!=='auto'&&t>=weaponBuffReady){weaponBuffReady=t+30;weaponBuffEnd=t+duration(6);}
   if(weaponBuffEnd>t)mana=Math.min(p.mana,mana+21*count*(1+extra));
   if(s.weapon!=='Crossbow')return;
-  for(const d of dotsFromWeapons){if(d.kind!=='poison')continue;const q=d.id==='bellandir-poison'?wp(.2)*chance(p.critR-p.endurance,p.ratingK):wp(.15);
+  for(const d of dotsFromWeapons){if(d.kind!=='poison')continue;const q=d.id==='bellandir-poison'?wp(.2)*criticalRate('Crossbow'):wp(.15);
    if(d.id==='bellandir-poison')applyStackingDot(d.dot,q,count,d.duration*debuffMultiplier(),'Яд Бел’Адир');
-   const offQ=d.id==='bellandir-poison'?wp(.2)*chance(p.critR+(has(PASS.ambi)?90:0)-p.endurance,p.ratingK):wp(.15);if(d.id==='bellandir-poison')applyStackingDot(d.dot,offQ*extra,count,d.duration*debuffMultiplier(),'Яд Бел’Адир: парная атака');else{d.dot.hits(t,offQ*extra,count,d.duration*debuffMultiplier());weaken(1,count*offQ*extra,'Отравленный болт');}
+   const offQ=d.id==='bellandir-poison'?wp(.2)*criticalRate('Crossbow',has(PASS.ambi)?90:0):wp(.15);if(d.id==='bellandir-poison')applyStackingDot(d.dot,offQ*extra,count,d.duration*debuffMultiplier(),'Яд Бел’Адир: парная атака');else{d.dot.hits(t,offQ*extra,count,d.duration*debuffMultiplier());weaken(1,count*offQ*extra,'Отравленный болт');}
   }
  }
  const debuffMultiplier=()=>debuffScale;
@@ -307,7 +314,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(weapons.has('manaDrain')&&t>=manaDrainReady){enemyMana=Math.max(0,enemyMana-40);manaDrainReady=t+3;}
   if(weapons.has('vitality')&&s.weapon==='Crossbow'){if(t>=vitalityReady){vitalityReady=t+30;vitalityEnd=t+6;}if(vitalityEnd>t)hp=Math.min(p.hp,hp+61*hits*offchance(s));}
   if(hasMx('Crossbow_Normal_Def_Skill')&&has('WP_CR_S_WeakenAccuracy')&&hp<=p.hp*.3&&t>=survivalReady){survivalReady=t+60;for(let i=1;i<=5;i++)enqueue(t+i,()=>hp=Math.min(p.hp,hp+1000));}
-  const cr=chance((s.weapon==='Wand'?p.critM:p.critR)-p.endurance,p.ratingK);
+  const cr=criticalRate(s.weapon);
   if(hasMx('Crossbow_Rare_Tac_Skill')){accuracyBuffEnd=t+3;accuracyBuffStacks=stackGain('accuracy',hits*cr,3,3);}
   if(has('WP_WA_GR_S_CurseKillBonus')&&hasMx('Wand_Normal_Tac_Skill')&&s.weapon==='Wand'&&weakChance()>0){if(corruptionEnd<=t)corruptionStacks=0;corruptionStacks=Math.min(3,corruptionStacks+hits);corruptionEnd=t+9;}
   if(hasMx('Wand_Normal_Util_Skill')&&has('WP_WA_GR_S_SupportAllyCostRegenUp')&&s.useType==='kAttack'){spiritStacks=stackGain('spirit',hits,3,5);spiritEnd=t+3;}
@@ -347,7 +354,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
    case 'decay':{
     const self=sp(s,1),key=self?'selfBoost':'decay';
     buffs[key]=t+(self?duration(9+(sp(s,2)?p.selfDurationExtension:0)):curseDuration(9+(sp(s,2)?3:0)));
-    if(!self){decayProbability=wp(.9,true)*hitRate(s);weaken(1,decayProbability);curseProc();}else if(hasMx('Wand_Rare_Def_Skill')){buffs[key]=t+duration(6);healShield=(p.wandMin+p.wandMax)/2*4;healShieldEnd=buffs[key];}
+    if(!self){if(flank('Wand'))direct(s,2,0,1,{projectile:false,off:false});decayProbability=wp(.9,true)*hitRate(s);weaken(1,decayProbability);curseProc();}else if(hasMx('Wand_Rare_Def_Skill')){buffs[key]=t+duration(6);healShield=(p.wandMin+p.wandMax)/2*4;healShieldEnd=buffs[key];}
     if(detail)effectEvents.push({time:t,end:buffs[key],id:s.id,target:self?'self':'enemy',stat:self?'skillBoost':'skillResistance',value:self?p.selfSkillBoost:-p.targetResistanceDrop});
     break;
    }
@@ -356,12 +363,12 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
    case 'step':charges=Math.min(3,charges+1);buffs.step=t+duration(.5);if(has(PASS.adapt))buffs.adapt=t+duration(3);if(sp(s,1))buffs.wind=t+3;if((sp(s,3)||weapons.has('step'))&&cd[IDS.rapid]!==undefined)changeCooldown(IDS.rapid,t,'Смещение: сброс');break;
    case 'nature':if(natureElement&&mana>=p.mana*.1)buffs.nature=Infinity;break;
    case 'ghost':buffs.ghost=t+duration(6);break;
-   case 'rapid':{const count=sp(s,2)?4:3,boost=weakChance(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,1.5+.2*boost,32+7*boost,1,{mult});if(sp(s,4))changeCooldown(s.id,t+Math.max(0,cd[s.id]-t)*remainingCooldownFactor(hitRate(s)*chance(p.critR-p.endurance,p.ratingK),hitRate(s)*chance(p.critR+(has(PASS.ambi)?90:0)-p.endurance,p.ratingK),offchance(s)),'Скоростная стрельба: крит');});break;}
+   case 'rapid':{const count=sp(s,2)?4:3,boost=weakChance(),mult=sp(s,3)?1.2:1;for(let i=0;i<count;i++)enqueue(t+i*.12,()=>{direct(s,1.5+.2*boost,32+7*boost,1,{mult});if(sp(s,4))changeCooldown(s.id,t+Math.max(0,cd[s.id]-t)*remainingCooldownFactor(hitRate(s)*criticalRate('Crossbow'),hitRate(s)*criticalRate('Crossbow',has(PASS.ambi)?90:0),offchance(s)),'Скоростная стрельба: крит');});break;}
    case 'mana':hp-=450*(sp(s,1)?2:1);mana=Math.min(p.mana,mana+590*(sp(s,1)?2:1));break;
    case 'buck':direct(s,2.9,99);if(cd[IDS.step]!==undefined)cd[IDS.step]=Math.max(t,cd[IDS.step]-15);if(!sp(s,1)){slow=t+3;weaken();}break;
    case 'barrage':{const dur=Math.max(.5,(s.cast-s.hitDelay)/(1+p.speed/100));for(let i=0;i<32;i++)enqueue(t+i*dur/32,()=>direct(s,.27,17,1,{off:false,hitMultiplier:1+.5*offchance(s),mult:1+.08*Math.min(i,10)}));break;}
    case 'shot':{const over=sp(s,2)&&charges>=3;charges-=over?3:1;direct(s,over?6:3.1,over?12:32);break;}
-   case 'weak':direct(s,5,135);if(p.furyInterval>0&&Math.abs(t%p.furyInterval)<1||sp(s,1)&&sleepEnd>t)weakEnd=t+6*wp(.8);break;
+   case 'weak':direct(s,5,135);if(p.furyInterval>0&&Math.abs(t%p.furyInterval)<1||sp(s,1)&&sleepEnd>t){weakEnd=t+6*wp(.8);weakCritBonus=21+(flank('Crossbow')?3:0)};break;
    case 'wind':{const wasSlow=slow>t;direct(s,1,0);slow=t+3*wp(.8);weaken();if(wasSlow){battleSpeed=25;battleSpeedEnd=t+3;}break;}
    case 'sleep':if(p.controlImmune)break;slow=t+3*wp(.8);sleepEnd=t+(sp(s,2)?0:3)+curseDuration(15.6);sleepHits=sp(s,1)?2:1;weaken();break;
    case 'heal':if(weapons.has('healOverTime')&&hp<=p.hp*.4&&t>=healProcReady){healProcReady=t+30;for(let i=1;i<=6;i++)enqueue(t+i,()=>hp=Math.min(p.hp,hp+380));}if(hasMx('Wand_Rare_Tac_Skill'))direct(s,6.1,232,1,{off:false,projectile:false});else{heal(s,6.1,232);if(sp(s,4))mana=Math.min(p.mana,mana+(p.wandMin+p.wandMax)*.25);}break;
@@ -511,7 +518,7 @@ export function referenceConfigurations(catalog,target=100){
  for(const preserve of [false,true])for(const stacks of [1,2,3]){
   const keys=['nature','mana','light','decay','ghost','mark','touch','area','spread','burst','laser','rapid'];
   const priority=keys.map(k=>IDS[k]);
-  const ns={nature:[4],mana:[1],light:[1],decay:[1],ghost:[],mark:[2],touch:[2,3],area:[3],spread:[1,3],burst:preserve?[1,2,3]:[2,3],laser:[3,4],rapid:[]};
+  const ns={nature:[4],mana:[1],light:[1],decay:[1],ghost:[4],mark:[2],touch:[2,3],area:[3],spread:[1,3],burst:preserve?[1,2,3]:[2,3],laser:[3,4],rapid:[]};
   const preferred=Object.fromEntries(keys.map(k=>[IDS[k],catalog.skills.find(s=>s.id===IDS[k]).specializations.filter(t=>ns[k].includes(Number(t.id.split('_').at(-1)))).map(t=>t.id)]));
   const specs=allocateSpecializations(catalog,priority,preferred,()=>0,target);
   if(specs)result.push({name:`Проклятия + усиления · ${preserve?'сохранение':'снятие'} · ${stacks} ур.`,priority,specs,burstStacks:stacks});
