@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {Bloodlust,cooldownSeconds,masteryEffects} from '../combat-mechanics.js';
+import {DEFAULTS,IDS,PASS,models,simulate,levelFiveCooldown,expectedHit} from '../simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
+const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};
+const near=(a,b)=>assert(Math.abs(a-b)<1e-7,`${a} != ${b}`);
+near(cooldownSeconds(15,50),10);near(cooldownSeconds(15*.9,50),9);
+assert.equal(levelFiveCooldown(catalog.skills.find(s=>s.id===IDS.ghost)),36);
+assert.equal(models(catalog,state).find(s=>s.id===IDS.ghost).cooldownSec,36);
+const buff=new Bloodlust();for(let i=0;i<10;i++)buff.apply(i*.5);
+near(buff.value(4.5).stacks,10);near(buff.value(4.5).critical,1);
+buff.apply(6.5);near(buff.value(7.5).stacks,0,'ten stacks cannot refresh the fixed three-second cap window');
+const probabilistic=new Bloodlust();probabilistic.apply(0,.05);near(probabilistic.value(0).stacks,.05);near(probabilistic.value(3).stacks,0);
+const specs=(id,nums)=>catalog.skills.find(s=>s.id===id).specializations.filter(t=>nums.includes(Number(t.id.split('_').at(-1)))).map(t=>t.id);
+const p={...DEFAULTS,crossMin:100,crossMax:100,wandMin:100,wandMax:100,critR:1000,mana:1e6,auto:0,cooldown:50};
+const oneRapid=simulate({catalog,state:{...state,passive:[PASS.thirst]},params:{...p,cooldown:0},priority:[IDS.rapid],overrides:{[IDS.rapid]:{cooldownSec:999,cast:0,hitDelay:0}}},true);
+near(oneRapid.damage[IDS.rapid],expectedHit(p,'Crossbow',1.5,32)+2*expectedHit({...p,boost:5},'Crossbow',1.5,32),'a three-projectile skill grants only one Bloodlust stack per cast');
+const combo={...state,passive:[PASS.thirst,PASS.night],specs:{[IDS.burst]:specs(IDS.burst,[1,3])}};
+const run=(st,params=p,priority=[IDS.touch,IDS.burst,IDS.mark])=>simulate({catalog,state:st,params,priority,burstStacks:1},true);
+const passive=run(combo,{...p,night:1});
+assert(passive.cooldownCycles.length);for(const cycle of passive.cooldownCycles){assert.deepEqual(cycle.reductions,{},'Bloodlust never shortens cooldowns');if(cycle.id===IDS.burst){near(cycle.scheduledReady-cycle.start,9);assert(cycle.nextCast-cycle.start>=9-1e-7);}}
+const paid={Crossbow_Normal_Attack_01:10,Crossbow_Normal_Attack_02:10};
+const mastered={...combo,masteryTrees:{CR:paid}};assert(masteryEffects(mastered).Crossbow_Normal_Attack_Skill);
+const auto=run(mastered,{...p,auto:1,interval:.2,offhand:100,night:1});
+for(const cycle of auto.cooldownCycles)assert.deepEqual(cycle.reductions,{},'5% basic-attack mastery procs are self buffs, not guaranteed weakens');
+const dots=st=>simulate({catalog,state:st,params:p,priority:[IDS.touch],overrides:{[IDS.touch]:{cast:0,hitDelay:0,cooldownSec:999}}},true);
+assert.equal(dots({...state,passive:[PASS.thirst]}).damageEvents.filter(e=>e.id===IDS.touch).length,9,'Bloodlust does not extend curse duration');
+const ghostState={...combo,specs:{...combo.specs,[IDS.nature]:specs(IDS.nature,[2])}};
+const ghost=run(ghostState,{...p,auto:1,night:1,interval:.3},[IDS.nature,IDS.ghost,IDS.touch,IDS.burst,IDS.mark]);
+const ghostCasts=ghost.logs.filter(s=>s.id===IDS.ghost);
+for(let i=1;i<ghostCasts.length;i++)assert(ghostCasts[i].time-ghostCasts[i-1].time>=24-1e-7,'Ghost cannot reset its own 36/1.5-second cooldown');
+assert(ghost.cooldownCycles.some(c=>c.id===IDS.burst&&Object.keys(c.reductions).length));
+for(const cycle of ghost.cooldownCycles){if(cycle.id===IDS.ghost)assert.deepEqual(cycle.reductions,{});for(const source of Object.keys(cycle.reductions))assert(source.startsWith('Отрешённость:'));}
+const withoutGhost=run(ghostState,{...p,auto:1,night:1,interval:.3},[IDS.nature,IDS.touch,IDS.burst,IDS.mark]);
+for(const cycle of withoutGhost.cooldownCycles)assert.deepEqual(cycle.reductions,{});
+console.log('Cooldown sources: haste formula, Bloodlust buff and cap, 5% mastery, no passive curse extension, Ghost-only reductions and no self-reset passed.');

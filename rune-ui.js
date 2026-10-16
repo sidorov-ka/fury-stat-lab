@@ -1,4 +1,4 @@
-import {runeSlots,maxRuneChoices,maxRuneSelection,normalizeMaxRunes,runeSynergies,applyRuneSynergy} from './runes.js?v=ru-october-20261014';
+import {runeSlots,maxRuneChoices,maxRuneSelection,normalizeMaxRunes,runeSynergies,applyRuneSynergy} from './runes.js?v=cdr-sources-20261016';
 export function mountRunes(host,item,entry,catalog,statRows,escape){
  if(!runeSlots(item))return;
  const choices=maxRuneChoices(item),types={Attack:'Атака',Defense:'Защита',Assist:'Поддержка'};

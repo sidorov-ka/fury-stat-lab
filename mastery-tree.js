@@ -1,5 +1,5 @@
-import {commonStats} from './common-mastery.js?v=ru-october-20261014';
-import {TREES} from './mastery-data.js?v=ru-october-20261014';
+import {commonStats} from './common-mastery.js?v=cdr-sources-20261016';
+import {TREES} from './mastery-data.js?v=cdr-sources-20261016';
 export {TREES};
 const parts=c=>({attackutil:['attack','util'],utildefense:['util','defense'],defensetactic:['defense','tactic'],tacticattack:['tactic','attack']}[c]||[c]);
 export const isAutomaticNode=n=>n.type==='synergy'&&n.max===1;

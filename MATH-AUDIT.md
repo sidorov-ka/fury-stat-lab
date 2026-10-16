@@ -252,3 +252,18 @@ Sources: [official RU patch](https://throneandliberty.ru/news/103-opisanie-oktya
 Remaining scope: the shield's new specialization describes defensive directional ratings; incoming DPS is already post-mitigation, so these ratings must not reduce that input again. Repeated Swift Healing actions are not yet modelled as a complete healing rotation; its updated description alone is not a claim that healing chains are verified.
 
 Validation: all 21 test files pass; October regression checks cover hand-calculated +12 earring totals, actual trait ranks, directional activation, boss rune gating, best direction and expiry, Decay damage and the 80 DEX milestone.
+
+
+## Correction: cooldown sources, October 16, 2026
+
+The previous Battle Thirst / Bloodlust cooldown model is superseded. RUTL's `WP_CR_CR_S_WeakenAttackBonus` description/progression duplicates Selfless Diffusion's effect. The current RU TL Build skill table (`https://tl-build.ru/data/skills.json`, retrieved October 16) defines Bloodlust as a self buff: +5 skill damage boost per stack (Epic 5), at most one stack per attack skill cast; ten stacks grant +12.3% critical damage for a fixed three seconds without refreshing. The mastery node's “one Bloodlust level with 5% probability” agrees with that buff definition. This is the source interpretation used for the correction; user observation is a check, not a fitted target.
+
+- Removed permanent cooldown reduction and weaken-duration extension from Bloodlust.
+- Removed `weaken(hits*.05)`: its positional argument selected a stack tier, leaving applications=1, which falsely granted a guaranteed cooldown reduction on every basic attack. The mastery now grants probabilistic self-buff stacks and a three-second attack-speed proc, without creating an enemy weaken.
+- Only active Selfless Diffusion grants .36/.072-second weaken reductions and .05-second weaken extension per hit. It cannot reduce its own cooldown. Its .36-second progression is a proc coefficient, never its own 36-second cooldown.
+- Haste uses `base / (1 + haste/100)`. Burst's specialization and night modifier apply before haste. No minimum 8–9-second interval was added.
+- Every implemented direct cooldown reduction, including defensive Chaos Shield, now goes through the cooldown ledger.
+
+Controlled diagnostic, not the user's exported build: Burst 21−6 seconds, night 10%, haste 43.8% gives 9.388 seconds before temporary reductions. With Bellandir/Tevent, Nature fire, basic mastery and the same fixed stats, the Ghost-on median cast interval changed from 7.00 to 9.40 seconds; shortest 5.95 to 7.80 seconds. Without Ghost, reductions are empty, and no cast starts earlier than the calculated cooldown. Other builds may have different legal intervals.
+
+Validation adds explicit tests for the haste formula, Ghost's own cooldown, Bloodlust cap expiry, one stack per skill cast, no passive cooldown reductions/curse extension, probabilistic basic mastery, and reductions limited to Ghost.

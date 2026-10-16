@@ -57,11 +57,11 @@ const {ProcDot}=await import('../weapon-effects.js');
 const sorrow=new ProcDot(3);sorrow.applyLevels(0,1,9,.5,2);near(sorrow.stacks(0),1.5);sorrow.applyLevels(6,1,9,.5,2);near(sorrow.stacks(6),2.75);near(sorrow.states.filter(s=>s.stacks===3).reduce((n,s)=>n+s.weight,0),.75);sorrow.applyLevels(12,1,9,.5,2);near(sorrow.stacks(12),3);
 const misses=new ProcDot(3);misses.applyLevels(0,.5,9,.5,2);near(misses.stacks(0),.75);near(misses.empty,.5);
 const galeState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.rapid]:traits(IDS.rapid,[1,2])}};
-const galeRun=simulate({catalog:c,state:galeState,params:{...p,critR:0,critM:0},priority:[IDS.rapid],overrides:{[IDS.rapid]:{cast:0,hitDelay:0}}},true);
-near(galeRun.logs[1].time,5.45); // First level .36, then three subsequent levels .072: ready 5.424, sampled on .05 s grid.
+const galeRun=simulate({catalog:c,state:galeState,params:{...p,critR:0,critM:0},priority:[IDS.ghost,IDS.rapid],overrides:{[IDS.ghost]:{cast:0,hitDelay:0,cooldownSec:999},[IDS.rapid]:{cast:0,hitDelay:0}}},true);
+const galeCasts=galeRun.logs.filter(s=>s.id===IDS.rapid);near(galeCasts[1].time-galeCasts[0].time,5.15); // Ghost guarantees offhand: first level .36 + seven subsequent levels .072 = .864; ready 5.136, sampled on .05 s grid.
 const cappedState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.barrage]:traits(IDS.barrage,[3])}};
-const cappedRun=simulate({catalog:c,state:cappedState,params:{...p,critR:0,critM:0},priority:[IDS.barrage],overrides:{[IDS.barrage]:{cast:.25,hitDelay:0,cooldownSec:10}}},true);
-assert(cappedRun.logs[1].time>=6.4,'32 rapid weakens cannot bypass the ten-per-second limit');
+const cappedRun=simulate({catalog:c,state:cappedState,params:{...p,critR:0,critM:0},priority:[IDS.ghost,IDS.barrage],overrides:{[IDS.ghost]:{cast:0,hitDelay:0,cooldownSec:999},[IDS.barrage]:{cast:.25,hitDelay:0,cooldownSec:10}}},true);
+const barrageCasts=cappedRun.logs.filter(s=>s.id===IDS.barrage);assert(barrageCasts[1].time-barrageCasts[0].time>=6.4,'32 rapid weakens cannot bypass the ten-per-second limit');
 console.log('Proc regression: 50% extra curse is capped per outcome; Gale first level and subsequent levels use their distinct source coefficients; all weaken sources share the cap.');
 
 // The RU Nature tooltip supplies its own 30% chance and 3-second duration.

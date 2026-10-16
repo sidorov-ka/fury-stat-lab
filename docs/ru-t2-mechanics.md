@@ -45,3 +45,7 @@ Correction: the prior interpretation of Battle Thirst was wrong. For stacking we
 ### Nature source correction
 
 The previous import wrongly reused Fireball's 80% application probability and 12-second burn lifetime for Nature fire. The retained RU Epic-4 Nature tooltip says 30% and 3 seconds. Only the per-tick burning coefficient (3.4% +15) is taken from Fireball, not its triggering probability or lifetime. Wind uses Nature's 30% application and cold uses 62.5%, not guaranteed procs. A per-cast cooldown ledger now attributes every weakening reduction that made Curse Burst available. No arbitrary minimum Curse Burst interval is introduced to fit a result.
+
+
+### October 16 correction: ownership of cooldown effects
+The earlier Battle Thirst statement above is superseded. Bloodlust is a stacking self buff to skill damage and critical damage; it does not reduce cooldowns or extend enemy weakens. Only active Selfless Diffusion applies the .36/.072-second weaken reductions and hit-based duration extensions, and it never reduces its own cooldown. The base-attack mastery gives 5% self-buff procs; it does not apply a weaken. See `MATH-AUDIT.md` for source disagreement, calculation and validation.
