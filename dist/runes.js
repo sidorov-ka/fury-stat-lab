@@ -1,4 +1,4 @@
-import {RUNE_DATA as data} from './rune-data.js?v=cdr-sources-20261016';
+import {RUNE_DATA as data} from './rune-data.js?v=full-audit-20261016';
 const grades=['kC','kB','kA','kAA'];
 export const runeSlots=item=>Math.min(3,Math.max(0,Number(item?.runeSlots)||0));
 export const runeChoices=item=>data.runes.filter(r=>r.slot===item.slot&&r.type!=='All');
@@ -9,7 +9,7 @@ export function runeEffects(item,entry,catalog){
   if(!r||!r.statPool.some(p=>p.stat===s.stat))return null;
   const level=Math.max(1,Math.min(r.maxLevel,Math.trunc(Number(s.level)||1)));
   const curve=data.enchantCurves[r.enchantValueId]?.[s.stat]||[];
-  let value=Number(curve[level]??curve[level-1]??0);
+  let value=Number(data.baseValues[r.baseValueId]?.[s.stat]||0)+Number(curve[Math.min(level,curve.length)-1]||0);
   const f=catalog.formats[s.stat]||{},mul=f.mul??1,scaled=value*mul;
   if(!f.suffix&&(Math.abs(scaled)>=10||Math.abs(scaled-Math.round(scaled))<=.35))value=Math.round(scaled)/mul;
   add(s.stat,value);return {...r,level};

@@ -1,0 +1,3669 @@
+{
+  "retrieved": "2026-10-16",
+  "sources": {
+    "equipment": "https://tl-build.ru/api/equipment",
+    "traits": "https://tl-build.ru/data/traits.json",
+    "runes": "https://tl-build.ru/data/runes.json",
+    "mastery": "https://tl-build.ru/data/mastery-v2.json",
+    "attributes": "https://tl-build.ru/data/attributes.json",
+    "skills": "https://tl-build.ru/data/skills.json",
+    "resonance": "https://tl-build.ru/data/trait-resonance.json"
+  },
+  "itemFieldChanges": [
+    {
+      "id": "crossbow_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t1_construct_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t1_undead_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t2_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t2_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t2_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t3_mythicbeast_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t5_boss_001",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t5_boss_002",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t2_polymorph_001",
+      "fields": [
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t1_construct_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t1_undead_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t2_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t3_Arthropod_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t3_beast_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t3_mythicbeast_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t5_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t5_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t5_boss_005",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t2_polymorph_001",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantMaxLevel",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_a_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_a_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_a_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_a_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_a_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t2_set_001",
+      "fields": [
+        "extraStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_a_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_a_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_a_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_a_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_a_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_a_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_a_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_a_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_a_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_a_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_a_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_a_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_a_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_a_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_a_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_b_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_b_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_b_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_b_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_a_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_a_t1_nomal_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_a_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_a_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_a_t2_set_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_nomal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_nomal_002",
+      "fields": [
+        "extraStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_nomal_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_nomal_004",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t2_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_nomal_002",
+      "fields": [
+        "extraStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_b_t1_nomal_001",
+      "fields": [
+        "extraStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_b_t1_nomal_002",
+      "fields": [
+        "extraStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_nomal_004",
+      "fields": [
+        "extraStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t2_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t3_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t3_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t2_addoption_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t2_addoption_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t2_addoption_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_t2_addoption_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t3_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_008",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_009",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_010",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t2_addoption_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t2_addoption_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t2_addoption_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_t2_addoption_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t3_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_b_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t2_addoption_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t2_addoption_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t2_addoption_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t2_addoption_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t3_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_b_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_b_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_b_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_b_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t1_nomal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t2_addoption_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t2_addoption_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t2_addoption_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_a_t2_addoption_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t3_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_008",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_Nudge_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_Nudge_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_a_Nudge_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_Nudge_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_Nudge_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_a_Nudge_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_Nudge_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_Nudge_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_Nudge_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_Arena_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_Arena_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_Arena_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_Arena_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_a_t1_Arena_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_Arena_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_Arena_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_Arena_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_Arena_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_Arena_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_Arena_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_Arena_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_Arena_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_Arena_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_set_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_set_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_set_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_set_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_set_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa2_t1_normal_013",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t2_polymorph_002",
+      "fields": [
+        "baseStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t2_nomal_003",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t1_normal_001",
+      "fields": [
+        "baseStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_a_t3_Arthropod_001",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t2_boss_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa2_t1_normal_010",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_007",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa2_t1_normal_013",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_009",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa2_t1_normal_011",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t5_boss_002",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t2_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t1_normal_009",
+      "fields": [
+        "baseStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa2_t1_normal_010",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t2_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t3_boss_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_set_002",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_nomal_005",
+      "fields": [
+        "extraStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_008",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t1_normal_001",
+      "fields": [
+        "baseStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t2_set_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t2_set_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t2_set_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t2_set_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t2_set_003",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_011",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t2_nomal_001",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t1_nomal_009",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_017",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_015",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t2_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t2_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_012",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_013",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_021",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_007",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t3_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t2_normal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t2_normal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t2_normal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t2_normal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t2_normal_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t1_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t1_nomal_014",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t1_normal_010",
+      "fields": [
+        "baseStats",
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t3_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t1_nomal_008",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t2_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cape_aa_t2_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t3_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t5_boss_003",
+      "fields": [
+        "baseStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t2_boss_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa2_t1_normal_011",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t2_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t2_boss_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t1_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_plate_aa_t2_set_002",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t2_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_020",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa_t3_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_019",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t2_boss_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t1_nomal_005",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_fabric_a_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_016",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cape_aa_t2_boss_002",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_b_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_aa_t1_nomal_006",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_010",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa2_t1_normal_013",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa2_t1_normal_012",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t1_nomal_009",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cloak_a_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_plate_aa_t1_nomal_005",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa2_t1_normal_014",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t2_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa2_t1_normal_012",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t1_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "belt_aa_t2_boss_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "crossbow_aa_t2_boss_001",
+      "fields": [
+        "baseStats",
+        "enchantScaling",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t2_boss_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t1_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_nomal_005",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_a_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_fabric_aa_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "cape_aa_t2_boss_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t1_normal_011",
+      "fields": [
+        "baseStats",
+        "extraStats",
+        "extraEnchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "necklace_aa2_t1_normal_011",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t1_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_aa_t2_polymorph_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_plate_aa_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_plate_aa_t2_set_002",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t1_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa_t2_boss_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t2_boss_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_022",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "bracelet_aa2_t1_normal_012",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "wand_a_t2_nomal_003",
+      "fields": [
+        "baseStats",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_fabric_aa_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_fabric_aa_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_leather_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "chest_leather_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t2_normal_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "hands_leather_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "feet_leather_aa_t2_normal_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_set_001",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "head_plate_aa_t1_nomal_005",
+      "fields": [
+        "enchantScaling",
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_set_004",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t2_set_002",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_fabric_aa_t1_set_001",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t2_set_003",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "legs_leather_aa_t1_nomal_005",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    },
+    {
+      "id": "ring_aa2_t1_normal_018",
+      "fields": [
+        "traitBaseSeeds"
+      ]
+    }
+  ],
+  "sourceSha256": {
+    "rutl-traits.json": "0b5b8b06bb5cdd22b46ac60e1e0285a2cebee67656cf8d7abb17cada52b6f0d3",
+    "rutl-runes.json": "95e034476a100fbec9fd1c21773f1c7f7dd969728d37c6d5f1d83818ae2f4304",
+    "rutl-attribute-stats.json": "d6e52d4ed35dda5d6ca81e728a0e9723c76ed05f5dc56391beac8aa736940548",
+    "tl-trait-resonance.json": "284c068d1288ada19f08a33da0314b4ae52a12300fca65c7b1639eefa293a15e",
+    "tl-skill-stats.json": "c4f211d04a29885825ed7e6c2ba2648c8f5f2c56fdd53d04597a2f7f90474779",
+    "rutl-attributes.json": "22323c8c27585ee433621267be80dab3387c3098b42509b8fd9cd6ad7dd71efc",
+    "tl-attributes.json": "463f77bc9b2807d99e43d47eeefb3f4b965923b047c622770ddbda9baa35e4c3",
+    "tl-stat-format.json": "63f77161a0b265d7641823598e29c69ed19e6b48d1e77981c64d02a93a59078d",
+    "rutl-skills.json": "3ce5b967f4df3c9980aa841771960876d0f37a2cae49362219444bf14b5030a7",
+    "tl-skills.json": "6ca5d1a91a9ecb4e995fabff8633ed650120d952fc00fa5c362c9fb651cd79a1",
+    "tl-mastery-v2.json": "5703aed235ebb2b886b6e360b43d0147f3294e629b5d31303592ae87706187dc",
+    "rutl-stat-format.json": "de6033a0445fd582cadf6185a48a28d9e10ac21587d1c304ca962f46a66d5141",
+    "tl-runes.json": "506af7fafa66fa8ba6279a9f98d375ee35790f134da31efb631464d0d035d0c5",
+    "rutl-stat-labels.json": "09896a0e002cfac3ff93fe4d02f9abde5eecc9528dad47194e0988f45740d620",
+    "tl-traits.json": "faaaa99d3335b04edccb48576c681794c50060fa2ec86503ce30e64688b692de",
+    "rutl-equipment.json": "f4b95e5069bed025de67bc07eb7c05e66453fd00dcfe49ec815e2e9540d6a936",
+    "tl-skill-spec-overrides.json": "c43f2e697b4df3b9ac2899abd1624fde599c21316f2ee5fad8af8c03f2e942db",
+    "tl-equipment.json": "f571fbe2cff01ffad69650a79955b517c4d94668ac6c88dd4be59c62e5ceeb31",
+    "equipment-diffs.json": "c50d9707cf6878d783b6eabdf19a4a3b1d76c21a1f58a3de77a9b59f7638a8d7",
+    "rutl-skill-mastery-v2.json": "16dfe74e4a58f58b4f018163dedd11aa6783660dc8e42ded6266d608cd20f572",
+    "tl-0glx30sxz10d8.js": "5eb3a6c7621f85f2e6569e41ec025f2957a4b4428f0dd431d7dd88fd72bde048",
+    "tl-0ib7m82recfig.js": "96c604f42efb571a5df24510d30530038dafe26bee96e00beea73e762a399060"
+  },
+  "ordinaryMasteryChanges": [
+    "Wand_Normal_UtilDefense_06",
+    "Wand_Normal_Util_05",
+    "Wand_Normal_AttackUtil_03",
+    "Wand_High_TacticAttack_12",
+    "Wand_High_DefenseTactic_09",
+    "Wand_High_Util_04",
+    "Wand_Rare_UtilDefense_06",
+    "Wand_Rare_Util_05"
+  ],
+  "matchedItems": 548,
+  "totalItems": 595,
+  "rutlMatchedItems": 589,
+  "changedBaseOrExtraItems": [
+    "crossbow_aa_t5_boss_001",
+    "crossbow_aa_t5_boss_002",
+    "wand_aa_t5_boss_005",
+    "wand_aa_t2_polymorph_001",
+    "head_plate_aa_t2_set_001",
+    "feet_plate_aa_t1_nomal_002",
+    "chest_leather_aa_t1_nomal_002",
+    "feet_leather_b_t1_nomal_001",
+    "feet_leather_b_t1_nomal_002",
+    "chest_fabric_aa_t1_nomal_004",
+    "crossbow_aa_t2_polymorph_002",
+    "crossbow_a_t2_nomal_003",
+    "crossbow_a_t1_normal_001",
+    "crossbow_a_t3_Arthropod_001",
+    "wand_aa_t5_boss_002",
+    "wand_aa_t1_normal_009",
+    "chest_plate_aa_t1_set_002",
+    "chest_plate_aa_t1_nomal_005",
+    "wand_a_t1_normal_001",
+    "wand_a_t2_nomal_001",
+    "crossbow_aa_t1_normal_010",
+    "crossbow_aa_t5_boss_003",
+    "chest_plate_aa_t2_set_002",
+    "cape_aa_t2_boss_002",
+    "necklace_aa2_t1_normal_012",
+    "crossbow_aa_t2_boss_001",
+    "wand_aa_t1_normal_011",
+    "wand_a_t2_nomal_003"
+  ],
+  "setStatChanges": [
+    {
+      "set": "Честь полководца",
+      "pieces": 4,
+      "before": {},
+      "after": {
+        "shield_block_chance": 1000.0
+      }
+    },
+    {
+      "set": "Триумф великого стратега",
+      "pieces": 4,
+      "before": {},
+      "after": {
+        "maneuver_movement_distance_modifier": 1000.0
+      }
+    },
+    {
+      "set": "Память призрачного волка",
+      "pieces": 4,
+      "before": {},
+      "after": {
+        "off_hand_attack_chance_modifier": 3000.0
+      }
+    },
+    {
+      "set": "Явление Собирателя жизней",
+      "pieces": 2,
+      "before": {
+        "CriticalDamageDealtModifier": 1400
+      },
+      "after": {
+        "critical_damage_dealt_modifier": 1400
+      }
+    },
+    {
+      "set": "Расцвет первозданной природы",
+      "pieces": 2,
+      "before": {},
+      "after": {
+        "debuff_given_duration_modifier": 750
+      }
+    },
+    {
+      "set": "Обеты вознесённого стража",
+      "pieces": 4,
+      "before": {},
+      "after": {
+        "heal_modifier": 2500
+      }
+    },
+    {
+      "set": "Хаос измерений",
+      "pieces": 2,
+      "before": {
+        "StaminaRegen": -10000
+      },
+      "after": {
+        "stamina_regen": -10000.0
+      }
+    },
+    {
+      "set": "Искупление Вестника рассвета",
+      "pieces": 4,
+      "before": {
+        "damage_reduction_penetration": 35
+      },
+      "after": {
+        "bonus_attack_power_main_hand": 35
+      }
+    },
+    {
+      "set": "Видения вещего жреца",
+      "pieces": 4,
+      "before": {
+        "heal_taken_modifier": 1000
+      },
+      "after": {
+        "skill_heal_taken_modifier": 1000.0
+      }
+    },
+    {
+      "set": "Крестовый поход Вершителя судеб",
+      "pieces": 2,
+      "before": {},
+      "after": {
+        "periodic_skill_damage_modifier": 2000.0
+      }
+    },
+    {
+      "set": "Блеск неувядающей славы",
+      "pieces": 4,
+      "before": {
+        "damage_reduction": 24
+      },
+      "after": {
+        "damage_reduction": 12
+      }
+    },
+    {
+      "set": "Путь покаяния",
+      "pieces": 4,
+      "before": {
+        "damage_reduction": 40,
+        "melee_critical_defense": 1500,
+        "range_critical_defense": 1500,
+        "magic_critical_defense": 1500
+      },
+      "after": {
+        "damage_reduction": 20,
+        "all_critical_defense": 1500
+      }
+    },
+    {
+      "set": "Шёпот Клинка теней",
+      "pieces": 2,
+      "before": {
+        "melee_evasion": 1100,
+        "range_evasion": 1100,
+        "magic_evasion": 1100
+      },
+      "after": {
+        "melee_evasion": 2200,
+        "range_evasion": 2200,
+        "magic_evasion": 2200
+      }
+    },
+    {
+      "set": "Мудрые советы старейшины",
+      "pieces": 2,
+      "before": {},
+      "after": {
+        "periodic_skill_damage_modifier": 1200
+      }
+    }
+  ],
+  "sourceConflicts": [
+    "TL Build CON>=50 duplicates 1000 raw all_double_defense; count milestone once",
+    "RUTL additive offhand versus TL Build relative modifier; selected relative",
+    "RUTL difference of skill boost/resistance versus independent factors in existing WTFOMG fixtures; retained independent model"
+  ],
+  "checks": {
+    "tlItems": 548,
+    "rutlOnlyItems": 47,
+    "tlUpgrades": 5789,
+    "rutlOnlyUpgrades": 464,
+    "runeCases": 1774,
+    "attributeCases": 1000,
+    "staticSetRules": 35
+  }
+}

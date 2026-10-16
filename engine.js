@@ -1,10 +1,10 @@
-import {treeStats} from './mastery-tree.js?v=cdr-sources-20261016';
-import {runeStats} from './runes.js?v=cdr-sources-20261016';
+import {treeStats} from './mastery-tree.js?v=full-audit-20261016';
+import {runeStats} from './runes.js?v=full-audit-20261016';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
 export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['earring','Серьги','Earring'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
 export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
 export function itemStats(item,level=0,traits=[],catalog,resonanceId=null){
- const stats={}; const add=(k,v)=>{if(Number.isFinite(Number(v)))stats[k]=(stats[k]||0)+Number(v)};
+ const stats={}; const add=(k,v)=>{if(k==='species_damage_amplification')k='all_species_damage_amplification';if(Number.isFinite(Number(v)))stats[k]=(stats[k]||0)+Number(v)};
  for(const [base,scale] of [['baseStats','enchantScaling'],['extraStats','extraEnchantScaling']]){
   for(const key of new Set([...Object.keys(item[base]||{}),...Object.keys(item[scale]?.[level]||{})])) add(key,Number(item[base]?.[key]||0)+Number(item[scale]?.[level]?.[key]||0));
  }
@@ -15,7 +15,8 @@ export function itemStats(item,level=0,traits=[],catalog,resonanceId=null){
   seen.add(t.id);const info=catalog.traits[t.id];if(!info)continue;
   const limit=traitLimit(item.grade);if(!limit)continue;
   const lv=Math.max(1,Math.min(limit,t.level||1));
-  add(info.stat,info.curve?.length?Number(info.base||0)+Number(info.curve[lv-1]||0):Number(info.max??info.base??0));
+  const base=info.baseBySeed?.[String(item.traitBaseSeeds?.[t.id]||1)]??info.base??0;
+  add(info.stat,info.curve?.length?Number(base)+Number(info.curve[lv-1]||0):Number(info.max??base));
  }
  for(const [k,v] of Object.entries(resonanceStats(item,{traits,resonanceId},catalog)))add(k,v);
  return stats;

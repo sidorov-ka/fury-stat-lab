@@ -18,7 +18,7 @@ assert.equal(simulationParams(state,c).dotCrit,1);
 const traits=(id,nums)=>c.skills.find(s=>s.id===id).specializations.filter(t=>nums.includes(Number(t.id.split('_').at(-1)))).map(t=>t.id);
 const rapidState={...state,specs:{[IDS.rapid]:traits(IDS.rapid,[2,3,4])}};
 const rapid=simulate({catalog:c,state:rapidState,params:{...p,crossMax:100,critR:1000,offMin:100,offMax:100,offhand:100},priority:[IDS.rapid],overrides:{[IDS.rapid]:{cast:0,hitDelay:0}}},true);
-near(rapid.logs[1].time,6.1);
+near(rapid.logs[1].time,6.7); // Three main and three offhand bolts; no fourth main bolt.
 const step=simulate({catalog:c,state,params:{...p,speed:200},priority:[IDS.step],overrides:{[IDS.step]:{cooldownSec:999}}},true);near(step.logs[0].duration,1);
 const circle=preserveArea=>simulate({catalog:c,state:{...state,specs:{[IDS.area]:traits(IDS.area,preserveArea?[2]:[])}},params:p,priority:[IDS.touch,IDS.area,IDS.burst],burstStacks:1,overrides:Object.fromEntries([IDS.touch,IDS.area,IDS.burst].map(id=>[id,{cast:0,hitDelay:0,cooldownSec:999}]))},true);
 assert(circle(true).damage[IDS.area]>0);assert(!circle(false).damage[IDS.area]);
@@ -58,7 +58,7 @@ const sorrow=new ProcDot(3);sorrow.applyLevels(0,1,9,.5,2);near(sorrow.stacks(0)
 const misses=new ProcDot(3);misses.applyLevels(0,.5,9,.5,2);near(misses.stacks(0),.75);near(misses.empty,.5);
 const galeState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.rapid]:traits(IDS.rapid,[1,2])}};
 const galeRun=simulate({catalog:c,state:galeState,params:{...p,critR:0,critM:0},priority:[IDS.ghost,IDS.rapid],overrides:{[IDS.ghost]:{cast:0,hitDelay:0,cooldownSec:999},[IDS.rapid]:{cast:0,hitDelay:0}}},true);
-const galeCasts=galeRun.logs.filter(s=>s.id===IDS.rapid);near(galeCasts[1].time-galeCasts[0].time,5.15); // Ghost guarantees offhand: first level .36 + seven subsequent levels .072 = .864; ready 5.136, sampled on .05 s grid.
+const galeCasts=galeRun.logs.filter(s=>s.id===IDS.rapid);near(galeCasts[1].time-galeCasts[0].time,5.45); // Base offhand is zero: guarantee adds one offhand; .36 + 3*.072 = .576, ready 5.424.
 const cappedState={...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.barrage]:traits(IDS.barrage,[3])}};
 const cappedRun=simulate({catalog:c,state:cappedState,params:{...p,critR:0,critM:0},priority:[IDS.ghost,IDS.barrage],overrides:{[IDS.ghost]:{cast:0,hitDelay:0,cooldownSec:999},[IDS.barrage]:{cast:.25,hitDelay:0,cooldownSec:10}}},true);
 const barrageCasts=cappedRun.logs.filter(s=>s.id===IDS.barrage);assert(barrageCasts[1].time-barrageCasts[0].time>=6.4,'32 rapid weakens cannot bypass the ten-per-second limit');

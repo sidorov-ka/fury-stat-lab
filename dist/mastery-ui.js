@@ -1,5 +1,5 @@
-import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=cdr-sources-20261016';
-const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png?v=cdr-sources-20261016',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png?v=cdr-sources-20261016'};
+import {TREES,summary,lockReason,changeNode,normalizeTree,nodeRows,nodeText,treeStats,treeWarnings,isAutomaticNode,SHEET_MASTERY_NODES} from './mastery-tree.js?v=full-audit-20261016';
+const MASTERY_ICON_OVERRIDES={Wand_High_Attack_01:'icons/mastery/curse-duration.png?v=full-audit-20261016',Wand_Rare_Attack_01:'icons/mastery/periodic-damage.png?v=full-audit-20261016'};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>Number(v).toLocaleString('ru-RU',{maximumFractionDigits:2});
 const colors={common:'#a3adba',uncommon:'#64ad84',rare:'#739fe6',epic:'#b68bea'};
@@ -17,7 +17,7 @@ export function mountMastery(panel,getState,catalog,onChange){
   const sectorNames={attack:'Атака',util:'Поддержка',defense:'Защита',tactic:'Тактика'},pointSummary=summary(tree,choice);
   const sectors=automatic?`<p class="micro">${Object.entries(sectorNames).map(([sector,name])=>`${name}: ${pointSummary.sectors[n.ring+':'+sector]||0} / ${n.required||20}`).join(' · ')}. Не более двух ключевых узлов на кольце.</p>`:'';
   const controls=automatic?`<p class="notice">${l?'Открыт автоматически':'Закрыт'} · 0 очков</p>`:`<div class="mastery-stepper"><button data-minus aria-label="Убрать очко" ${l?'':'disabled'}>−</button><b>${l} / ${n.max}</b><button data-plus aria-label="Добавить очко" ${reason||l>=n.max?'disabled':''}>+</button></div>`;
-  box.innerHTML=`<h4>${esc(n.name)}</h4>${controls}${sectors}<p class="micro">${esc(reason||(automatic?'Условия выполнены':'Узел доступен'))}${!rs.length?(SHEET_MASTERY_NODES.has(n.id)?' · Бонус учитывается при выборе связанной пассивки':' · Эффект не включён в DPS'):''}</p><p class="description">${esc(n.text)}</p><p class="micro">${l?'Текущий бонус':'Бонус при открытии'}</p>${rows(rs)}`;
+  box.innerHTML=`<h4>${esc(n.name)}</h4>${controls}${sectors}<p class="micro">${esc(reason||(automatic?'Условия выполнены':'Узел доступен'))}${!rs.length?(SHEET_MASTERY_NODES.has(n.id)?' · Бонус учитывается при выборе связанной пассивки':' · Эффект не включён в DPS'):''}</p><p class="description">${esc(nodeText(n,l||1))}</p><p class="micro">${l?'Текущий бонус':'Бонус при открытии'}</p>${rows(rs)}`;
   if(!automatic){box.querySelector('[data-minus]').onclick=()=>update(key,n.id,-1);box.querySelector('[data-plus]').onclick=()=>update(key,n.id,1);}
  }
  function draw(){const state=getState();for(const [key,tree] of Object.entries(TREES)){

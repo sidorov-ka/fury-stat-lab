@@ -1,5 +1,5 @@
-import {commonStats} from './common-mastery.js?v=cdr-sources-20261016';
-import {TREES} from './mastery-data.js?v=cdr-sources-20261016';
+import {commonStats} from './common-mastery.js?v=full-audit-20261016';
+import {TREES} from './mastery-data.js?v=full-audit-20261016';
 export {TREES};
 const parts=c=>({attackutil:['attack','util'],utildefense:['util','defense'],defensetactic:['defense','tactic'],tacticattack:['tactic','attack']}[c]||[c]);
 export const isAutomaticNode=n=>n.type==='synergy'&&n.max===1;
@@ -13,8 +13,9 @@ function allowedAutomatic(tree,selected,ring,preferred=Object.keys(selected)){
  candidates.sort((a,b)=>a.order-b.order||b.points-a.points||tree.nodes.indexOf(a.n)-tree.nodes.indexOf(b.n));
  return new Set(candidates.slice(0,2).map(x=>x.n.id));
 }
-const textStats={Wand_High_Attack_01:[['curse_duration',1]],Wand_Rare_Attack_01:[['periodic_damage_percent',5]],Crossbow_Hero_Tactic_04:[['move_speed_modifier',1000]],Wand_Hero_Tactic_04:[['healing_output_percent',12],['curse_damage_percent',-12]],Wand_Hero_Defense_03:[['healing_cooldown_percent',14]]};
-export const nodeRows=(n,l)=>l>0?(n.levels[l-1]||n.stats||[]).length?(n.levels[l-1]||n.stats): (textStats[n.id]||[]).map(([stat,value])=>({stat,value:value*l/n.max})):[];
+const textStats={Wand_High_Attack_01:[['curse_duration',1]],Wand_Rare_Attack_01:[['periodic_damage_percent',5]],Crossbow_Hero_Tactic_04:[['move_speed_modifier',800]],Wand_Hero_Util_02:[['healing_output_percent',12],['curse_damage_percent',-12]],Wand_Hero_Defense_03:[['healing_cooldown_percent',14]]};
+export const nodeRows=(n,l)=>l>0?(n.levels[l-1]||n.stats||[]).length?(n.levels[l-1]||n.stats): (textStats[n.id]||[]).map(([stat,value])=>({stat,value:value*(n.grade==='epic'?.5+.5*l/n.max:l/n.max)})):[];
+export function nodeText(n,level=1){const lines=(n.text||'').split(/\r?\n/);return n.grade==='epic'&&lines.length===n.max?lines[Math.max(0,Math.min(n.max-1,level-1))]:n.text;}
 export function summary(tree,selected={}){
  const out={total:0,grades:{},sectors:{},epic:0};
  for(const n of tree.nodes){const l=Number(selected[n.id])||0;if(!l||free(n))continue;out.total+=l;out.grades[n.grade]=(out.grades[n.grade]||0)+l;for(const c of pointParts(n)){const k=n.ring+':'+c;out.sectors[k]=(out.sectors[k]||0)+l;}if(n.grade==='epic')out.epic++;}
