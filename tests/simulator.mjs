@@ -55,7 +55,7 @@ assert.equal(specCost({...state,active:joint.priority,specs:joint.specs},catalog
 assert(joint.priority.length<=12);assert.equal(new Set(joint.priority).size,joint.priority.length);
 for(const id of joint.priority)assert(specializationOptions(catalog,id).some(o=>JSON.stringify(o.ids)===JSON.stringify(joint.specs[id])),'legal specialization set');
 assert.deepEqual(joint,optimize(jointInput),'joint search must be repeatable');
-const replay=simulate({...jointInput,state:{...state,active:joint.priority,specs:joint.specs},priority:joint.priority,burstStacks:joint.burstStacks},true);
+const replay=simulate({...jointInput,state:{...state,active:joint.priority,specs:joint.specs},priority:joint.priority,burstStacks:joint.burstStacks,rotationPolicy:joint.rotationPolicy},true);
 assert.equal(replay.total,joint.total,'returned specialization snapshot must reproduce reported damage');
 assert(optimize({...jointInput,budget:60}).dps>=joint.dps,'more search preserves incumbent');
 assert(allocateSpecializations(catalog,[IDS.nature]),'partial budgets are valid');

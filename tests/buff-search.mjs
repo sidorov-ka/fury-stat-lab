@@ -8,7 +8,7 @@ const input={catalog,state,params:{...DEFAULTS,crossMin:100,crossMax:100,wandMin
 const result=optimize(input);
 assert(result.priority.includes(IDS.light),'search must discover an indirect damage buff absent from the original panel');
 assert(result.specs[IDS.light].some(x=>x.endsWith('_1')));
-const replay={...input,state:{...state,active:result.priority,specs:result.specs},priority:result.priority,burstStacks:result.burstStacks};
+const replay={...input,state:{...state,active:result.priority,specs:result.specs},priority:result.priority,burstStacks:result.burstStacks,rotationPolicy:result.rotationPolicy};
 assert.equal(simulate(replay).dps,result.dps);
 assert(result.dps>simulate({...replay,priority:result.priority.filter(x=>x!==IDS.light)}).dps);
 assert(result.specPoints<=100);

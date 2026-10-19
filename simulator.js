@@ -185,7 +185,7 @@ export function intervalWithSpeedBonus(params,bonus){return params.interval*(1+p
 export function rapidCriticalCooldownReduction(params,offChance,offCritBonus=0){
  return chance(params.critR,params.ratingK)+offChance*chance(params.critR+offCritBonus,params.ratingK);
 }
-export function simulate({catalog,state,params,overrides={},priority,burstStacks=3},detail=false){
+export function simulate({catalog,state,params,overrides={},priority,burstStacks=3,rotationPolicy=null},detail=false){
  const p={mainWeapon:'Crossbow',attackPosition:'front',...DEFAULTS,...BUFF_DEFAULTS,targetDistance:0,targetHealth:100,...params};
  const mx=masteryEffects(state),hasMx=id=>Boolean(mx[id]),rank=id=>mx[id]||0;
  const ordinaryDotBonus=.05*rank('Wand_Rare_Attack_01'),curseDotBonus=(hasMx('Wand_Rare_Attack_Skill')?.15:0)-.12*rank('Wand_Hero_Util_02');
@@ -224,7 +224,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  const flank=weapon=>combatRatings(p,weapon,combatPosition()).position!=='front';
  const extendWeaken=seconds=>{for(const d of Object.values(dots))if(d.end>t){d.end+=seconds;d.dot?.extend(t,seconds);}for(const d of [...dotsFromWeapons,...extraDots])d.dot.extend(t,seconds);if(buffs.decay>t)buffs.decay+=seconds;if(markEnd>t)markEnd+=seconds;};
  const spendMana=amount=>{mana=Math.max(0,mana-amount);manaSpent+=amount;minMana=Math.min(minMana,mana);};
- let natureMana=0,natureUptime=0,natureStops=0;
+ let natureMana=0,natureUptime=0,natureStops=0,planningWait=0;
  const buffs={nature:0,ghost:0,step:0,adapt:0,decay:0,selfBoost:0,light:0,wind:0},dots={},effectEvents=[];
  let lightStarted=0,lightDirected=false,decayProbability=1;
  let markEnd=0,markPool=0,markExplosive=false,markSource=null,procWindow=-1,procCount=0;
@@ -450,7 +450,32 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(common.has(COMMON_IDS.crisis)&&hp<p.hp*.5&&t>=crisisReady){crisisEnd=t+5;crisisReady=t+60;}
   if(t+1e-7<busy)continue;
   let chosen=natureSkill&&eligible(natureSkill)?natureSkill:null,unfunded=false;
-  for(const s of list)if(!chosen&&eligible(s)){const cost=s.manaCost/(1+p.efficiency/100);if(mana+1e-7>=cost){chosen=s;break;}unfunded=true;}
+  const available=[];
+  for(const s of list)if(eligible(s)){const cost=s.manaCost/(1+p.efficiency/100);if(mana+1e-7>=cost)available.push(s);else unfunded=true;}
+  if(!chosen)chosen=available[0]||null;
+  if(rotationPolicy&&markSkillExplosive()){
+   const speed=1+(p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
+   const impact=s=>Math.min(actionDuration(s,p,speed)+p.latency,Math.max(.05,s.hitDelay/speed));
+   const mark=byId.get(IDS.mark),windowEnd=markEnd>t?markEnd:0;
+   const attacks=(rotationPolicy.burstFirst?['burst','rapid']:['rapid','burst']).map(key=>available.find(s=>s.key===key)).filter(Boolean);
+   if(windowEnd){
+    // Use actual impact times, not button-start times. Never refresh a live
+    // mark ahead of an attack that can still land in its accumulation window.
+    const attack=attacks.find(s=>t+impact(s)<windowEnd-1e-7);
+    if(attack)chosen=attack;
+   }else if(attacks.length){
+    const markReady=available.includes(mark),wait=Math.max(0,cd[IDS.mark]-t);
+    if(markReady){
+     const setup=rotationPolicy.setup?['light','decay','ghost'].map(key=>available.find(s=>s.key===key)).find(Boolean):null;
+     chosen=setup||mark;
+    }else if(wait>0&&wait<=rotationPolicy.holdSeconds&&mana>=mark.manaCost/(1+p.efficiency/100)){
+     // Fill a short wait only with an action that ends before the mark is
+     // ready; otherwise keep autoattacking. Resource recovery remains eligible.
+     const filler=available.find(s=>!['rapid','burst','mark'].includes(s.key)&&actionDuration(s,p,speed)+p.latency<=wait);
+     chosen=filler||null;if(!chosen)planningWait+=.05;
+    }
+   }
+  }
   if(chosen){
    const s={...chosen,castToken:++castSerial},speed=1+(p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
    const cast=actionDuration(s,p,speed)+p.latency;
@@ -468,7 +493,8 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
    if(p.auto&&(p.mainWeapon==='Wand'?p.wandMax:p.crossMax)>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:p.mainWeapon,pve:1,key:'auto',specs:[]};const extra=s.weapon==='Crossbow'?offchance(s):0;const v=expectedHit(p,s.weapon,1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()})+extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()});add('auto',v);weaponHit(s,hitRate(s),extra);combatProcs(s,(1+extra)*hitRate(s));flower(s);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t){d.end+=.05*(1+extra);d.dot?.extend(t,.05*(1+extra));}for(const d of dotsFromWeapons)d.dot.extend(t,.05*(1+extra));if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p.mainWeapon==='Wand'?{...p,interval:p.wandInterval||2}:p,(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed());}
   }
  }
- return {total,dps:total/300,counts,damage,logs,damageEvents,effectEvents,cooldownCycles,bins,minMana,mana,hp,enemyMana,shield:healShield,starved,natureMana,natureUptime,natureStops,natureElement,healing:p.healing,priority,burstStacks};
+ return {total,dps:total/300,counts,damage,logs,damageEvents,effectEvents,cooldownCycles,bins,minMana,mana,hp,enemyMana,shield:healShield,starved,natureMana,natureUptime,natureStops,natureElement,healing:p.healing,priority,burstStacks,rotationPolicy,planningWait};
+ function markSkillExplosive(){const mark=byId.get(IDS.mark);return list.includes(mark)&&mark.specs.includes(2);}
 }
 function optimizeFixed(input,progress=()=>{}){
  const all=models(input.catalog,input.state,input.overrides).filter(s=>(s.key!=='light'||s.specs.includes(1))&&(s.key!=='nature'||s.specs.length>0));
@@ -535,14 +561,47 @@ export function referenceConfigurations(catalog,target=100){
  return result;
 }
 export function interactionComparison(input,result){
- const replay={...input,state:{...input.state,active:result.priority,specs:result.specs||input.state.specs},priority:result.priority,burstStacks:result.burstStacks};
+ const replay={...input,state:{...input.state,active:result.priority,specs:result.specs||input.state.specs},priority:result.priority,burstStacks:result.burstStacks,rotationPolicy:result.rotationPolicy};
  // Leave the buff casts, costs and uptime intact. Disable only their numerical
  // bonuses; removing their buttons would also change opportunity costs.
  const without=simulate({...replay,params:{...input.params,lightMaxBonus:0,selfSkillBoost:0}});
  return {withoutPersonalBonuses:without.dps,personalBonusDelta:result.dps-without.dps};
 }
+// Compare bounded, conditional action sequences over the entire fight. Keeping
+// the unplanned incumbent makes waiting/setup optional, never a prescribed gain.
+export function planRotation(input,result,progress=()=>{}){
+ const baseSpecs=result.specs||input.state.specs,variants=[baseSpecs],catalog=input.catalog;
+ const cost=specs=>catalog.skills.reduce((n,s)=>n+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)).reduce((a,t)=>a+Number(t.cost),0),0);
+ if(input.mode==='all'&&result.priority.includes(IDS.decay)){
+  const fixed=Object.fromEntries([...(input.state.passive||[]),...(input.state.defensive||[])].filter(Boolean).map(id=>[id,baseSpecs[id]||[]]));
+  const others=result.priority.filter(id=>id!==IDS.decay);
+  for(const option of specializationOptions(catalog,IDS.decay)){
+   let specs={...baseSpecs,[IDS.decay]:option.ids};
+   if(cost(specs)>100){const allocated=allocateSpecializations(catalog,others,baseSpecs,()=>0,100-cost(fixed)-option.cost);if(!allocated)continue;specs={...fixed,...allocated,[IDS.decay]:option.ids};}
+   if(!variants.some(v=>JSON.stringify(v)===JSON.stringify(specs)))variants.push(specs);
+  }
+ }
+ let best=result,tested=0;const comparison={self:null,target:null};
+ const explosive=(catalog.skills.find(s=>s.id===IDS.mark)?.specializations||[]).find(t=>t.id.endsWith('_2'))?.id;
+ for(const specs of variants){
+  const policies=[null];
+  if(result.priority.includes(IDS.mark)&&specs[IDS.mark]?.includes(explosive))for(const setup of [false,true])for(const burstFirst of [false,true])for(const holdSeconds of [0,.35,.7,1.2])policies.push({setup,burstFirst,holdSeconds});
+  for(const rotationPolicy of policies){
+   const trial=simulate({...input,state:{...input.state,active:result.priority,specs},priority:result.priority,burstStacks:result.burstStacks,rotationPolicy});tested++;
+   if(result.priority.includes(IDS.decay)){
+    const self=specs[IDS.decay]?.some(id=>id.endsWith('_1')),key=self?'self':'target';
+    if(!comparison[key]||trial.dps>comparison[key].dps)comparison[key]={dps:trial.dps,specPoints:cost(specs),rotationPolicy,specs};
+   }
+   if(trial.total>best.total)best={...trial,specs};
+  }
+  progress({phase:'planning',done:tested,budget:variants.length*33,dps:best.dps});
+ }
+ const specs=best.specs||baseSpecs,state={...input.state,active:best.priority,specs};
+ const replay=simulate({...input,state,priority:best.priority,burstStacks:best.burstStacks,rotationPolicy:best.rotationPolicy},true);
+ return {...result,...replay,specs,specPoints:cost(specs),tested:(result.tested||0)+tested,utilityPoints:specializationUtility(catalog,specs),warnings:coverage(state,catalog),planning:{tested,beforeDps:result.dps,gainDps:replay.dps-result.dps,comparison,fixedSpecializations:input.mode!=='all'}};
+}
 export function optimize(input,progress=()=>{}){
- if(input.mode!=='all'){const result={...optimizeFixed(input,progress),specs:structuredClone(input.state.specs)};return {...result,interaction:interactionComparison(input,result)};}
+ if(input.mode!=='all'){const result=planRotation(input,{...optimizeFixed(input,progress),specs:structuredClone(input.state.specs)},progress);return {...result,interaction:interactionComparison(input,result)};}
  let seed=78231;const random=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
  const pool=Object.values(IDS);
@@ -657,5 +716,5 @@ export function optimize(input,progress=()=>{}){
  const specs={...fixedSpecs,...bestSpecs},state={...input.state,active:best.priority,specs};
  const specPoints=input.catalog.skills.reduce((sum,s)=>sum+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)).reduce((n,t)=>n+Number(t.cost),0),0);
  const result={...run(best.priority,bestSpecs,best.burstStacks,true),specs,specPoints,supportTrials,curseSearch,referenceTrials,utilityPoints:specializationUtility(input.catalog,specs),baseline:baseline.dps,tested,warnings:coverage(state,input.catalog)};
- return {...result,interaction:interactionComparison(input,result)};
+ const planned=planRotation(input,result,progress);return {...planned,interaction:interactionComparison(input,planned)};
 }

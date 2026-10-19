@@ -51,9 +51,9 @@ const input={catalog,state:{...state,active:reference.priority,specs:reference.s
 const result=optimize(input);
 assert(result.dps>=result.baseline,'the optimizer may not lose a valid input build');
 for(const row of result.referenceTrials){
- const replay=simulate({...input,state:{...input.state,active:row.priority,specs:row.specs},priority:row.priority,burstStacks:row.burstStacks});
+ const replay=simulate({...input,state:{...input.state,active:row.priority,specs:row.specs},priority:row.priority,burstStacks:row.burstStacks,rotationPolicy:row.rotationPolicy});
  assert.equal(row.dps,replay.dps);assert(result.dps>=row.dps,'all control panels are retained if better');
 }
-assert.equal(result.dps,simulate({...input,state:{...input.state,active:result.priority,specs:result.specs},priority:result.priority,burstStacks:result.burstStacks}).dps);
+assert.equal(result.dps,simulate({...input,state:{...input.state,active:result.priority,specs:result.specs},priority:result.priority,burstStacks:result.burstStacks,rotationPolicy:result.rotationPolicy}).dps);
 assert(result.specPoints<=100);
 console.log(JSON.stringify({checks:'interaction audit passed',baseline:result.baseline,best:result.dps,controls:result.referenceTrials.map(r=>({name:r.name,dps:r.dps})),buffs:result.interaction},null,2));
