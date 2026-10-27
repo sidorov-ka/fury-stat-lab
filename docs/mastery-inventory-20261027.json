@@ -1,0 +1,2143 @@
+{
+  "note": "Инвентаризация клиентских данных; referencedInSource не подтверждает корректность или полноту реализации.",
+  "nodes": [
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Attack_01",
+      "name": "[Аспект] Скорость атаки",
+      "grade": "common",
+      "type": "normal",
+      "description": "Скорость атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "attack_speed_modifier",
+          "value": 210,
+          "label": "Скорость атаки",
+          "category": "скорость/откат"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Attack_02",
+      "name": "[Приоритет] Шанс критического удара (дальний бой)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Шанс крит. удара (дальний бой) ▲\nЗащита (ближний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_critical_attack",
+          "value": 480,
+          "label": "Шанс крит. удара (дальний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "melee_armor",
+          "value": -48,
+          "label": "Защита (ближний бой)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_TacticAttack_12",
+      "name": "[Эталон] Меткость (дальний бой)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Меткость (дальний бой) ▲\nСкорость атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_accuracy",
+          "value": 160,
+          "label": "Меткость (дальний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "attack_speed_modifier",
+          "value": 110,
+          "label": "Скорость атаки",
+          "category": "скорость/откат"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Tactic_11",
+      "name": "[Приоритет] Скорость передвижения",
+      "grade": "common",
+      "type": "normal",
+      "description": "Скорость передвижения ▲\nЭффект. исцеления (амитой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "move_speed_modifier",
+          "value": 320,
+          "label": "move_speed_modifier",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_doll_heal_modifier",
+          "value": -1000,
+          "label": "magic_doll_heal_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Tactic_10",
+      "name": "[Аспект] Ослабление",
+      "grade": "common",
+      "type": "normal",
+      "description": "Ослабление ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "weaken_accuracy",
+          "value": 1600,
+          "label": "weaken_accuracy",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_DefenseTactic_09",
+      "name": "[Эталон] Сопротивление умениям",
+      "grade": "common",
+      "type": "normal",
+      "description": "Сопротивление умениям ▲\nРадиус атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_resistance",
+          "value": 80,
+          "label": "skill_power_resistance",
+          "category": "урон умений"
+        },
+        {
+          "stat": "attack_range_modifier",
+          "value": 160,
+          "label": "attack_range_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Defense_07",
+      "name": "[Аспект] Длительность негативных эффектов",
+      "grade": "common",
+      "type": "normal",
+      "description": "Длит. негатив. эффектов ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "debuff_taken_duration_modifier",
+          "value": -160,
+          "label": "debuff_taken_duration_modifier",
+          "category": "длительность"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Defense_08",
+      "name": "[Приоритет] Максимальное здоровье",
+      "grade": "common",
+      "type": "normal",
+      "description": "Макс. здоровье ▲\nМеткость (дальний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "hp_max",
+          "value": 384,
+          "label": "hp_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "range_accuracy",
+          "value": -240,
+          "label": "Меткость (дальний бой)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_UtilDefense_06",
+      "name": "[Эталон] Защита (магия)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Защита (магия) ▲\nДлит. положит. эффектов ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "magic_armor",
+          "value": 32,
+          "label": "Защита (магия)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "buff_given_duration_modifier",
+          "value": 110,
+          "label": "buff_given_duration_modifier",
+          "category": "длительность"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Util_05",
+      "name": "[Аспект] Восстановление маны",
+      "grade": "common",
+      "type": "normal",
+      "description": "Восстановление маны ▲\nДлит. негатив. эффектов ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_regen",
+          "value": 36000,
+          "label": "cost_regen",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "debuff_taken_duration_modifier",
+          "value": 120,
+          "label": "debuff_taken_duration_modifier",
+          "category": "длительность"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Util_04",
+      "name": "[Аспект] Восстановление выносливости",
+      "grade": "common",
+      "type": "normal",
+      "description": "Восстановление выносливости ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stamina_regen",
+          "value": 3200,
+          "label": "stamina_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_AttackUtil_03",
+      "name": "[Эталон] Базовый урон",
+      "grade": "common",
+      "type": "normal",
+      "description": "Базовый урон ▲ (повышается с 5-го ур.)\nЭффективность расхода маны ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_consumption_modifier",
+          "value": 160,
+          "label": "cost_consumption_modifier",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "bonus_attack_power_main_hand",
+          "value": 2,
+          "label": "Доп. урон",
+          "category": "урон оружия"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Attack_01",
+      "name": "[Аспект] Шанс критического удара (дальний бой)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Шанс крит. удара (дальний бой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_critical_attack",
+          "value": 400,
+          "label": "Шанс крит. удара (дальний бой)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Attack_02",
+      "name": "[Приоритет] Урон (дальний бой)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Урон (дальний бой) ▲\nУстойчивость (ближний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_damage_dealt_modifier",
+          "value": 300,
+          "label": "range_damage_dealt_modifier",
+          "category": "модификатор типа"
+        },
+        {
+          "stat": "melee_critical_defense",
+          "value": -450,
+          "label": "melee_critical_defense",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_TacticAttack_12",
+      "name": "[Эталон] Максимальный урон",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Макс. урон ▲ (повышается с 4-го ур.)\nРадиус атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "attack_range_modifier",
+          "value": 200,
+          "label": "attack_range_modifier",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "attack_power_main_hand",
+          "value": 3,
+          "label": "Макс. урон",
+          "category": "урон оружия"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Tactic_11",
+      "name": "[Приоритет] Ослабление",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Ослабление ▲\nМакс. мана ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "weaken_accuracy",
+          "value": 3000,
+          "label": "weaken_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "cost_max",
+          "value": -240,
+          "label": "cost_max",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Tactic_10",
+      "name": "[Аспект] Сопротивление эффектам контроля",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Сопротивление эффектам контроля (все) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stun_tolerance",
+          "value": 1330,
+          "label": "stun_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "bind_tolerance",
+          "value": 1330,
+          "label": "bind_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "weaken_tolerance",
+          "value": 1330,
+          "label": "weaken_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "petrification_tolerance",
+          "value": 1330,
+          "label": "petrification_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "sleep_tolerance",
+          "value": 1330,
+          "label": "sleep_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "silence_tolerance",
+          "value": 1330,
+          "label": "silence_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "blind_tolerance",
+          "value": 1330,
+          "label": "blind_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "collide_resistance",
+          "value": 1330,
+          "label": "collide_resistance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_DefenseTactic_09",
+      "name": "[Эталон] Сопротивление оглушению",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Сопротивление оглушению ▲\nШанс атаки парным оружием ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stun_tolerance",
+          "value": 1000,
+          "label": "stun_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "off_hand_attack_chance",
+          "value": 80,
+          "label": "off_hand_attack_chance",
+          "category": "парное оружие"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Defense_07",
+      "name": "[Аспект] Сопротивление критическому урону",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Сопротивление крит. урону ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "critical_damage_taken_modifier",
+          "value": 270,
+          "label": "critical_damage_taken_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Defense_08",
+      "name": "[Приоритет] Защита (магия)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Защита (магия) ▲\nШанс крит. удара (дальний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "magic_armor",
+          "value": 120,
+          "label": "Защита (магия)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "range_critical_attack",
+          "value": -300,
+          "label": "Шанс крит. удара (дальний бой)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_UtilDefense_06",
+      "name": "[Эталон] Сопротивление умениям",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Сопротивление умениям ▲\nСкорость восстановления умений ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_resistance",
+          "value": 100,
+          "label": "skill_power_resistance",
+          "category": "урон умений"
+        },
+        {
+          "stat": "skill_cooldown_modifier",
+          "value": 100,
+          "label": "Скорость восстановления умений",
+          "category": "скорость/откат"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Util_05",
+      "name": "[Приоритет] Восстановление выносливости",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Восстановление выносливости ▲\nСопротивление оглушению ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stamina_regen",
+          "value": 6000,
+          "label": "stamina_regen",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "stun_tolerance",
+          "value": -1500,
+          "label": "stun_tolerance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Util_04",
+      "name": "[Аспект] Эффективность получаемого исцеления",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Эффект. получаемого исцеления (умения) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_heal_taken_modifier",
+          "value": 330,
+          "label": "skill_heal_taken_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_AttackUtil_03",
+      "name": "[Эталон] Шанс мощной атаки (дальний бой)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Шанс мощн. атаки (дальний бой) ▲\nВосстановление здоровья ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_double_attack",
+          "value": 200,
+          "label": "range_double_attack",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "hp_regen",
+          "value": 20000,
+          "label": "hp_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Attack_01",
+      "name": "[Аспект] Меткость (дальний бой)",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Меткость (дальний бой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_accuracy",
+          "value": 480,
+          "label": "Меткость (дальний бой)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Attack_02",
+      "name": "[Приоритет] Повышение урона умений",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Повышение урона умений ▲\nСопротивление умениям ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_amplification",
+          "value": 360,
+          "label": "skill_power_amplification",
+          "category": "урон умений"
+        },
+        {
+          "stat": "skill_power_resistance",
+          "value": -180,
+          "label": "skill_power_resistance",
+          "category": "урон умений"
+        },
+        {
+          "stat": "dex",
+          "value": 2,
+          "label": "dex",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_TacticAttack_12",
+      "name": "[Эталон] Радиус атаки",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Длит. негатив. эффектов ▲\nРадиус атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "attack_range_modifier",
+          "value": 240,
+          "label": "attack_range_modifier",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "debuff_taken_duration_modifier",
+          "value": -120,
+          "label": "debuff_taken_duration_modifier",
+          "category": "длительность"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Tactic_11",
+      "name": "[Приоритет] Эффективность расхода маны",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Эффективность расхода маны ▲\nВосстановление здоровья ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_consumption_modifier",
+          "value": 720,
+          "label": "cost_consumption_modifier",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "hp_regen",
+          "value": -36000,
+          "label": "hp_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Tactic_10",
+      "name": "[Аспект] Скорость передвижения",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Скорость передвижения ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "move_speed_modifier",
+          "value": 320,
+          "label": "move_speed_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_DefenseTactic_09",
+      "name": "[Эталон] Сопротивление импульсу",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Устойчивость (ближний бой) ▲\nСопротивление импульсу ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_critical_defense",
+          "value": 360,
+          "label": "melee_critical_defense",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "collide_resistance",
+          "value": 1200,
+          "label": "collide_resistance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Defense_07",
+      "name": "[Аспект] Уклонение",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Уклонение (все) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_evasion",
+          "value": 480,
+          "label": "Уклонение (ближний бой)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "range_evasion",
+          "value": 480,
+          "label": "Уклонение (дальний бой)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_evasion",
+          "value": 480,
+          "label": "Уклонение (магия)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Defense_08",
+      "name": "[Приоритет] Выживаемость",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Макс. здоровье ▲\nСкорость атаки ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "hp_max",
+          "value": 576,
+          "label": "hp_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "attack_speed_modifier",
+          "value": -180,
+          "label": "Скорость атаки",
+          "category": "скорость/откат"
+        },
+        {
+          "stat": "per",
+          "value": 2,
+          "label": "per",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_UtilDefense_06",
+      "name": "[Эталон] Сопротивление умениям",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Сопротивление умениям ▲\nВосстановление здоровья ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_resistance",
+          "value": 120,
+          "label": "skill_power_resistance",
+          "category": "урон умений"
+        },
+        {
+          "stat": "hp_regen",
+          "value": 24000,
+          "label": "hp_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Util_05",
+      "name": "[Приоритет] Скорость восстановления умений",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Скорость восстановления умений ▲\nСопротивление сну ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_cooldown_modifier",
+          "value": 360,
+          "label": "Скорость восстановления умений",
+          "category": "скорость/откат"
+        },
+        {
+          "stat": "sleep_tolerance",
+          "value": -1800,
+          "label": "sleep_tolerance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Util_04",
+      "name": "[Аспект] Восстановление маны",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Восстановление маны ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_regen",
+          "value": 36000,
+          "label": "cost_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_AttackUtil_03",
+      "name": "[Эталон] Шанс мощной атаки (дальний бой)",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Шанс мощн. атаки (дальний бой) ▲\nЭффект. исцеления (амитой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "range_double_attack",
+          "value": 240,
+          "label": "range_double_attack",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "magic_doll_heal_modifier",
+          "value": 2400,
+          "label": "magic_doll_heal_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Hero_Attack_01",
+      "name": "Чутьё убийцы",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Шанс атаки парным оружием повышается на 11%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 12%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 13%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 14%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 15%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 16%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 17%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 18%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 19%, если в радиусе 10 м от персонажа есть противник.\nШанс атаки парным оружием повышается на 20%, если в радиусе 10 м от персонажа есть противник.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Hero_Tactic_04",
+      "name": "Маневрирование",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Скорость передвижения повышается на 4,4%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 15,5%.\nСкорость передвижения повышается на 4,8%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 16%.\nСкорость передвижения повышается на 5,2%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 16,5%.\nСкорость передвижения повышается на 5,6%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 17%.\nСкорость передвижения повышается на 6%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 17,5%.\nСкорость передвижения повышается на 6,4%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 18%.\nСкорость передвижения повышается на 6,8%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 18,5%.\nСкорость передвижения повышается на 7,2%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 19%.\nСкорость передвижения повышается на 7,6%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 19,5%.\nСкорость передвижения повышается на 8%. При получении персонажем урона в ближнем бою на 2 сек. скорость передвижения снижается на 20%.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Hero_Defense_03",
+      "name": "Танцующие миражи",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Успешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 4,4%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 110 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 4,8%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 120 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 5,2%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 130 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 5,6%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 140 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 6%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 150 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 6,4%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 160 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 6,8%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 170 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 7,2%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 180 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 7,6%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 190 ед.\nУспешное уклонение от атаки противника на 3 сек. повышает скорость передвижения на 8%. При использовании умений типа «Манёвр» на 3 сек. показатели уклонения (дальний бой, магия) повышаются на 200 ед.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Hero_Util_02",
+      "name": "Несгибаемый воин",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Максимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 143 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 156 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 169 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 182 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 195 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 208 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 221 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 234 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 247 ед.\nМаксимальный запас маны снижается на 1000 ед. Если текущий запас маны персонажа составляет 30% от максимального или менее, показатель скорости восстановления маны повышается на 260 ед.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Attack_Skill",
+      "name": "Воинственность",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Жажда битвы», попадание базовой атакой арбалетов с вероятностью 5% накладывает на персонажа один уровень эффекта «Жажда битвы» и на 3 сек. повышает скорость атаки на 5%.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Tac_Skill",
+      "name": "Стратегия противодействия",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Стратегия выживания», при получении персонажем урона в ближнем бою срабатывает эффект, аналогичный умению «Контратака», который придаёт противнику импульс, отбрасывая его. Пока цели придан импульс, направленные на неё атаки будут считаться атаками с самого уязвимого направления. Эффект срабатывает не чаще 1 раза в 30 сек.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Def_Skill",
+      "name": "Истощающие болты",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Упадок» и объём здоровья персонажа составляет 30% от максимального или менее, попадание по противнику восстанавливает 5000 ед. здоровья в течение 5 сек. Эффект срабатывает не чаще 1 раза в 60 сек.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Normal_Util_Skill",
+      "name": "Орлиное величие",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Орлиный взор», показатели меткости (ближний бой, дальний бой, магия) повышаются на 100 ед., когда в радиусе 15 м от персонажа находится противник. Если противник находится в радиусе 10 м от персонажа, показатели шанса критического удара (ближний бой, дальний бой, магия) дополнительно повышаются на 100 ед.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Attack_Skill",
+      "name": "Выгодный момент",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Амбидекстр», шанс атаки парным оружием снижается на 4%, но показатель максимального урона для атак парным оружием повышается на 30 ед.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Tac_Skill",
+      "name": "Сосредоточенная стрельба",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Бронебойные болты» и текущий запас маны составляет 40% от максимального или менее, показатель меткости (дальний бой) повышается на 150 ед., а шанс критического удара (дальний бой) — на 150 ед.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Def_Skill",
+      "name": "Пик приспособления",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Адаптация», показатели уклонения (дальний бой, магия) снижаются на 150 ед. При срабатывании эффекта этого умения показатели уклонения (дальний бой, магия) повышаются на 300 ед. и дополнительно ещё на 150 ед. в первую секунду действия эффекта.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_High_Util_Skill",
+      "name": "Безрассудная стрельба",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если текущий запас маны персонажа составляет 30% от максимального или менее, шанс атаки парным оружием повышается на 20%, однако каждая атака парным оружием расходует 10 ед. маны.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Attack_Skill",
+      "name": "Быстрая смерть",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Если объём здоровья противника 30% и ниже, урон умений арбалета на 3 сек. повышается на 5%.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Tac_Skill",
+      "name": "Тактическое преимущество",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Каждое успешное ослабление противника на 3 сек. повышает скорость передвижения на 2% (суммируется до 3 раз). Каждое критическое попадание на 3 сек. повышает показатели меткости (ближний бой, дальний бой, магия) на 30 ед. (суммируется до 3 раз).",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Def_Skill",
+      "name": "Отчаянное уклонение",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Если текущий объём здоровья персонажа составляет 25% от максимального или менее, показатели уклонения (ближний бой, дальний бой, магия) повышаются на 600 ед. на 3 сек. Эффект срабатывает не чаще 1 раза в 30 сек.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "CR",
+      "id": "Crossbow_Rare_Util_Skill",
+      "name": "Командный дух",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Попадание базовой атакой арбалетов с вероятностью 5% повышает шанс критического удара (ближний бой, дальний бой, магия) всех союзников в радиусе 16 м на 100 ед.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Attack_01",
+      "name": "[Аспект] Радиус атаки",
+      "grade": "common",
+      "type": "normal",
+      "description": "Радиус атаки ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "attack_range_modifier",
+          "value": 320,
+          "label": "attack_range_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Attack_02",
+      "name": "[Приоритет] Меткость",
+      "grade": "common",
+      "type": "normal",
+      "description": "Меткость (все) ▲\nЭффективность исцеления ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_accuracy",
+          "value": 384,
+          "label": "Меткость (ближний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "range_accuracy",
+          "value": 384,
+          "label": "Меткость (дальний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "magic_accuracy",
+          "value": 384,
+          "label": "Меткость (магия)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "heal_modifier",
+          "value": -180,
+          "label": "heal_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_TacticAttack_12",
+      "name": "[Эталон] Ослабление",
+      "grade": "common",
+      "type": "normal",
+      "description": "Ослабление ▲\nБазовый урон ▲ (повышается с 5-го ур.)",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "weaken_accuracy",
+          "value": 800,
+          "label": "weaken_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "bonus_attack_power_main_hand",
+          "value": 2,
+          "label": "Доп. урон",
+          "category": "урон оружия"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Tactic_11",
+      "name": "[Приоритет] Скорость восстановления умений",
+      "grade": "common",
+      "type": "normal",
+      "description": "Скорость восстановления умений ▲\nЭффективность расхода маны ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_cooldown_modifier",
+          "value": 240,
+          "label": "Скорость восстановления умений",
+          "category": "скорость/откат"
+        },
+        {
+          "stat": "cost_consumption_modifier",
+          "value": -200,
+          "label": "cost_consumption_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Tactic_10",
+      "name": "[Аспект] Сопротивление урону (все виды монстров)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Сопротивление урону (все виды монстров) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "grankus_damage_resistance",
+          "value": 128,
+          "label": "grankus_damage_resistance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "undead_damage_resistance",
+          "value": 128,
+          "label": "undead_damage_resistance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "animal_damage_resistance",
+          "value": 128,
+          "label": "animal_damage_resistance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "creation_damage_resistance",
+          "value": 128,
+          "label": "creation_damage_resistance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "demon_damage_resistance",
+          "value": 128,
+          "label": "demon_damage_resistance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_DefenseTactic_09",
+      "name": "[Эталон] Уклонение",
+      "grade": "common",
+      "type": "normal",
+      "description": "Макс. здоровье ▲\nУклонение (все) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "hp_max",
+          "value": 128,
+          "label": "hp_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "melee_evasion",
+          "value": 160,
+          "label": "Уклонение (ближний бой)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "range_evasion",
+          "value": 160,
+          "label": "Уклонение (дальний бой)",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_evasion",
+          "value": 160,
+          "label": "Уклонение (магия)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Defense_07",
+      "name": "[Аспект] Устойчивость к мощным атакам (ближний бой)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Устойчивость к мощн. атакам (ближний бой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_double_defense",
+          "value": 480,
+          "label": "melee_double_defense",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Defense_08",
+      "name": "[Приоритет] Эффективность получаемого исцеления (умения)",
+      "grade": "common",
+      "type": "normal",
+      "description": "Эффект. получаемого исцеления (умения) ▲\nМеткость (магия) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_heal_taken_modifier",
+          "value": 400,
+          "label": "skill_heal_taken_modifier",
+          "category": "исцеление"
+        },
+        {
+          "stat": "magic_accuracy",
+          "value": -240,
+          "label": "Меткость (магия)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_UtilDefense_06",
+      "name": "[Эталон] Сопротивление немоте",
+      "grade": "common",
+      "type": "normal",
+      "description": "Сопротивление немоте ▲\nСнижение урона ▲ (повышается с 4-го ур.)",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "silence_tolerance",
+          "value": 800,
+          "label": "silence_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "damage_reduction",
+          "value": 3,
+          "label": "Снижение урона",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Util_05",
+      "name": "[Приоритет] Эффективность исцеления",
+      "grade": "common",
+      "type": "normal",
+      "description": "Эффективность исцеления ▲\nСон ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "heal_modifier",
+          "value": 480,
+          "label": "heal_modifier",
+          "category": "исцеление"
+        },
+        {
+          "stat": "sleep_accuracy",
+          "value": -1200,
+          "label": "sleep_accuracy",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Util_04",
+      "name": "[Аспект] Эффективность расхода маны",
+      "grade": "common",
+      "type": "normal",
+      "description": "Эффективность расхода маны ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_consumption_modifier",
+          "value": 320,
+          "label": "cost_consumption_modifier",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_AttackUtil_03",
+      "name": "[Эталон] Дополнительный урон",
+      "grade": "common",
+      "type": "normal",
+      "description": "Дополнит. урон ▲ (повышается с 4-го ур.)\nВосстановление маны ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_regen",
+          "value": 12000,
+          "label": "cost_regen",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "damage_reduction_penetration",
+          "value": 3,
+          "label": "damage_reduction_penetration",
+          "category": "дополнительный урон"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Attack_01",
+      "name": "[Аспект] Время действия проклятий",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Время действия проклятий +0,1 сек.\nВремя действия проклятий +0,2 сек.\nВремя действия проклятий +0,3 сек.\nВремя действия проклятий +0,4 сек.\nВремя действия проклятий +0,5 сек.\nВремя действия проклятий +0,6 сек.\nВремя действия проклятий +0,7 сек.\nВремя действия проклятий +0,8 сек.\nВремя действия проклятий +0,9 сек.\nВремя действия проклятий +1 сек.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Attack_02",
+      "name": "[Приоритет] Скорость атаки",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Скорость атаки ▲\nЗащита (дальний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "attack_speed_modifier",
+          "value": 400,
+          "label": "Скорость атаки",
+          "category": "скорость/откат"
+        },
+        {
+          "stat": "range_armor",
+          "value": -60,
+          "label": "Защита (дальний бой)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_TacticAttack_12",
+      "name": "[Эталон] Повышение урона умений",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Повышение урона умений ▲\nДополнит. урон ▲ (повышается с 3-го ур.)",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_amplification",
+          "value": 100,
+          "label": "skill_power_amplification",
+          "category": "урон умений"
+        },
+        {
+          "stat": "damage_reduction_penetration",
+          "value": 4,
+          "label": "damage_reduction_penetration",
+          "category": "дополнительный урон"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Tactic_11",
+      "name": "[Приоритет] Длительность положительных эффектов",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Длит. положит. эффектов ▲\nВосстановление маны ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "buff_given_duration_modifier",
+          "value": 400,
+          "label": "buff_given_duration_modifier",
+          "category": "длительность"
+        },
+        {
+          "stat": "cost_regen",
+          "value": -22500,
+          "label": "cost_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Tactic_10",
+      "name": "[Аспект] Повышение урона (все виды монстров)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Повышение урона (все виды монстров) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "grankus_damage_amplification",
+          "value": 160,
+          "label": "grankus_damage_amplification",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "undead_damage_amplification",
+          "value": 160,
+          "label": "undead_damage_amplification",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "animal_damage_amplification",
+          "value": 160,
+          "label": "animal_damage_amplification",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "creation_damage_amplification",
+          "value": 160,
+          "label": "creation_damage_amplification",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "demon_damage_amplification",
+          "value": 160,
+          "label": "demon_damage_amplification",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_DefenseTactic_09",
+      "name": "[Эталон] Снижение урона",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Снижение урона ▲ (повышается с 3-го ур.)\nОслабление ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "weaken_accuracy",
+          "value": 1000,
+          "label": "weaken_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "damage_reduction",
+          "value": 4,
+          "label": "Снижение урона",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Defense_07",
+      "name": "[Аспект] Защита (ближний бой)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Защита (ближний бой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_armor",
+          "value": 80,
+          "label": "Защита (ближний бой)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Defense_08",
+      "name": "[Приоритет] Устойчивость к мощным атакам (магия)",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Устойчивость к мощн. атакам (магия) ▲\nШанс крит. удара (магия) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "magic_double_defense",
+          "value": 900,
+          "label": "magic_double_defense",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_critical_attack",
+          "value": -300,
+          "label": "Шанс крит. удара (магия)",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_UtilDefense_06",
+      "name": "[Эталон] Сопротивление оглушению",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Сопротивление оглушению ▲\nЗащита (магия) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stun_tolerance",
+          "value": 1000,
+          "label": "stun_tolerance",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_armor",
+          "value": 40,
+          "label": "Защита (магия)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Util_05",
+      "name": "[Приоритет] Максимальная мана",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Макс. мана ▲\nВосстановление здоровья ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_max",
+          "value": 480,
+          "label": "cost_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "hp_regen",
+          "value": -30000,
+          "label": "hp_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Util_04",
+      "name": "[Аспект] Эффективность исцеления",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Эффективность исцеления ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "heal_modifier",
+          "value": 400,
+          "label": "heal_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_AttackUtil_03",
+      "name": "[Эталон] Максимальный урон",
+      "grade": "uncommon",
+      "type": "normal",
+      "description": "Макс. урон ▲ (повышается с 4-го ур.)\nМакс. мана ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_max",
+          "value": 160,
+          "label": "cost_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "attack_power_main_hand",
+          "value": 3,
+          "label": "Макс. урон",
+          "category": "урон оружия"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Attack_01",
+      "name": "[Аспект] Периодический урон",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Периодический урон +0,5%\nПериодический урон +1%\nПериодический урон +1,5%\nПериодический урон +2%\nПериодический урон +2,5%\nПериодический урон +3%\nПериодический урон +3,5%\nПериодический урон +4%\nПериодический урон +4,5%\nПериодический урон +5%",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Attack_02",
+      "name": "[Приоритет] Шанс мощной атаки (магия)",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Шанс мощн. атаки (магия) ▲\nУстойчивость к мощн. атакам (дальний бой) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "magic_double_attack",
+          "value": 720,
+          "label": "magic_double_attack",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "range_double_defense",
+          "value": -540,
+          "label": "range_double_defense",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_TacticAttack_12",
+      "name": "[Эталон] Повышение урона умений",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Длит. положит. эффектов ▲\nПовышение урона умений ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "buff_given_duration_modifier",
+          "value": 160,
+          "label": "buff_given_duration_modifier",
+          "category": "длительность"
+        },
+        {
+          "stat": "skill_power_amplification",
+          "value": 120,
+          "label": "skill_power_amplification",
+          "category": "урон умений"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Tactic_11",
+      "name": "[Приоритет] Восстановление выносливости",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Восстановление выносливости ▲\nМакс. мана ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "stamina_regen",
+          "value": 7200,
+          "label": "stamina_regen",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "cost_max",
+          "value": -288,
+          "label": "cost_max",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "per",
+          "value": 2,
+          "label": "per",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Tactic_10",
+      "name": "[Аспект] Эффекты контроля",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Эффекты контроля ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "weaken_accuracy",
+          "value": 1600,
+          "label": "weaken_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "stun_accuracy",
+          "value": 1600,
+          "label": "stun_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "petrification_accuracy",
+          "value": 1600,
+          "label": "petrification_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "sleep_accuracy",
+          "value": 1600,
+          "label": "sleep_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "silence_accuracy",
+          "value": 1600,
+          "label": "silence_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "bind_accuracy",
+          "value": 1600,
+          "label": "bind_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "blind_accuracy",
+          "value": 1600,
+          "label": "blind_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "collide_amplification",
+          "value": 1600,
+          "label": "collide_amplification",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_DefenseTactic_09",
+      "name": "[Эталон] Сопротивление умениям",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Сопротивление умениям ▲\nДлит. положит. эффектов ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "skill_power_resistance",
+          "value": 120,
+          "label": "skill_power_resistance",
+          "category": "урон умений"
+        },
+        {
+          "stat": "buff_given_duration_modifier",
+          "value": 160,
+          "label": "buff_given_duration_modifier",
+          "category": "длительность"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Defense_07",
+      "name": "[Аспект] Уклонение (ближний бой)",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Уклонение (ближний бой) ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_evasion",
+          "value": 720,
+          "label": "Уклонение (ближний бой)",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Defense_08",
+      "name": "[Приоритет] Устойчивость",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Устойчивость (все) ▲\nШанс мощн. атаки (магия) ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_critical_defense",
+          "value": 720,
+          "label": "melee_critical_defense",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "range_critical_defense",
+          "value": 720,
+          "label": "range_critical_defense",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_critical_defense",
+          "value": 720,
+          "label": "magic_critical_defense",
+          "category": "прочая характеристика"
+        },
+        {
+          "stat": "magic_double_attack",
+          "value": -360,
+          "label": "magic_double_attack",
+          "category": "вероятность атаки"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_UtilDefense_06",
+      "name": "[Эталон] Длительность негативных эффектов",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Длит. негатив. эффектов ▲\nЭффективность исцеления ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "debuff_taken_duration_modifier",
+          "value": -120,
+          "label": "debuff_taken_duration_modifier",
+          "category": "длительность"
+        },
+        {
+          "stat": "heal_modifier",
+          "value": 240,
+          "label": "heal_modifier",
+          "category": "исцеление"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Util_05",
+      "name": "[Приоритет] Эффективность исцеления",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Эффективность исцеления ▲\nСон ▼",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "heal_modifier",
+          "value": 720,
+          "label": "heal_modifier",
+          "category": "исцеление"
+        },
+        {
+          "stat": "sleep_accuracy",
+          "value": -1800,
+          "label": "sleep_accuracy",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "int",
+          "value": 2,
+          "label": "int",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Util_04",
+      "name": "[Аспект] Восстановление маны",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Восстановление маны ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "cost_regen",
+          "value": 36000,
+          "label": "cost_regen",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_AttackUtil_03",
+      "name": "[Эталон] Сопротивление немоте",
+      "grade": "rare",
+      "type": "normal",
+      "description": "Шанс крит. удара ▲\nСопротивление немоте ▲",
+      "maximum": 10,
+      "stats": [
+        {
+          "stat": "melee_critical_attack",
+          "value": 192,
+          "label": "Шанс крит. удара (ближний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "range_critical_attack",
+          "value": 192,
+          "label": "Шанс крит. удара (дальний бой)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "magic_critical_attack",
+          "value": 192,
+          "label": "Шанс крит. удара (магия)",
+          "category": "вероятность атаки"
+        },
+        {
+          "stat": "silence_tolerance",
+          "value": 1200,
+          "label": "silence_tolerance",
+          "category": "прочая характеристика"
+        }
+      ],
+      "referencedInSource": false
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Hero_Attack_01",
+      "name": "Вердикт Бездны",
+      "grade": "epic",
+      "type": "normal",
+      "description": "При атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 6,6% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 7,2% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 7,8% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 8,4% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 9% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 9,6% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 10,2% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 10,8% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 11,4% от оставшегося периодического урона, но не рассеивая проклятие.\nПри атаке цели, находящейся под действием наложенного персонажем проклятия, наносящего периодический урон, с вероятностью 8% срабатывает эффект умения «Бедственное слово», нанося цели 12% от оставшегося периодического урона, но не рассеивая проклятие.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Hero_Tactic_04",
+      "name": "Летаргия",
+      "grade": "epic",
+      "type": "normal",
+      "description": "При наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 11% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 12% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 13% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 14% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 15% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 16% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 17% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 18% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 19% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».\nПри наложении на монстров проклятий «Касание скорби», «Ритуальный круг», «Перст угасания» и «Час отмщения» с вероятностью 20% дополнительно накладывается эффект «Летаргия», действующий в течение 3 сек., который аналогичен сну, но не рассеивается при получении урона. На эффект «Летаргия» не действует умение «Злой рок».",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Hero_Defense_03",
+      "name": "Первосвященство",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Время восстановления исцеляющих умений сокращается на 7,7%.\nВремя восстановления исцеляющих умений сокращается на 8,4%.\nВремя восстановления исцеляющих умений сокращается на 9,1%.\nВремя восстановления исцеляющих умений сокращается на 9,8%.\nВремя восстановления исцеляющих умений сокращается на 10,5%.\nВремя восстановления исцеляющих умений сокращается на 11,2%.\nВремя восстановления исцеляющих умений сокращается на 11,9%.\nВремя восстановления исцеляющих умений сокращается на 12,6%.\nВремя восстановления исцеляющих умений сокращается на 13,3%.\nВремя восстановления исцеляющих умений сокращается на 14%.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Hero_Util_02",
+      "name": "Святость",
+      "grade": "epic",
+      "type": "normal",
+      "description": "Объём исцеления от исцеляющих умений повышается на 6,6%, а периодический урон проклятий снижается на 6,6%.\nОбъём исцеления от исцеляющих умений повышается на 7,2%, а периодический урон проклятий снижается на 7,2%.\nОбъём исцеления от исцеляющих умений повышается на 7,8%, а периодический урон проклятий снижается на 7,8%.\nОбъём исцеления от исцеляющих умений повышается на 8,4%, а периодический урон проклятий снижается на 8,4%.\nОбъём исцеления от исцеляющих умений повышается на 9%, а периодический урон проклятий снижается на 9%.\nОбъём исцеления от исцеляющих умений повышается на 9,6%, а периодический урон проклятий снижается на 9,6%.\nОбъём исцеления от исцеляющих умений повышается на 10,2%, а периодический урон проклятий снижается на 10,2%.\nОбъём исцеления от исцеляющих умений повышается на 10,8%, а периодический урон проклятий снижается на 10,8%.\nОбъём исцеления от исцеляющих умений повышается на 11,4%, а периодический урон проклятий снижается на 11,4%.\nОбъём исцеления от исцеляющих умений повышается на 12%, а периодический урон проклятий снижается на 12%.",
+      "maximum": 10,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Attack_Skill",
+      "name": "Заклание",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Кровавый пакт», вместо исцеления союзников его эффект наносит противникам дополнительный урон в том же размере.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Tac_Skill",
+      "name": "Миазмы",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Одолевающая скверна», его эффект срабатывает только при попадании умением жезла по ослабленной персонажем цели. Вместо увеличения максимального урона наносимый магический урон повышается на 2,4% (указано значение для пассивного умения «Одолевающая скверна» Эпич. 5-го ур.).",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Def_Skill",
+      "name": "Дар самоотречения",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Дар небытия», его дневной эффект усиливается на 20%, а ночью действует в размере 50% от базового значения. При одновременной активации с кумулятивным эффектом «Око пустоты» и дневной, и ночной эффекты всегда усилены на 20%.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Normal_Util_Skill",
+      "name": "Духовный гнев",
+      "grade": "common",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Совершенная душа», его эффект срабатывает только при попадании по противнику умением типа «Атака», а вместо повышения показателя эффективности исцеления он повышает базовый урон на 1.4% (указано значение для пассивного умения «Совершенная душа» Эпич. 5-го ур.).",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Attack_Skill",
+      "name": "Славное возмездие",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Славное возрождение», общее значение эффективности исцеления умениями снижается на 30%, но базовый урон повышается на 25% от значения, ранее увеличивавшего эффективность исцеления умениями.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Tac_Skill",
+      "name": "Мрачный обет",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Священный обет», его эффект заменяется эффектом повышения урона умений и периодического урона.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Def_Skill",
+      "name": "Небесный зов",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Потусторонний зов», его эффект заменяется на усиление умений «Спасительный свет Клэя», «Благословенный щит» и «Источник жизни» на 15% (указано значение для пассивного умения «Потусторонний зов» Эпич. 5-го ур.).",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_High_Util_Skill",
+      "name": "Око пустоты",
+      "grade": "uncommon",
+      "type": "synergy",
+      "description": "Если активировано пассивное умение «Дар небытия», его ночной эффект усиливается на 20%, а днём действует в размере 50% от базового значения. При одновременной активации с кумулятивным эффектом «Дар самоотречения» и дневной, и ночной эффекты всегда усилены на 20%.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Attack_Skill",
+      "name": "Чернокнижие",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Периодический урон проклятий повышается на 15%, но объём исцеления от исцеляющих умений снижается на 20%.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Tac_Skill",
+      "name": "Тёмный апостол",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Умение «Быстрое исцеление» заменяется умением «Порча», которое наносит урон противникам. Умение «Спасительный свет Клэя» заменяется умением «Бремя праздности», которое в течение 5 сек. ежесекундно наносит урон противникам в радиусе 5 м вокруг персонажа. Умение «Источник жизни» заменяется умением «Омут разложения», которое наносит урон противникам в указанной области.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Def_Skill",
+      "name": "Ведовской оберег",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Эффект умения «Час преодоления» позволяет персонажу проходить сквозь противников и дополнительно окружает его защитным барьером, который поглощает урон в размере 400% базового урона. Время действия эффекта изменяется на 6 сек.",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    },
+    {
+      "weapon": "WA_GR",
+      "id": "Wand_Rare_Util_Skill",
+      "name": "Искра проклятия",
+      "grade": "rare",
+      "type": "synergy",
+      "description": "Попадание базовой атакой жезла с вероятностью 15% накладывает на монстра один из эффектов — «Касание скорби», «Перст угасания» или «Час отмщения».",
+      "maximum": 1,
+      "stats": [],
+      "referencedInSource": true
+    }
+  ]
+}
