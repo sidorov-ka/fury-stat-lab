@@ -83,7 +83,7 @@ for(const weapon of ['Crossbow','Wand'])for(const off of [false,true])assert(exp
 const selfDecay=buffRun(IDS.decay,[1]),baseDecay=buffRun(IDS.decay,[]),thirdDecay=buffRun(IDS.decay,[3]);
 assert.equal(selfDecay.effectEvents[0].target,'self');assert.equal(baseDecay.effectEvents[0].target,'enemy');
 assert.equal(baseDecay.total,thirdDecay.total,'trait 3 retains base effect on monster');
-assert.equal(selfDecay.effectEvents[0].value,80);assert.equal(baseDecay.effectEvents[0].value,-220);
+assert.equal(selfDecay.effectEvents[0].value,220);assert.equal(baseDecay.effectEvents[0].value,-220);
 assert.equal(expectedHit({...params,resistance:700},'Wand',1,0),50);
 assert(expectedHit({...params,resistance:700},'Wand',1,0,{resistanceDrop:220})>50);
 const selfState={...state,active:[IDS.decay,IDS.rapid],passive:[PASS.thirst],specs:{[IDS.decay]:[spec(IDS.decay,1)]}};

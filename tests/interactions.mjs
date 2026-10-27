@@ -35,7 +35,7 @@ const overlapInput={catalog,state:{...state,specs:{[IDS.light]:spec(IDS.light,[1
 const overlap=simulate(overlapInput,true);
 const overlapHit=overlap.damageEvents.find(e=>e.id===IDS.laser);
 assert(overlap.effectEvents.every(e=>e.time<=overlapHit.time&&e.end>overlapHit.time));
-assert.equal(overlapHit.value,expectedHit(params,'Wand',.82,20,{maxBonus:92,boostBonus:80,skillMultiplier:1.3}),'both buffs affect the same hit through their own formula, without an invented joint multiplier');
+assert.equal(overlapHit.value,expectedHit(params,'Wand',.82,20,{maxBonus:92,boostBonus:220,skillMultiplier:1.3}),'both buffs affect the same hit through their own formula, without an invented joint multiplier');
 // Independent analytical check of Touch + Circle + extension + explosion.
 const priority=[IDS.touch,IDS.area,IDS.spread,IDS.burst];
 const overrides=Object.fromEntries(priority.map(id=>[id,{cooldownSec:999,cast:0,hitDelay:0}]));

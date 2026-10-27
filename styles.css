@@ -152,3 +152,10 @@ html{scroll-behavior:smooth}section[id]{scroll-margin-top:85px}
 .battle-log .rotation-log::-webkit-scrollbar-thumb{background:#677e9d;border:2px solid #0b131f;border-radius:8px}
 .battle-log .rotation-action{min-width:0;overflow-wrap:anywhere}
 .battle-log .rotation-mana{margin-left:auto;flex-shrink:0}
+
+.damage-breakdown{margin:1.25rem 0;padding:1rem;border:1px solid var(--line,#354258);border-radius:12px}
+.damage-breakdown label{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap}
+.damage-breakdown select{max-width:100%}
+.damage-bars{display:flex;height:24px;margin:1rem 0;border-radius:6px;overflow:hidden;background:#263348}
+.damage-bars span{display:block;height:100%;min-width:0}
+.damage-breakdown details p{margin:.35rem 0}

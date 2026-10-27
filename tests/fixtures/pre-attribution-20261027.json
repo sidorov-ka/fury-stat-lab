@@ -1,0 +1,23 @@
+{
+  "total": 777335.3185623853,
+  "damage": {
+    "WP_CR_CR_S_RapidShot": 151015.80299999999,
+    "nature-hit": 57470.04900000026,
+    "nature-burning": 41315.25004618837,
+    "WP_WA_GR_S_Corruption": 183555.69230769202,
+    "WP_WA_GR_S_CurseBurst": 34205.797570850205,
+    "nature-burning-explosion": 955.3177364939347,
+    "curse-explosion": 32326.546153846153,
+    "WP_CR_CR_S_ArmorBreakShot": 31257.86666666665,
+    "mark-explosion": 49166.22941397778,
+    "auto": 196066.76666666562
+  },
+  "counts": {
+    "WP_CR_CR_S_AddProjectile": 1,
+    "WP_CR_CR_S_RapidShot": 50,
+    "WP_WA_GR_S_Corruption": 35,
+    "WP_WA_GR_S_CurseBurst": 14,
+    "WP_CR_CR_S_ArmorBreakShot": 19,
+    "WP_CR_S_GhostWalk": 9
+  }
+}
