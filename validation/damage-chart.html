@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fury Stat Lab — вклад типов урона (проверочная визуализация)</title>
+<style>
+:root{font:15px system-ui,sans-serif;color:#e7eaf1;background:#121722}
+body{max-width:1000px;margin:auto;padding:24px}h1{font-size:1.5rem}h2{font-size:1.15rem}
+small,.hint{color:#a3adbf}.panel{background:#1b2332;border:1px solid #354258;border-radius:14px;padding:20px;margin:15px 0}
+.summary{font-size:1.8rem;font-weight:700}.stack{display:flex;width:100%;height:32px;overflow:hidden;border-radius:7px;background:#354258}
+.seg{height:100%}table{width:100%;border-collapse:collapse}td,th{padding:9px;text-align:left;border-bottom:1px solid #354258}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px}
+textarea{box-sizing:border-box;width:100%;height:160px;background:#0e1521;color:#e7eaf1;border:1px solid #52607a;border-radius:8px;padding:12px;font:13px ui-monospace,monospace}
+button{background:#7467e8;border:0;color:white;padding:10px 18px;border-radius:7px;cursor:pointer}
+#error{color:#ff8c95}.muted{color:#a3adbf}
+</style></head><body>
+<h1>Вклад типов урона</h1><p class="hint">Автономная демонстрация формата событий для интеграции. Значения ниже условные, это не результаты игрового расчёта.</p>
+<div class="panel"><div>Общий DPS</div><div class="summary" id="dps">—</div><p class="muted" id="total"></p><div class="stack" id="stack" role="img" aria-label="Распределение урона по типам"></div></div>
+<div class="panel"><h2>По типам урона</h2><table><thead><tr><th>Тип</th><th class="num">Урон</th><th class="num">DPS</th><th class="num">Доля</th></tr></thead><tbody id="types"></tbody></table></div>
+<div class="panel"><h2>По умениям и эффектам</h2><table><thead><tr><th>Источник</th><th class="num">Урон</th><th class="num">DPS</th><th class="num">Доля</th></tr></thead><tbody id="sources"></tbody></table></div>
+<div class="panel"><h2>Данные событий JSON</h2><p class="hint">Каждый реальный урон фиксируется один раз. Служебные записи накопления метки помечаются isBookkeeping: true.</p><textarea id="events"></textarea><p><button id="recalc">Пересчитать</button> <span id="error"></span></p></div>
+<script type="module">
+import {damageBreakdown} from "./damage-breakdown.mjs";
+const colors={magic_dot:"#a78bfa",magic_direct:"#67a3ec",ranged:"#f2bd65",weapon_proc:"#55c9b3",mark_explosion:"#f17f9d",other:"#9ba6b5"};
+const sample={durationSeconds:10,events:[
+{source:"Касание скорби",damageType:"magic_dot",damage:560},
+{source:"Бедственное слово",damageType:"magic_direct",damage:180},
+{source:"Скоростная стрельба",damageType:"ranged",damage:85},
+{source:"Беландир",damageType:"weapon_proc",damage:110},
+{source:"Метка смерти",damageType:"mark_explosion",damage:65}
+]};
+const events=document.querySelector("#events");events.value=JSON.stringify(sample,null,2);
+const fmt=n=>new Intl.NumberFormat("ru-RU",{maximumFractionDigits:1}).format(n);
+function addCell(row,value,cls){const c=document.createElement("td");c.textContent=value;if(cls)c.className=cls;row.append(c);return c;}
+function render(){
+  const input=JSON.parse(events.value),r=damageBreakdown(input.events,input.durationSeconds);
+  document.querySelector("#dps").textContent=fmt(r.totalDps);
+  document.querySelector("#total").textContent=fmt(r.totalDamage)+" урона за "+fmt(r.durationSeconds)+" с";
+  const stack=document.querySelector("#stack"),types=document.querySelector("#types"),sources=document.querySelector("#sources");
+  stack.replaceChildren();types.replaceChildren();sources.replaceChildren();
+  for(const item of r.byType.filter(x=>x.damage>0)){
+    const seg=document.createElement("div");seg.className="seg";seg.style.width=item.sharePercent+"%";seg.style.background=colors[item.type];seg.title=item.label+": "+fmt(item.sharePercent)+"%";stack.append(seg);
+    const tr=document.createElement("tr"),td=addCell(tr,"");
+    const dot=document.createElement("span");dot.className="dot";dot.style.background=colors[item.type];td.append(dot,document.createTextNode(item.label));
+    addCell(tr,fmt(item.damage),"num");addCell(tr,fmt(item.dps),"num");addCell(tr,fmt(item.sharePercent)+"%","num");types.append(tr);
+  }
+  for(const item of r.bySource){const tr=document.createElement("tr");addCell(tr,item.source);addCell(tr,fmt(item.damage),"num");addCell(tr,fmt(item.dps),"num");addCell(tr,fmt(item.sharePercent)+"%","num");sources.append(tr);}
+  document.querySelector("#error").textContent="";
+}
+document.querySelector("#recalc").addEventListener("click",()=>{try{render()}catch(e){document.querySelector("#error").textContent=e.message}});
+render();
+</script></body></html>
