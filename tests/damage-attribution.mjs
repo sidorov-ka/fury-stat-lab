@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {DEFAULTS,IDS,simulate,BUFF_DEFAULTS} from '../dist/simulator.js';
-import {breakdown} from '../dist/damage-attribution.js';
+import {breakdown,eventInfo} from '../dist/damage-attribution.js';
 import {sensitivity} from '../dist/sim-worker.js';
 const catalog=JSON.parse(fs.readFileSync(new URL('../dist/catalog.json',import.meta.url)));
 const golden=JSON.parse(fs.readFileSync(new URL('./fixtures/pre-attribution-20261027.json',import.meta.url)));
@@ -16,6 +16,10 @@ assert(b.attackType.some(x=>x.key==='unverified'),'unverified explosions must no
 assert(b.attackType.some(x=>x.key==='magic')&&b.attackType.some(x=>x.key==='ranged'));assert(!b.attackType.some(x=>x.key==='melee'));
 assert(b.hand.some(x=>x.key==='main')&&b.hand.some(x=>x.key==='off'));
 assert(b.dotType.some(x=>x.key==='curse')&&b.dotType.some(x=>x.key==='burning'));
+assert.equal(eventInfo('touch',{weapon:'Wand',mechanism:'dot',dotType:'curse'}).attackType,'magic');
+assert.equal(eventInfo('poison',{weapon:'Crossbow',mechanism:'dot',dotType:'poison'}).attackType,'ranged');
+assert.equal(eventInfo('mark-explosion').attackType,'unverified');
+assert(result.damageEvents.some(x=>x.attribution.mechanism==='dot'&&x.attribution.attackType==='magic'));
 near(sum(b.dotType),b.mechanism.find(x=>x.key==='dot').damage);
 assert(result.damage['mark-explosion']>0);near(result.damageEvents.filter(x=>x.id==='mark-explosion').reduce((n,x)=>n+x.value,0),result.damage['mark-explosion']);
 const snapshot=JSON.stringify(params),sens=sensitivity(input,{...result,specs:state.specs});assert.equal(JSON.stringify(params),snapshot,'sensitivity cannot mutate base');assert(sens.every(x=>Number.isFinite(x.dps)));

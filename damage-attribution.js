@@ -1,7 +1,7 @@
 // Classification of already calculated damage. These labels do not implement
 // combat formulas. 'model' describes the ratings selected by the simulator,
 // not an independently confirmed damage type on the RU game server.
-export const ATTACK_LABELS={magic:'Магия',ranged:'Дальний бой',melee:'Ближний бой',unverified:'Не подтверждён'};
+export const ATTACK_LABELS={magic:'Характеристики магии',ranged:'Характеристики дальнего боя',melee:'Характеристики ближнего боя',unverified:'Смешанный или не выделенный расчёт'};
 export const MECHANISM_LABELS={auto:'Автоатаки',direct:'Прямой урон умений',dot:'Периодический урон',explosion:'Взрывы',additional:'Дополнительные попадания',weapon:'Эффекты оружия',other:'Прочий урон'};
 export const DOT_LABELS={curse:'Проклятие',burning:'Воспламенение',poison:'Яд',bleed:'Кровотечение',other:'Другой периодический урон'};
 export const HAND_LABELS={main:'Основная рука',off:'Парное оружие',none:'Не разделено'};

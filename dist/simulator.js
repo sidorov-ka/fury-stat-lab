@@ -1,4 +1,4 @@
-import {eventInfo,breakdown} from './damage-attribution.js?v=damage-audit-20261027';
+import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027b';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
 import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=full-audit-20261016';
 import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=full-audit-20261016';
@@ -447,9 +447,9 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(fieldEnd>t&&fieldNext<=t){fieldNext=t+1;if(!activeDot('area'))putDot('area',fieldSource,sp(fieldSource,1)?.6:.65,sp(fieldSource,1)?22:73,9);}
   if(buffs.nature>t&&mana<p.mana*.1){buffs.nature=0;natureStops++;}if(buffs.nature>t)natureUptime+=.05;
   if(markEnd&&markEnd<=t)markBoom();
-  for(const d of [...dotsFromWeapons,...extraDots]){const ticks=d.dot.tick(t);if(ticks)add(d.id,expectedHit(p,d.weapon,d.c,d.f||0,{...opts(true)})*ticks*(dotMultiplier(d.kind==='curse')+nightDot()),0,{mechanism:'dot',dotType:d.kind==='burn'?'burning':d.kind==='curse'?'curse':d.kind==='poison'?'poison':'other'});}
+  for(const d of [...dotsFromWeapons,...extraDots]){const ticks=d.dot.tick(t);if(ticks)add(d.id,expectedHit(p,d.weapon,d.c,d.f||0,{...opts(true)})*ticks*(dotMultiplier(d.kind==='curse')+nightDot()),0,{weapon:d.weapon,mechanism:'dot',dotType:d.kind==='burn'?'burning':d.kind==='curse'?'curse':d.kind==='poison'?'poison':'other'});}
   while(pending.length&&pending[0].at<=t+1e-7)pending.shift().fn();
-  for(const d of Object.values(dots)){if(d.dot){const ticks=d.dot.tick(t);if(ticks){add(d.s.id,dotDamage(d,ticks),0,{weapon:d.s.weapon,attackType:'unverified',mechanism:'dot',dotType:'curse'});flower(d.s);}}else if(d.next<=t+1e-7&&d.next<=d.end+1e-7){add(d.s.id,dotDamage(d),0,{weapon:d.s.weapon,attackType:'unverified',mechanism:'dot',dotType:'curse'});flower(d.s);d.next+=1;}}
+  for(const d of Object.values(dots)){if(d.dot){const ticks=d.dot.tick(t);if(ticks){add(d.s.id,dotDamage(d,ticks),0,{weapon:d.s.weapon,mechanism:'dot',dotType:'curse'});flower(d.s);}}else if(d.next<=t+1e-7&&d.next<=d.end+1e-7){add(d.s.id,dotDamage(d),0,{weapon:d.s.weapon,mechanism:'dot',dotType:'curse'});flower(d.s);d.next+=1;}}
   if(common.has(COMMON_IDS.crisis)&&hp<p.hp*.5&&t>=crisisReady){crisisEnd=t+5;crisisReady=t+60;}
   if(t+1e-7<busy)continue;
   let chosen=natureSkill&&eligible(natureSkill)?natureSkill:null,unfunded=false;
