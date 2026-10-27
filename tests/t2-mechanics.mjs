@@ -67,6 +67,12 @@ console.log('Proc regression: 50% extra curse is capped per outcome; Gale first 
 // The RU Nature tooltip supplies its own 30% chance and 3-second duration.
 const fireOnce=simulate({catalog:c,state:{...state,specs:{[IDS.nature]:traits(IDS.nature,[2])}},params:{...p,auto:1,crossMin:100,crossMax:100,critR:0,interval:1000},priority:[IDS.nature]},true);
 near(fireOnce.damage['nature-burning'],.3*3*(.034*100+15));
+// After Touch expires, only the 15% Tevent curse branch can trigger the
+// preserved explosion. Burning must not detonate in the remaining 85%.
+const conditionalFireState={...state,items:{weapon2:{id:'wand_aa_t2_polymorph_001',level:0,traits:[]}},specs:{[IDS.nature]:traits(IDS.nature,[2]),[IDS.burst]:traits(IDS.burst,[1])}};
+const conditionalFire=simulate({catalog:c,state:conditionalFireState,params:{...DEFAULTS,crossMin:100,crossMax:100,wandMin:100,wandMax:100,auto:1,interval:1,mana:1e6,regen:0},priority:[IDS.nature,IDS.touch,IDS.burst],burstStacks:0,overrides:{[IDS.touch]:{cooldownSec:999,cast:0,hitDelay:0},[IDS.burst]:{cooldownSec:4,cast:0,hitDelay:0}}},true);
+const laterFire=conditionalFire.damageEvents.find(e=>e.id==='nature-burning-explosion'&&Math.abs(e.time-12.3)<.01);
+assert(laterFire);near(laterFire.value,36.82266923120399*.15);
 const fireThirst=simulate({catalog:c,state:{...state,passive:['WP_CR_CR_S_WeakenAttackBonus'],specs:{[IDS.nature]:traits(IDS.nature,[2]),[IDS.burst]:traits(IDS.burst,[1,3])}},params:{...p,auto:1,offhand:100,interval:.25,critR:2000},priority:[IDS.nature,IDS.touch,IDS.burst]},true);
 assert(fireThirst.cooldownCycles.some(x=>x.id===IDS.burst));
 for(const cycle of fireThirst.cooldownCycles){const reduction=Object.values(cycle.reductions).reduce((a,b)=>a+b,0);assert(cycle.nextCast+1e-7>=cycle.scheduledReady-reduction,'each cast must have an auditable ready time');}

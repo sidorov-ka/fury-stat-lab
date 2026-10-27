@@ -1,4 +1,4 @@
-import {optimize,simulate} from './simulator.js?v=damage-model-20261027b';
+import {optimize,simulate} from './simulator.js?v=damage-model-20261027c';
 const changes=[
  ['critM',100,'Магия: критический удар +100'],['critR',100,'Дальний бой: критический удар +100'],
  ['heavyM',100,'Магия: мощная атака +100'],['heavyR',100,'Дальний бой: мощная атака +100'],

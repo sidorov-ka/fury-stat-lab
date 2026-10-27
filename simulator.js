@@ -1,4 +1,4 @@
-import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027b';
+import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027c';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
 import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=full-audit-20261016';
 import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=full-audit-20261016';
@@ -360,7 +360,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
     direct(s,4.2,272,1,{projectile:false,off:false});const stacks=dotStacks();
     const curseChance=stacks||activeDot('area')?1:1-dotsFromWeapons.filter(d=>d.kind==='curse').reduce((q,d)=>{d.dot.expire(t);return q*d.dot.empty;},1);
     if(curseChance>0){let rest=0;for(const d of Object.values(dots))if(d.end>t){rest+=remainingCurse(d);}
-     for(const d of [...dotsFromWeapons,...extraDots]){const value=expectedHit(p,d.weapon,d.c,d.f||0,{...opts(true)})*(dotMultiplier(d.kind==='curse')+nightDot())*d.dot.remaining(t)*(d.kind==='poison'?curseChance:1);add(d.id+'-explosion',value*(1+(sp(s,2)?.10:.05)*stacks)*(sp(s,1)?.5:1));if(!sp(s,1)){if(d.kind==='poison')d.dot.consume(curseChance);else d.dot.clear();}}
+     for(const d of [...dotsFromWeapons,...extraDots]){const conditional=d.kind!=='curse';const value=expectedHit(p,d.weapon,d.c,d.f||0,{...opts(true)})*(dotMultiplier(d.kind==='curse')+nightDot())*d.dot.remaining(t)*(conditional?curseChance:1);add(d.id+'-explosion',value*(1+(sp(s,2)?.10:.05)*stacks)*(sp(s,1)?.5:1));if(!sp(s,1)){if(conditional)d.dot.consume(curseChance);else d.dot.clear();}}
      add('curse-explosion',rest*(1+(sp(s,2)?.10:.05)*stacks)*(sp(s,1)?.5:1),0,{source:IDS.burst});if(!sp(s,1))for(const d of Object.values(dots)){d.end=t;d.dot?.clear();}
     }break;}
    case 'decay':{

@@ -1,6 +1,6 @@
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
 import {COMMON_PASSIVES} from './common-mastery.js?v=full-audit-20261016';
-import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=damage-model-20261027b';
+import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=damage-model-20261027c';
 const fields=[
  ['giantBlessing','Благословение Гигантиды: 0 — нет, 1 — да'],['controlImmune','Невосприимчивость к контролю: 0 — нет, 1 — да'],['enemyMana','Мана цели'],['stepDuration','Длительность рывка, с'],['evasion','Уклонение цели'],['endurance','Устойчивость цели'],['heavyEvasion','Устойчивость к мощным атакам'],['weakenResistance','Сопротивление ослаблениям'],['enemyAttacks','Число атак по персонажу в секунду'],['incomingDps','Входящий урон после защиты, ед./с'],['furyInterval','Интервал успешных блоков яростной атаки, с'],['moving','Постоянное движение: 0 — нет, 1 — да'],['killInterval','Интервал убийства противников, с'],['baseDamagePercent','Базовый урон: прибавка от пассивок, %'],['rangeDamage','Урон дальнего боя, %'],['magicDamage','Урон магии, %'],
  ['selfDurationExtension','Час преодоления: Длительность ▲, с (гипотеза)'],
@@ -51,7 +51,7 @@ function warnings(){
   if(err.length){$('sim-status').textContent=[...new Set(err)].join(' ');$('sim-params').open=true;return;}
   const overrides={};
   runInput={catalog,state,params,overrides,mode,budget:Number($('sim-budget').value)};dirty=false;$('simulate').disabled=true;$('sim-cancel').hidden=false;$('sim-progress').hidden=false;$('sim-progress').max=runInput.budget;$('sim-progress').value=0;$('sim-status').textContent='Сравниваю ротации…';
-  try{worker=new Worker(new URL('./sim-worker.js?v=damage-model-20261027b',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
+  try{worker=new Worker(new URL('./sim-worker.js?v=damage-model-20261027c',import.meta.url),{type:'module'});}catch(e){$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;$('sim-status').textContent='Браузер не смог запустить расчёт. Обнови страницу и повтори.';return;}
   const finish=()=>{worker?.terminate();worker=null;$('simulate').disabled=false;$('sim-cancel').hidden=true;$('sim-progress').hidden=true;};
   worker.onerror=()=>{finish();$('sim-status').textContent='Ошибка расчёта. Проверь параметры и повтори запуск.';};
   worker.onmessage=e=>{const m=e.data;if(m.type==='progress'){$('sim-progress').value=m.done;$('sim-status').textContent=m.phase==='sensitivity'?'Сравниваю характеристики…':m.phase==='planning'?`Сравниваю окна урона · DPS ${num(m.dps)}`:m.phase==='support'?`Проверяю сочетания · ${m.tested} вариантов · DPS ${num(m.dps)}`:`${m.done} / ${m.budget} · лучший DPS ${num(m.dps)}`;}else if(m.type==='error'){finish();$('sim-status').textContent='Ошибка: '+m.message;}else{finish();result=m.result;renderResult();$('sim-status').textContent='Расчёт завершён.';}};worker.postMessage(runInput);
