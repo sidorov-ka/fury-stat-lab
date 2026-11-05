@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {cooldownSeconds} from '../combat-mechanics.js';
+import {ProcDot} from '../weapon-effects.js';
+import {attackInterval,intervalWithSpeedBonus,deriveStats,characterStats} from '../simulator.js';
+const near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
+near(cooldownSeconds(18,300),6);near(cooldownSeconds(18,200),6);
+near(attackInterval(1,0,300),.4);near(intervalWithSpeedBonus({interval:.4,speed:150},100),.4);
+const dot=new ProcDot(3);dot.applyLevels(0,1,80,0,2,30);assert.equal(dot.states[0].end,30);dot.extend(1,20,30);assert.equal(dot.states[0].end,31);dot.applyLevels(2,1,40,0,2,30);assert.equal(dot.states[0].end,32);
+const c=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));c.attributes.baseCharacter.stats.attack_speed_modifier=30000;c.attributes.baseCharacter.stats.skill_cooldown_modifier=30000;c.attributes.baseCharacter.stats.buff_given_duration_modifier=30000;
+const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};
+const d=deriveStats(state,c),sheet=characterStats(state,c);assert.equal(d.speed,150);assert.equal(d.cooldown,200);assert.equal(d.buffDuration,150);assert.equal(sheet.attack_speed_modifier,15000);assert.equal(sheet.skill_cooldown_modifier,20000);assert.equal(sheet.buff_given_duration_modifier,15000);
+console.log('November limits: attack speed, cooldown recovery, buff duration and Touch of Despair.');

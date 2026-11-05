@@ -1,7 +1,7 @@
 import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027c';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
-import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=full-audit-20261016';
-import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=full-audit-20261016';
+import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=nov-caps-20261105';
+import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=nov-caps-20261105';
 import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=full-audit-20261016';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
 import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=full-audit-20261016';
@@ -42,7 +42,7 @@ export function specializationRole(id,n){
 }
 export function specializationUtility(catalog,specs){return catalog.skills.reduce((sum,s)=>sum+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)&&['utility','defensive'].includes(specializationRole(s.id,Number(t.id.split('_').at(-1))))).reduce((n,t)=>n+t.cost,0),0);}
 export const chance=(rating,k=1000)=>Math.max(0,rating)/(Math.max(0,rating)+k);
-export function attackInterval(baseSeconds,dexPercent,speedPercent,dexSeconds=null){return Math.max(.001,baseSeconds+(dexSeconds??-Math.max(0,dexPercent)*.0067))/Math.max(.01,1+speedPercent/100);}
+export function attackInterval(baseSeconds,dexPercent,speedPercent,dexSeconds=null){return Math.max(.001,baseSeconds+(dexSeconds??-Math.max(0,dexPercent)*.0067))/Math.max(.01,1+Math.min(150,speedPercent)/100);}
 // Client-derived base level table: TL Codex gear builder, retrieved 2026-10-01.
 // https://tlcodex.com/en/gearbuild/934/ : character level 55, stat IDs 163 (HP), 166 (MP).
 export const LEVEL_55_BASE=Object.freeze({hp:6675,mana:5550});
@@ -68,6 +68,7 @@ export function deriveStats(state,catalog){
 
  const val=k=>(raw[k]||0)*(catalog.formats[k]?.mul??1);
  const out={...DEFAULTS,accuracyR:val('all_accuracy')+val('range_accuracy'),accuracyM:val('all_accuracy')+val('magic_accuracy'),weaken:val('all_state_accuracy')+val('weaken_accuracy'),critR:val('all_critical_attack')+val('range_critical_attack'),critM:val('all_critical_attack')+val('magic_critical_attack'),heavyR:val('all_double_attack')+val('range_double_attack'),heavyM:val('all_double_attack')+val('magic_double_attack'),critDamage:val('critical_damage_dealt_modifier'),boost:val('skill_power_amplification'),bonus:val('damage_reduction_penetration'),cooldown:val('skill_cooldown_modifier'),speed:val('attack_speed_modifier'),mana:val('cost_max'),regen:val('cost_regen'),efficiency:val('cost_consumption_modifier'),hp:val('hp_max'),buffDuration:val('buff_given_duration_modifier')};
+ out.speed=Math.min(150,out.speed);out.cooldown=Math.min(200,out.cooldown);out.buffDuration=Math.min(150,out.buffDuration);
  for(const position of ['front','side','back'])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out[position+name]=val(position+'_'+stat);
  for(const [suffix,type] of [['R','range'],['M','magic']])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out['boss'+name+suffix]=val('boss_all_'+stat)+val('boss_'+type+'_'+stat);
  out.bossBonus=val('boss_bonus_attack_power');out.bossBoost=val('boss_skill_power_amplification');
@@ -110,6 +111,7 @@ export function characterStats(state,catalog){
  }
  for(const suffix of ['accuracy','tolerance']){for(const type of ['weaken','stun','petrification','sleep','silence','bind','blind'])out[type+'_'+suffix]=(raw[type+'_'+suffix]||0)+(raw['all_state_'+suffix]||0);const impulse=suffix==='accuracy'?'collide_amplification':'collide_resistance';out[impulse]=(raw[impulse]||0)+(raw['all_state_'+suffix]||0);delete out['all_state_'+suffix];}
  const passive=passiveSheetEffects(state,catalog,combat.mana);
+ for(const [stat,key] of [['attack_speed_modifier','speed'],['skill_cooldown_modifier','cooldown'],['buff_given_duration_modifier','buffDuration']])out[stat]=combat[key]/(catalog.formats[stat]?.mul||.01);
  out.stamina_regen=(out.stamina_regen||0)+passive.staminaRegen/(catalog.formats.stamina_regen?.mul||1);
  out.weaken_accuracy=(out.weaken_accuracy||0)+passive.weaken/(catalog.formats.weaken_accuracy?.mul||1);
  out.attack_power_modifier=(out.attack_power_modifier||0)+passive.baseDamagePercent/(catalog.formats.attack_power_modifier?.mul||.01);
@@ -183,7 +185,7 @@ export function combatHealing(state,catalog,params){
  const factor=day&&night?1.2:params.night?(day?.5:0):(day?1.2:1);
  return params.healing+((state.passive||[]).includes(PASS.night)?passiveValue(state,catalog,PASS.night,'Эффективность исцеления ▲',36)*factor*passiveSheetEffects(state,catalog,params.mana).healingMultiplier:0);
 }
-export function intervalWithSpeedBonus(params,bonus){return params.interval*(1+params.speed/100)/(1+(params.speed+bonus)/100);}
+export function intervalWithSpeedBonus(params,bonus){return params.interval*(1+Math.min(150,params.speed)/100)/(1+Math.min(150,params.speed+bonus)/100);}
 // Expected critical attempts per projectile; the cooldown itself uses remainingCooldownFactor.
 export function rapidCriticalCooldownReduction(params,offChance,offCritBonus=0){
  return chance(params.critR,params.ratingK)+offChance*chance(params.critR+offCritBonus,params.ratingK);
@@ -225,14 +227,14 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  const hitRate=s=>combatRatings(p,s.weapon,combatPosition(),0,accuracyBonus()).hit;
  const criticalRate=(weapon,bonus=0)=>combatRatings(p,weapon,combatPosition(),bonus).critical;
  const flank=weapon=>combatRatings(p,weapon,combatPosition()).position!=='front';
- const extendWeaken=seconds=>{for(const d of Object.values(dots))if(d.end>t){d.end+=seconds;d.dot?.extend(t,seconds);}for(const d of [...dotsFromWeapons,...extraDots])d.dot.extend(t,seconds);if(buffs.decay>t)buffs.decay+=seconds;if(markEnd>t)markEnd+=seconds;};
+ const extendWeaken=seconds=>{for(const d of Object.values(dots))if(d.end>t){d.end=Math.min(d.end+seconds,d.s?.key==='touch'?t+30:Infinity);d.dot?.extend(t,seconds,d.s?.key==='touch'?30:Infinity);}for(const d of [...dotsFromWeapons,...extraDots])d.dot.extend(t,seconds);if(buffs.decay>t)buffs.decay+=seconds;if(markEnd>t)markEnd+=seconds;};
  const spendMana=amount=>{mana=Math.max(0,mana-amount);manaSpent+=amount;minMana=Math.min(minMana,mana);};
  let natureMana=0,natureUptime=0,natureStops=0,planningWait=0;
  const buffs={nature:0,ghost:0,step:0,adapt:0,decay:0,selfBoost:0,light:0,wind:0},dots={},effectEvents=[];
  let lightStarted=0,lightDirected=false,decayProbability=1;
  let markEnd=0,markPool=0,markExplosive=false,markSource=null,procWindow=-1,procCount=0;
  const pv=(id,label,fallback)=>passiveValue(state,catalog,id,label,fallback);
- const duration=n=>n*(1+p.buffDuration/100),curseDuration=n=>n+rank('Wand_High_Attack_01')+(has(PASS.duration)&&!hasMx('Wand_High_Def_Skill')?pv(PASS.duration,'Время действия проклятий ▲',3.3):0);
+ const duration=n=>n*(1+Math.min(150,p.buffDuration)/100),curseDuration=n=>n+rank('Wand_High_Attack_01')+(has(PASS.duration)&&!hasMx('Wand_High_Def_Skill')?pv(PASS.duration,'Время действия проклятий ▲',3.3):0);
  const activeDot=key=>dots[key]&&(dots[key].dot?dots[key].dot.stacks(t)>1e-10:dots[key].end>t);
  const dotStacks=()=>activeDot('touch')?dots.touch.dot.stacks(t):0;
  const dayBonus=hasMx('Wand_Normal_Def_Skill'),nightBonus=hasMx('Wand_High_Util_Skill');
@@ -282,7 +284,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   if(weapons.has('laser')&&s.key==='laser'&&!activeDot('area'))putDot('area',{id:IDS.area,key:'area',weapon:'Wand',pve:1,specs:[],castToken:s.castToken},.65,73,9);
   if(markEnd>t&&!markExplosive){add('mark-hit',hitValue(markSource,.23,15)*hits);}
   if(projectile)natureProc(hits);
-  if(buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t){d.end+=.05*hits;d.dot?.extend(t,.05*hits);}for(const d of dotsFromWeapons)d.dot.extend(t,.05*hits);if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
+  if(buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t){d.end=Math.min(d.end+.05*hits,d.s?.key==='touch'?t+30:Infinity);d.dot?.extend(t,.05*hits,d.s?.key==='touch'?30:Infinity);}for(const d of dotsFromWeapons)d.dot.extend(t,.05*hits);if(buffs.decay>t)buffs.decay+=.05*hits;if(markEnd>t)markEnd+=.05*hits;}
   procGale(s,hits);combatProcs(s,hits);if(sleepEnd>t&&sleepHits>0){sleepHits-=hits;if(sleepHits<=0)sleepEnd=t;}commonHit(s);
  }
  function enqueue(at,fn){pending.push({at,fn});pending.sort((a,b)=>a.at-b.at);}
@@ -303,7 +305,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   const previous=dots[key],q=hitRate(s)*wp(1,true),ttl=curseDuration(seconds)*debuffMultiplier();
   if(key==='touch'){
    const dot=previous?.dot||new ProcDot(3),extra=s.key==='touch'&&sp(s,3)?.5:0,application=q*Math.min(1,stacks);
-   dot.expire(t);const first=dot.empty*application*(1-extra);dot.applyLevels(t,application,ttl,extra,2);
+   dot.expire(t);const first=dot.empty*application*(1-extra);dot.applyLevels(t,application,ttl,extra,2,30);
    dots[key]={s,c,f,dot,end:Math.max(t,...dot.states.map(d=>d.end)),weight:1};
    weaken(1,first,'Касание скорби: первый уровень');weaken(2,application-first,'Касание скорби: повторные уровни');curseProc(application);
   }else{dots[key]={s,c,f,end:t+ttl,weight:q,next:previous&&previous.end>t?previous.next:t+1,stacks};weaken(stacks,q);curseProc(q);}
@@ -372,7 +374,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
     if(detail)effectEvents.push({time:t,end:buffs[key],id:s.id,target:self?'self':'enemy',stat:self?'skillBoost':'skillResistance',value:self?p.selfSkillBoost:-p.targetResistanceDrop});
     break;
    }
-   case 'spread':curseProc();if(sp(s,3))direct(s,2*(Number(!!activeDot('touch'))+Number(!!activeDot('area'))+Number(buffs.decay>t)),0,1,{projectile:false,off:false});if(sp(s,1)){for(const d of Object.values(dots))if(d.end>t){d.end+=5;d.dot?.extend(t,5);}for(const d of dotsFromWeapons)if(d.kind==='curse')d.dot.extend(t,5);if(buffs.decay>t)buffs.decay+=5;}break;
+   case 'spread':curseProc();if(sp(s,3))direct(s,2*(Number(!!activeDot('touch'))+Number(!!activeDot('area'))+Number(buffs.decay>t)),0,1,{projectile:false,off:false});if(sp(s,1)){for(const d of Object.values(dots))if(d.end>t){d.end=Math.min(d.end+5,d.s?.key==='touch'?t+30:Infinity);d.dot?.extend(t,5,d.s?.key==='touch'?30:Infinity);}for(const d of dotsFromWeapons)if(d.kind==='curse')d.dot.extend(t,5);if(buffs.decay>t)buffs.decay+=5;}break;
    case 'mark':if(markEnd>t)markBoom();direct(s,2.8,109);markEnd=t+3;markExplosive=sp(s,2);markSource=s;markPool=0;weaken();break;
    case 'step':charges=Math.min(3,charges+1);buffs.step=t+duration(.5);if(has(PASS.adapt))buffs.adapt=t+duration(3);if(sp(s,1))buffs.wind=t+3;if((sp(s,3)||weapons.has('step'))&&cd[IDS.rapid]!==undefined)changeCooldown(IDS.rapid,t,'Смещение: сброс');break;
    case 'nature':if(natureElement&&mana>=p.mana*.1)buffs.nature=Infinity;break;
@@ -459,7 +461,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   for(const s of list)if(eligible(s)){const cost=s.manaCost/(1+p.efficiency/100);if(mana+1e-7>=cost)available.push(s);else unfunded=true;}
   if(!chosen)chosen=available[0]||null;
   if(rotationPolicy&&markSkillExplosive()){
-   const speed=1+(p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
+   const speed=1+Math.min(150,p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
    const impact=s=>Math.min(actionDuration(s,p,speed)+p.latency,Math.max(.05,s.hitDelay/speed));
    const mark=byId.get(IDS.mark),windowEnd=markEnd>t?markEnd:0;
    const attacks=(rotationPolicy.burstFirst?['burst','rapid']:['rapid','burst']).map(key=>available.find(s=>s.key===key)).filter(Boolean);
@@ -482,7 +484,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
    }
   }
   if(chosen){
-   const s={...chosen,castToken:++castSerial},speed=1+(p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
+   const s={...chosen,castToken:++castSerial},speed=1+Math.min(150,p.speed+(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed())/100;
    const cast=actionDuration(s,p,speed)+p.latency;
    if(t+Math.min(cast,Math.max(.05,s.hitDelay/speed))>=300)continue;
    spendMana(s.manaCost/(1+p.efficiency/100));
@@ -495,7 +497,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
    enqueue(t+(s.key==='step'?cast:Math.min(cast,Math.max(.05,s.hitDelay/speed))),()=>effect(s));
   }else{
    if(unfunded)starved+=.05;
-   if(p.auto&&(p.mainWeapon==='Wand'?p.wandMax:p.crossMax)>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:p.mainWeapon,pve:1,key:'auto',specs:[]};const extra=s.weapon==='Crossbow'?offchance(s):0;const main=expectedHit(p,s.weapon,1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()}),off=extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()}),v=main+off;const parts=detail&&s.weapon==='Crossbow'&&off>0?[{...eventInfo('auto',{weapon:s.weapon,hand:'main'}),value:main},{...eventInfo('auto',{weapon:s.weapon,hand:'off'}),value:v-main}]:null;add('auto',v,0,{weapon:s.weapon,hand:s.weapon==='Crossbow'?'main':'none'},parts);weaponHit(s,hitRate(s),extra);combatProcs(s,(1+extra)*hitRate(s));flower(s);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t){d.end+=.05*(1+extra);d.dot?.extend(t,.05*(1+extra));}for(const d of dotsFromWeapons)d.dot.extend(t,.05*(1+extra));if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p.mainWeapon==='Wand'?{...p,interval:p.wandInterval||2}:p,(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed());}
+   if(p.auto&&(p.mainWeapon==='Wand'?p.wandMax:p.crossMax)>0&&t+1e-7>=nextAuto){const s={id:'auto',weapon:p.mainWeapon,pve:1,key:'auto',specs:[]};const extra=s.weapon==='Crossbow'?offchance(s):0;const main=expectedHit(p,s.weapon,1,0,{...opts(),skill:false,skillMultiplier:1+.1*dotStacks()}),off=extra*expectedHit(p,'Crossbow',1,0,{...opts(false,true),skill:false,skillMultiplier:1+.1*dotStacks()}),v=main+off;const parts=detail&&s.weapon==='Crossbow'&&off>0?[{...eventInfo('auto',{weapon:s.weapon,hand:'main'}),value:main},{...eventInfo('auto',{weapon:s.weapon,hand:'off'}),value:v-main}]:null;add('auto',v,0,{weapon:s.weapon,hand:s.weapon==='Crossbow'?'main':'none'},parts);weaponHit(s,hitRate(s),extra);combatProcs(s,(1+extra)*hitRate(s));flower(s);natureProc(1+extra);if(markEnd>t&&!markExplosive)add('mark-hit',hitValue(markSource,.23,15)*(1+extra));if(buffs.ghost>t){for(const d of Object.values(dots))if(d.end>t){d.end=Math.min(d.end+.05*(1+extra),d.s?.key==='touch'?t+30:Infinity);d.dot?.extend(t,.05*(1+extra),d.s?.key==='touch'?30:Infinity);}for(const d of dotsFromWeapons)d.dot.extend(t,.05*(1+extra));if(markEnd>t)markEnd+=.05*(1+extra);if(buffs.decay>t)buffs.decay+=.05*(1+extra);}nextAuto=t+intervalWithSpeedBonus(p.mainWeapon==='Wand'?{...p,interval:p.wandInterval||2}:p,(buffs.step>t?20:0)+(crisisEnd>t?20:0)+(battleSpeedEnd>t?battleSpeed:0)+bloodlustSpeed());}
   }
  }
  return {total,dps:total/300,counts,damage,logs,damageEvents,damageBreakdown:detail?breakdown(damageEvents):null,effectEvents,cooldownCycles,bins,minMana,mana,hp,enemyMana,shield:healShield,starved,natureMana,natureUptime,natureStops,natureElement,healing:p.healing,priority,burstStacks,rotationPolicy,planningWait};

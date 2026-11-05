@@ -8,7 +8,7 @@ export function rapidOffhandChances(chance,guaranteed=false){const q=Math.max(0,
 export const signedChance=(rating,k=1000)=>rating/(Math.abs(rating)+k);
 export function weakenProbability(base,rating=0,resistance=0,curseBonus=0){return Math.max(0,Math.min(1,(base+curseBonus)*(1+signedChance(rating-resistance))));}
 export function remainingCooldownFactor(mainCritical,offhandCritical=0,offhandChance=0){return (1-.1*mainCritical)*(1-.1*offhandChance*offhandCritical);}
-export function cooldownSeconds(base,haste=0){return Math.max(.05,base/(1+Math.max(0,haste)/100));}
+export function cooldownSeconds(base,haste=0){return Math.max(.05,base/(1+Math.min(200,Math.max(0,haste))/100));}
 // Bloodlust is a self buff, not a weaken application or a cooldown proc.
 // Probability branches preserve the fixed expiry after reaching ten stacks.
 export class Bloodlust{
