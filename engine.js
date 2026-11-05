@@ -53,7 +53,7 @@ export function specCost(state,catalog){
 }
 export function totalAttributes(state,catalog){
  const gear=gearStats(state,catalog),mastery=treeStats(state);
- return Object.fromEntries(ATTRS.map(([k])=>[k,Number(state.attrs[k]||0)+Number(state.attributeAdjustments?.[k]||0)+(state.attrMode==='total'?0:Number(gear[k]||gear[k.toLowerCase()]||0)+Number(mastery[k.toLowerCase()]||0))]));
+ return Object.fromEntries(ATTRS.map(([k])=>[k,Number(state.attrs[k]||0)+Number(state.attributeAdjustments?.[k]||0)+(state.attrMode==='total'?0:(k==='Int'?Number(gear.Int||0)+Number(gear.int||0):Number(gear[k]||0))+Number(mastery[k.toLowerCase()]||0))]));
 }
 
 // A set threshold is applied once, regardless of how many equipped pieces carry its definition.

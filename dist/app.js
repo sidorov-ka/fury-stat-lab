@@ -1,16 +1,16 @@
-import {WEAPON_EFFECTS} from './weapon-effects.js?v=legendary-20261105';
+import {WEAPON_EFFECTS} from './weapon-effects.js?v=sets-audit-20261105';
 import {normalizeCommon,mountCommon} from './common-mastery.js?v=full-audit-20261016';
 import {equipmentDraft,newTrait} from './equipment-defaults.js?v=full-audit-20261016';
 import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=full-audit-20261016';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=legendary-20261105';
-import {setupSimulation} from './sim-ui.js?v=legendary-20261105';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=sets-audit-20261105';
+import {setupSimulation} from './sim-ui.js?v=sets-audit-20261105';
 import {createStore,mergeDefaults} from './storage.js?v=full-audit-20261016';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=full-audit-20261016';
 import {TREES,normalizeTree} from './mastery-tree.js?v=full-audit-20261016';
 import {mountMastery} from './mastery-ui.js?v=full-audit-20261016';
 import {mountRunes} from './rune-ui.js?v=full-audit-20261016';
 import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=full-audit-20261016';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=legendary-20261105';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=sets-audit-20261105';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -60,7 +60,7 @@ function renderGear(){
   return [`<div class="gear-synergy-row"><b>${escape(label)}</b><span>${synergy.map(({stat,value})=>`${escape(statLabel(stat))}: ${value>0?'+':''}${escape(format(stat,value))}`).join(' · ')}</span></div>`];
  });
  const sets=activeSets(state,catalog).filter(g=>g.bonuses.length);
- const setBonuses=sets.length?`<details class="gear-sets"><summary>Бонусы комплектов</summary>${sets.map(g=>`<div class="perk"><b>${escape(g.name)} · ${g.count} предмета</b>${g.bonuses.map(b=>`<p class="micro">${b.pieces} предмета: ${b.passives?.length?b.passives.map(p=>escape(p.description)).join(' '):(b.stats||[]).map(r=>{const k=r.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());return escape(statLabel(k))+': '+escape(format(k,r.value));}).join(' · ')}</p>`).join('')}</div>`).join('')}</details>`:'';
+ const setBonuses=sets.length?`<details class="gear-sets"><summary>Бонусы комплектов</summary>${sets.map(g=>`<div class="perk"><b>${escape(g.name)} · ${g.count} предмета</b>${g.bonuses.map(b=>`<p class="micro">${b.pieces} предмета: ${b.passives?.some(p=>p.description?.trim())?b.passives.map(p=>escape(p.description||'')).join(' '):(b.stats||[]).map(r=>{const k=r.type.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase());return escape(statLabel(k))+': '+escape(format(k,r.value));}).join(' · ')}</p>`).join('')}</div>`).join('')}</details>`:'';
  $('gear-grid').insertAdjacentHTML('beforeend',`<div class="gear-bonuses"><section class="gear-synergies" aria-label="Синергия рун экипировки"><h3>Синергия трёх рун</h3>${synergies.join('')||'<p class="micro">Нет активных сочетаний. Выбери три руны в подходящем порядке.</p>'}</section>${setBonuses}</div>`);
  $('gear-grid').querySelectorAll('[data-gear]').forEach(b=>b.onclick=()=>openGear(b.dataset.gear));
 }
@@ -178,7 +178,7 @@ $('picker').addEventListener('click',e=>{if(e.target===$('picker')){const r=$('p
 $('weapon').onchange=renderStats;
 $('reset').onclick=()=>{if(!confirm('Очистить экипировку, атрибуты, умения, специализации и бонусы мастерства? Условия боя сохранятся.'))return;state=emptyState();selectedSkill=null;renderGear();renderAttrs();renderStats();renderSkills();renderSkillDetail();toast('Сборка очищена')};
 async function init(){
- try{const r=await fetch('catalog.json?v=legendary-20261105',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
+ try{const r=await fetch('catalog.json?v=sets-audit-20261105',{cache:'no-cache'});if(!r.ok)throw new Error('HTTP '+r.status);catalog=await r.json();itemMap=new Map(catalog.equipment.map(x=>[x.id,x]));skillMap=new Map(catalog.skills.map(x=>[x.id,x]));
   const saved=profile.get('build');
   if(saved?.state){state=mergeDefaults(emptyState(),saved.state);state.items={};state.specs={};state.commonMastery=normalizeCommon(saved.state.commonMastery);
    for(const [key,tree] of Object.entries(TREES))state.masteryTrees[key]=normalizeTree(tree,saved.state.masteryTrees?.[key]);
