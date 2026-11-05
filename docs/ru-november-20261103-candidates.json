@@ -1,0 +1,327 @@
+{
+  "status": "reference-only; not yet suitable for player calculations",
+  "observedAt": "2026-11-05",
+  "ruPatch": "https://throneandliberty.ru/news/121-vozvrashchenie-kalanty-opisanie-obnovleniya",
+  "qualification": "RU names, set bonuses and four earring level 12 values checked in build.tlwg.ru; other level scaling, runes and traits must be checked before use in calculations.",
+  "sets": [
+    {
+      "id": "set_acc_t2_upgrade_001",
+      "name": "Символы нерушимого оберега",
+      "stats": "Стойкость +2; устойчивость к мощным атакам +60; максимальное здоровье +1000",
+      "source": "https://tldb.info/db/item-set/set_acc_t2_upgrade_001",
+      "threshold": 4,
+      "items": [
+        {
+          "id": "ear_aa_t2_upgrade_001",
+          "name": "Fortified Gilded Granite Teardrops",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 2 Fortitude: 3 Front Damage Reduction: 11 Front Endurance: 56 ",
+          "source": "https://tldb.info/db/item/ear_aa_t2_upgrade_001",
+          "ruName": "Укреплённые позолоченные гранитные слёзы",
+          "ruBuilderLevel12": "Защита (магия): 360; Сила: 5; Стойкость: 6; Снижение урона (спереди): 38; Устойчивость (спереди): 164"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_001",
+          "name": "Fortified Honor's Promise Signet",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 3 Wisdom: 1 Hit Chance: 53 Endurance: 20 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_001",
+          "ruName": "Прочная Клятва паладина"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_002",
+          "name": "Fortified Band of the Resistance Leader",
+          "base": "Magic Defense 240",
+          "stats": "Max Health: 150 Heavy Attack Evasion: 80 Endurance: 30 Damage Reduction: 6 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_002",
+          "ruName": "Прочная печатка Сопротивления"
+        },
+        {
+          "id": "necklace_aa_t2_upgrade_001",
+          "name": "Fortified Pendant of Eternal Flames",
+          "base": "Magic Defense 300",
+          "stats": "Collision Resistance: 75 Max Health: 300 Endurance: 40 ",
+          "source": "https://tldb.info/db/item/necklace_aa_t2_upgrade_001",
+          "ruName": "Прочная подвеска негасимых искр"
+        },
+        {
+          "id": "bracelet_aa_t2_upgrade_001",
+          "name": "Fortified Restraints of the Glacial Queen",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 2 Perception: 3 Ranged Endurance: 70 Magic Endurance: 70 ",
+          "source": "https://tldb.info/db/item/bracelet_aa_t2_upgrade_001",
+          "ruName": "Прочный браслет Королевы льдов"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_001",
+          "name": "Fortified Cunning Ogre Girdle",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 4 Melee Defense: 50 Heavy Attack Evasion: 45 Strength: 1 ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_001",
+          "ruName": "Прочный пояс прозорливого огра"
+        },
+        {
+          "id": "necklace_aa_t2_upgrade_005",
+          "name": "Fortified Pendant of the Divine Tree's Roots",
+          "base": "Magic Defense 240",
+          "stats": "Perception: 5 Mana Cost Efficiency: 3% Hit Chance: 20 Mana Regen: 15 ",
+          "source": "https://tldb.info/db/item/necklace_aa_t2_upgrade_005",
+          "ruName": "Прочное колье небесных корней"
+        }
+      ],
+      "ruBuilderSource": "https://build.tlwg.ru/builder"
+    },
+    {
+      "id": "set_acc_t2_upgrade_002",
+      "name": "Украшения великого стрелка",
+      "stats": "Ловкость +2; базовый урон +5; максимальное здоровье +600",
+      "source": "https://tldb.info/db/item-set/set_acc_t2_upgrade_002",
+      "threshold": 4,
+      "items": [
+        {
+          "id": "ear_aa_t2_upgrade_002",
+          "name": "Imbued Bloodbright Earrings",
+          "base": "Magic Defense 240",
+          "stats": "Dexterity: 2 Perception: 3 Front Evasion: 43 Side Heavy Attack Evasion: 43 ",
+          "source": "https://tldb.info/db/item/ear_aa_t2_upgrade_002",
+          "ruName": "Наполненные кроваво-яркие серьги",
+          "ruBuilderLevel12": "Защита (магия): 360; Ловкость: 5; Восприятие: 6; Уклонение (спереди): 151; Устойчивость к мощным атакам (сбоку): 151"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_003",
+          "name": "Imbued Ring of Distant Punishment",
+          "base": "Magic Defense 240",
+          "stats": "Ranged Hit Chance: 70 Range: 6% Dexterity: 1 Perception: 1 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_003",
+          "ruName": "Изысканное кольцо приговора"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_004",
+          "name": "Imbued Symbol of Nature's Advance",
+          "base": "Magic Defense 240",
+          "stats": "Hit Chance: 90 Critical Hit Chance: 33 Bonus Damage: 8 Dexterity: 1 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_004",
+          "ruName": "Изысканное лиственное кольцо"
+        },
+        {
+          "id": "necklace_aa_t2_upgrade_002",
+          "name": "Imbued Pendant of Frozen Tears",
+          "base": "Magic Defense 240",
+          "stats": "Added Attack Speed: 4% Perception: 2 Dexterity: 1 Critical Hit Chance: 50 ",
+          "source": "https://tldb.info/db/item/necklace_aa_t2_upgrade_002",
+          "ruName": "Изысканная Слеза мертвеца"
+        },
+        {
+          "id": "bracelet_aa_t2_upgrade_002",
+          "name": "Imbued Bracelet of the Violent Undertow",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 3 Critical Hit Chance: 25 Bonus Damage: 19 Perception: 1 ",
+          "source": "https://tldb.info/db/item/bracelet_aa_t2_upgrade_002",
+          "ruName": "Изысканный браслет владыки топей"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_002",
+          "name": "Imbued Hero's Legacy Warbelt",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 3 Health Regen: 24.75 Added Attack Speed: 1.8% Dexterity: 2 ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_002",
+          "ruName": "Изысканный ремень жестокосердия"
+        },
+        {
+          "id": "bracelet_aa_t2_upgrade_005",
+          "name": "Imbued Bracelet of Agony",
+          "base": "Magic Defense 240",
+          "stats": "Dexterity: 2 Bonus Damage: 18 Critical Hit Chance: 30 Wisdom: 2 ",
+          "source": "https://tldb.info/db/item/bracelet_aa_t2_upgrade_005",
+          "ruName": "Изысканное обручье агонии"
+        }
+      ],
+      "ruBuilderSource": "https://build.tlwg.ru/builder"
+    },
+    {
+      "id": "set_acc_t2_upgrade_003",
+      "name": "Атрибуты мудрого мага",
+      "stats": "Мудрость +2; повышение урона умений +45; максимальное здоровье +800",
+      "source": "https://tldb.info/db/item-set/set_acc_t2_upgrade_003",
+      "threshold": 4,
+      "items": [
+        {
+          "id": "ear_aa_t2_upgrade_003",
+          "name": "Enchanted Earrings of Primal Foresight",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 3 Perception: 2 Front Heavy Attack Evasion: 25 Side Evasion: 62 ",
+          "source": "https://tldb.info/db/item/ear_aa_t2_upgrade_003",
+          "ruName": "Зачарованные серьги первобытного предвидения",
+          "ruBuilderLevel12": "Защита (магия): 360; Мудрость: 6; Восприятие: 5; Устойчивость к мощным атакам (спереди): 133; Уклонение (сбоку): 170"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_005",
+          "name": "Enchanted Sinking Sun Signet",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 3 Strength: 1 Range: 4.7% Mana Regen: 15 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_005",
+          "ruName": "Зачарованное кольцо заходящего солнца"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_006",
+          "name": "Enchanted Ring of Divine Instruction",
+          "base": "Magic Defense 240",
+          "stats": "Magic Hit Chance: 70 Cooldown Speed: 3% Wisdom: 1 Perception: 1 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_006",
+          "ruName": "Зачарованные Узы небытия"
+        },
+        {
+          "id": "necklace_aa_t2_upgrade_003",
+          "name": "Enchanted Deep Draconic Gorget",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 2 Critical Hit Chance: 27 Mana Cost Efficiency: 7.3% Dexterity: 1 ",
+          "source": "https://tldb.info/db/item/necklace_aa_t2_upgrade_003",
+          "ruName": "Зачарованная подвеска из тёмной чешуи"
+        },
+        {
+          "id": "bracelet_aa_t2_upgrade_003",
+          "name": "Enchanted Bracelet of Fractured Worlds",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 3 Cooldown Speed: 3% Mana Cost Efficiency: 3% Perception: 1 ",
+          "source": "https://tldb.info/db/item/bracelet_aa_t2_upgrade_003",
+          "ruName": "Зачарованный фрагмент Великого разлома"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_003",
+          "name": "Enchanted Regal Apostle's Belt",
+          "base": "Magic Defense 240",
+          "stats": "Wisdom: 3 Mana Cost Efficiency: 4% Movement Speed: 3.3% Cooldown Speed: 1% ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_003",
+          "ruName": "Зачарованный апостольский ремень"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_005",
+          "name": "Enchanted Devotee of Flame's Belt",
+          "base": "Magic Defense 240",
+          "stats": "Dexterity: 2 Movement Speed: 1.8% Mana Regen: 39.75 Wisdom: 2 ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_005",
+          "ruName": "Зачарованная повязка провидца пламени"
+        }
+      ],
+      "ruBuilderSource": "https://build.tlwg.ru/builder"
+    },
+    {
+      "id": "set_acc_t2_upgrade_004",
+      "name": "Ключи к могуществу",
+      "stats": "Сила +2; критический урон +4%; максимальное здоровье +800",
+      "source": "https://tldb.info/db/item-set/set_acc_t2_upgrade_004",
+      "threshold": 4,
+      "items": [
+        {
+          "id": "ear_aa_t2_upgrade_004",
+          "name": "Bolstered Earrings of Glimmering Dew",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 3 Wisdom: 2 Front Endurance: 31 Side Damage Reduction: 20 ",
+          "source": "https://tldb.info/db/item/ear_aa_t2_upgrade_004",
+          "ruName": "Усиленные серьги мерцающей росы",
+          "ruBuilderLevel12": "Защита (магия): 360; Сила: 6; Мудрость: 5; Устойчивость (спереди): 139; Снижение урона (сбоку): 47"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_007",
+          "name": "Bolstered Ring of Celestial Light",
+          "base": "Magic Defense 240",
+          "stats": "Dexterity: 3 Perception: 2 Added Attack Speed: 3% Mana Cost Efficiency: 2% ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_007",
+          "ruName": "Укреплённое кольцо ночного неба"
+        },
+        {
+          "id": "ring_aa_t2_upgrade_008",
+          "name": "Bolstered Coil of Endless Hunger",
+          "base": "Magic Defense 240",
+          "stats": "Melee Hit Chance: 80 Added Attack Speed: 3.3% Perception: 1 Heavy Attack Chance: 20 ",
+          "source": "https://tldb.info/db/item/ring_aa_t2_upgrade_008",
+          "ruName": "Укреплённый перстень вечного голода"
+        },
+        {
+          "id": "necklace_aa_t2_upgrade_004",
+          "name": "Bolstered Death Knell Gorget",
+          "base": "Magic Defense 240",
+          "stats": "Added Attack Speed: 5.3% Ranged Evasion: 50 Magic Evasion: 90 Dexterity: 1 ",
+          "source": "https://tldb.info/db/item/necklace_aa_t2_upgrade_004",
+          "ruName": "Укреплённый Мрачный горжет"
+        },
+        {
+          "id": "bracelet_aa_t2_upgrade_004",
+          "name": "Bolstered Coil of the Verdant Sovereign",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 2 Dexterity: 3 Melee Evasion: 70 Ranged Evasion: 70 ",
+          "source": "https://tldb.info/db/item/bracelet_aa_t2_upgrade_004",
+          "ruName": "Укреплённый браслет покровителя природы"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_004",
+          "name": "Bolstered Belt of Claimed Trophies",
+          "base": "Magic Defense 240",
+          "stats": "Strength: 3 Max Health: 375 Heavy Attack Chance: 40 Movement Speed: 1.3% ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_004",
+          "ruName": "Укреплённый варварский пояс с оберегами"
+        },
+        {
+          "id": "belt_aa_t2_upgrade_006",
+          "name": "Bolstered Warmonger's Belt",
+          "base": "Magic Defense 240",
+          "stats": "Max Health: 450 Melee Evasion: 50 Ranged Evasion: 90 Perception: 2 ",
+          "source": "https://tldb.info/db/item/belt_aa_t2_upgrade_006",
+          "ruName": "Укреплённый пояс боевого безумия"
+        }
+      ],
+      "ruBuilderSource": "https://build.tlwg.ru/builder"
+    }
+  ],
+  "weapons": [
+    {
+      "id": "crossbow_aa_t2_raid_001",
+      "ruName": "Предвестники Хаоса Каланты",
+      "source": "https://nc.tldb.info/db/item/crossbow_aa_t2_raid_001",
+      "globalFixedItemLevel75": {
+        "source": "https://guildmanager.app/tools/throne-and-liberty/database/item/crossbow_aa_t2_raid_001",
+        "damage": [
+          43,
+          173
+        ],
+        "offhandDamage": [
+          43,
+          173
+        ],
+        "rangeM": 14.4,
+        "offhandChancePercent": 32,
+        "dexterity": 17,
+        "speciesDamageBoost": 72,
+        "bonusDamage": 72,
+        "verification": "global site; must compare to RU +12; displayed as item level 75, not independently verified as RU +12"
+      }
+    },
+    {
+      "id": "wand_aa_t2_raid_001",
+      "ruName": "Гримуар Хаоса Каланты",
+      "source": "https://nc.tldb.info/db/item/wand_aa_t2_raid_001",
+      "globalFixedItemLevel75": {
+        "source": "https://guildmanager.app/tools/throne-and-liberty/database/item/wand_aa_t2_raid_001",
+        "damage": [
+          108,
+          200
+        ],
+        "rangeM": 18.2,
+        "wisdom": 18,
+        "speciesDamageBoost": 72,
+        "manaCostEfficiencyPercent": 22,
+        "verification": "global site; must compare to RU +12; displayed as item level 75, not independently verified as RU +12"
+      }
+    },
+    {
+      "id": "crossbow_aa_t2_polymorph_003",
+      "name": "Queen Bellandir's Ashen Spine Throwers",
+      "source": "https://nc.tldb.info/db/item/crossbow_aa_t2_polymorph_003"
+    },
+    {
+      "id": "wand_aa_t2_polymorph_003",
+      "name": "Tevent's Grasp of Cremation",
+      "source": "https://nc.tldb.info/db/item/wand_aa_t2_polymorph_003"
+    }
+  ]
+}

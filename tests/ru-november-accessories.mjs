@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {itemStats,setStats} from '../engine.js';
+import {deriveStats} from '../simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
+const items=catalog.equipment.filter(i=>/^(ear|ring|necklace|bracelet|belt)_aa_t2_upgrade_/.test(i.id));
+assert.equal(items.length,28);
+for(const item of items){assert.equal(item.enchantMaxLevel,12);assert.equal(item.setBonuses[0].pieces,4);assert(item.traits.every(t=>catalog.traits[t]));}
+const ear=items.find(i=>i.id==='ear_aa_t2_upgrade_002');
+const stats=itemStats(ear,12,[],catalog);
+assert.equal(stats.magic_armor,360);assert.equal(stats.dex,5);assert.equal(stats.per,6);assert.equal(stats.front_all_evasion,1510);
+const pieces=items.filter(i=>i.setName==='Украшения великого стрелка').slice(0,4);
+const entries=Object.fromEntries(pieces.map((i,n)=>['p'+n,{id:i.id,level:12,traits:[]}]));
+const cross=catalog.equipment.find(i=>i.slot==='Weapon'&&i.category==='Crossbow');
+const wand=catalog.equipment.find(i=>i.slot==='Weapon'&&i.category==='Wand');
+const state={items:{...entries,weapon1:{id:cross.id,level:0,traits:[]},weapon2:{id:wand.id,level:0,traits:[]}},attrs:{str:10,dex:10,Int:10,per:10,con:10},attrMode:'total',active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};
+assert.equal(setStats(state,catalog).base_damage,5);
+const full=deriveStats(state,catalog),without=deriveStats({...state,excludeSetBonuses:true},catalog);
+for(const k of ['crossMin','crossMax','offMin','offMax','wandMin','wandMax'])assert.equal(full[k]-without[k],5,k);
+const three={...state,items:{...state.items}};delete three.items.p3;assert.equal(setStats(three,catalog).base_damage,undefined);
+console.log('November accessories: 28 records, enhancement, trait references and four-piece damage verified.');

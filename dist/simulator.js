@@ -79,6 +79,8 @@ export function deriveStats(state,catalog){
   if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog,e.resonanceId);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus;out.offhandBase=(s.off_hand_attack_chance||0)*.01;out.offhandModifier=val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed,dexSeconds);}
  }
  out.crossMin+=raw.main_weapon_base_damage||0;out.crossMax+=raw.main_weapon_base_damage||0;
+ // A flat base-damage set bonus applies to every equipped weapon and off hand.
+ for(const key of ['crossMin','crossMax','offMin','offMax','wandMin','wandMax'])if(out[key])out[key]+=raw.base_damage||0;
  const passive=passiveSheetEffects(state,catalog,out.mana);
  out.offMax+=out.offMin?passive.offMaxBonus:0;out.offhandModifier=(out.offhandModifier||0)+(out.offMin?passive.offChanceBonus:0);
  out.bonus+=passive.bonus;out.baseDamagePercent=passive.baseDamagePercent;

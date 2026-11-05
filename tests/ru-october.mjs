@@ -8,7 +8,7 @@ const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.u
 const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{}};
 const near=(a,b)=>assert(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 assert.equal(SLOTS.length,14);assert.equal(SLOTS.filter(s=>s[2]==='Earring').length,1);
-const earrings=catalog.equipment.filter(i=>i.slot==='Earring');assert.equal(earrings.length,6);
+const earrings=catalog.equipment.filter(i=>i.slot==='Earring');assert.equal(earrings.filter(i=>i.sourceData==='docs/ru-october-earrings.json').length,6);
 const ear=earrings.find(i=>i.id==='ear_aa_t2_normal_001');
 const traits=ear.traits.filter(t=>t.startsWith('kSide')).map(id=>({id,level:4}));
 const entry={id:ear.id,level:12,traits};
