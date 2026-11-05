@@ -1,11 +1,11 @@
 // Coefficients and triggers from the RU client descriptions retained in catalog.json.
 export const WEAPON_EFFECTS={
- crossbow_aa_t2_polymorph_001:'bellandir',crossbow_a_t2_nomal_004:'bolt',wand_aa_t2_polymorph_001:'tevent',
+ crossbow_aa_t2_polymorph_001:'bellandir',crossbow_aa_t2_polymorph_003:'bellandirAscended',wand_aa_t2_polymorph_003:'teventAscended',crossbow_a_t2_nomal_004:'bolt',wand_aa_t2_polymorph_001:'tevent',
  crossbow_aa_t2_polymorph_002:'brauka',crossbow_a_t2_nomal_003:'step',crossbow_a_t3_Arthropod_001:'barrage',
  wand_a_t2_nomal_001:'area',wand_aa_t1_normal_011:'laser',crossbow_aa_t5_boss_003:'rapid',
  crossbow_a_t3_mythicbeast_003:'vitality',wand_a_t3_Arthropod_001:'healCooldown',wand_aa_t5_boss_001:'invisibility',wand_aa_t5_boss_002:'shieldPlus',wand_aa_t5_boss_003:'manaDrain',wand_aa_t5_boss_005:'healOverTime',wand_aa_t2_polymorph_002:'shieldPower',wand_a_t2_nomal_003:'groupHeal',crossbow_aa_t5_boss_002:'partyMove',crossbow_a_t1_normal_001:'rewards',wand_a_t1_normal_001:'rewards',crossbow_aa_t2_boss_001:'mana',crossbow_aa_t5_boss_001:'daySpeed'
 };
-export function weaponEffects(state){return new Set(['weapon1','weapon2'].map(slot=>WEAPON_EFFECTS[state.items?.[slot]?.id]).filter(Boolean));}
+export function weaponEffects(state){return new Set(['weapon1','weapon2'].flatMap(slot=>{const item=state.items?.[slot];const prefix=item?.id==='crossbow_aa_t2_raid_001'?'crossbow_':item?.id==='wand_aa_t2_raid_001'?'wand_':null;const core=prefix&&item?.skillCoreId?.startsWith(prefix)?WEAPON_EFFECTS[item.skillCoreId]:null;return [WEAPON_EFFECTS[item?.id],core]}).filter(Boolean));}
 // Exact probability branches for discrete proc attempts. Each branch retains its own
 // capped stack count, expiry and tick phase; a 20% proc is never treated as a full stack.
 export class ProcDot{

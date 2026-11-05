@@ -1,10 +1,10 @@
 import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027c';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
-import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=nov-caps-20261105';
-import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=nov-caps-20261105';
+import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=legendary-20261105';
+import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=legendary-20261105';
 import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=full-audit-20261016';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=full-audit-20261016';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=legendary-20261105';
 
 import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=full-audit-20261016';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser',wind:'WP_CR_D_RobShot',heal:'WP_WA_GR_S_Heal',healAll:'WP_WA_GR_S_HealAll',sleep:'WP_WA_GR_S_Sleep',healField:'WP_WA_GR_S_HealField',shield:'WP_WA_GR_S_MagicShield'};
@@ -52,7 +52,7 @@ function rawCharacterStats(state,catalog){
  raw.cost_max=(raw.cost_max||0)+LEVEL_55_BASE.mana;
  raw.hp_max=(raw.hp_max||0)+LEVEL_55_BASE.hp;
  raw.cost_max-=masteryEffects(state).Crossbow_Hero_Util_02?1000:0;
- for(const entry of Object.values(state.items)){const item=catalog.equipment.find(x=>x.id===entry.id);if(item&&item.slot!=='Weapon'){const st=itemStats(item,entry.level,entry.traits,catalog,entry.resonanceId);for(const k of ['bonus_attack_power_main_hand','attack_power_main_hand'])raw[k]=(raw[k]||0)+(st[k]||0);}}
+ for(const entry of Object.values(state.items)){const item=catalog.equipment.find(x=>x.id===entry.id);if(item&&item.slot!=='Weapon'){const st=itemStats(item,entry.level,entry.traits,catalog,entry.resonanceId,entry);for(const k of ['bonus_attack_power_main_hand','attack_power_main_hand'])raw[k]=(raw[k]||0)+(st[k]||0);}}
  const extras={Crossbow:{},Wand:{}},attributes=totalAttributes(state,catalog);let dexPercent=0,dexSeconds=null;
  for(const [attr] of ATTRS){
   const total=Math.trunc(attributes[attr]);
@@ -77,7 +77,7 @@ export function deriveStats(state,catalog){
   const r=weaponRange(item,e.level),x=extras[weapon];
   const minBonus=(raw.bonus_attack_power_main_hand||0)+(x.bonus_attack_power_main_hand||0),spreadBonus=(raw.attack_power_main_hand||0)+(x.attack_power_main_hand||0);
   out[prefix+'Min']=r[0]+minBonus;out[prefix+'Max']=r[1]+minBonus+spreadBonus;
-  if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog,e.resonanceId);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus;out.offhandBase=(s.off_hand_attack_chance||0)*.01;out.offhandModifier=val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed,dexSeconds);}
+  if(prefix==='cross'){const s=itemStats(item,e.level,e.traits,catalog,e.resonanceId,e);out.offMin=1+(s.bonus_attack_power_off_hand||0)+minBonus;out.offMax=out.offMin+Math.max(0,(s.attack_power_off_hand||0)-1)+spreadBonus;out.offhandBase=(s.off_hand_attack_chance||0)*.01;out.offhandModifier=val('off_hand_attack_chance_modifier');out.interval=attackInterval((s.attack_speed_main_hand||500)*.001,dexPercent,out.speed,dexSeconds);}
  }
  out.crossMin+=raw.main_weapon_base_damage||0;out.crossMax+=raw.main_weapon_base_damage||0;
  // A flat base-damage set bonus applies to every equipped weapon and off hand.
@@ -200,7 +200,7 @@ export function simulate({catalog,state,params,overrides={},priority,burstStacks
 
  const weapons=weaponEffects(state),sets=setPassives(state,catalog),setIds=new Set(sets.map(x=>x.id||x.clientSource?.locresId));
  const dotBase=setIds.has('Item_Passive_Set_fabric_aa_T2_002_1_Passive')?20:0,elder=setIds.has('Item_Passive_Set_fabric_aa_T2_001_1_Talland');let weakenCount=0,weaponBuffEnd=0,weaponBuffReady=0,braukaStacks=0;
- const dotsFromWeapons=[...(weapons.has('bellandir')?[{id:'bellandir-poison',weapon:'Crossbow',c:1.1,duration:5,dot:new ProcDot(3),kind:'poison'}]:[]),...(weapons.has('bolt')?[{id:'weapon-poison',weapon:'Crossbow',c:.19,duration:9,dot:new ProcDot(),kind:'poison'}]:[]),...(weapons.has('tevent')?[{id:'tevent-curse',weapon:'Wand',c:.35,duration:30,dot:new ProcDot(),kind:'curse'}]:[])];
+ const dotsFromWeapons=[...((weapons.has('bellandir')||weapons.has('bellandirAscended'))?[{id:'bellandir-poison',weapon:'Crossbow',c:weapons.has('bellandirAscended')?1.7:1.1,duration:5,dot:new ProcDot(3),kind:'poison'}]:[]),...(weapons.has('bolt')?[{id:'weapon-poison',weapon:'Crossbow',c:.19,duration:9,dot:new ProcDot(),kind:'poison'}]:[]),...((weapons.has('tevent')||weapons.has('teventAscended'))?[{id:'tevent-curse',weapon:'Wand',c:weapons.has('teventAscended')?(p.pve?.7:.35):.35,duration:30,dot:new ProcDot(),kind:'curse'}]:[])];
  const exclusiveBase=Math.max(0,...sets.filter(x=>/Не суммируется|не суммируется/.test(x.description)&&/Критический урон/.test(x.description)).map(x=>Number(x.description.match(/на (?:\+)?(\d+)%/)?.[1]||0)));
  const exclusiveCombat=Math.max(exclusiveBase,setIds.has('Item_Passive_Set_leather_ab_T2_001_1_Talland')&&p.targetDistance>5?25:0);
  p.critDamage+=exclusiveCombat-exclusiveBase;
@@ -300,7 +300,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
   }
  }
  const debuffMultiplier=()=>debuffScale;
- function curseProc(applicationChance=1){if(weapons.has('tevent')){const q=wp(.15,true)*applicationChance;dotsFromWeapons.find(d=>d.kind==='curse').dot.apply(t,q,curseDuration(30)*debuffMultiplier());weaken(1,q);}}
+ function curseProc(applicationChance=1){if(weapons.has('tevent')||weapons.has('teventAscended')){const q=wp(.15,true)*applicationChance;dotsFromWeapons.find(d=>d.kind==='curse').dot.apply(t,q,curseDuration(30)*debuffMultiplier());weaken(1,q);}}
  function putDot(key,s,c,f,seconds,stacks=1){
   const previous=dots[key],q=hitRate(s)*wp(1,true),ttl=curseDuration(seconds)*debuffMultiplier();
   if(key==='touch'){

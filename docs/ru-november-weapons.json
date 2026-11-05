@@ -1,0 +1,5493 @@
+{
+  "source": "https://build.tlwg.ru/builder-data/equipment-experimental.json",
+  "retrievedAt": "2026-11-05",
+  "items": [
+    {
+      "id": "crossbow_aa_t2_polymorph_003",
+      "name": "Неистовые иссушающие шипострелы Бел’Адир",
+      "sourceName": "Queen Bellandir's Ashen Spine Throwers",
+      "englishName": "Queen Bellandir's Ashen Spine Throwers",
+      "description": "",
+      "thumbnail": "/Icons/Gearbook/Weapon/IT_P_Crossbow_00033A.webp",
+      "slot": "Weapon",
+      "grade": "Epic",
+      "tier": "t2",
+      "category": "Crossbow",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "attack_power_main_hand": 99,
+        "attack_power_off_hand": 114,
+        "bonus_attack_power_main_hand": 28,
+        "bonus_attack_power_off_hand": 43,
+        "attack_speed_main_hand": 550,
+        "attack_range_main_hand": 1320,
+        "off_hand_attack_chance": 2800
+      },
+      "extraStats": {
+        "dex": 8,
+        "stamina_regen": 2650,
+        "damage_reduction_penetration": 8,
+        "per": 2
+      },
+      "enchantScaling": {
+        "1": {
+          "attack_power_main_hand": 2,
+          "attack_power_off_hand": 2
+        },
+        "2": {
+          "attack_power_main_hand": 5,
+          "attack_power_off_hand": 5,
+          "bonus_attack_power_main_hand": 1,
+          "bonus_attack_power_off_hand": 1
+        },
+        "3": {
+          "attack_power_main_hand": 8,
+          "attack_power_off_hand": 8,
+          "bonus_attack_power_main_hand": 2,
+          "bonus_attack_power_off_hand": 2
+        },
+        "4": {
+          "attack_power_main_hand": 11,
+          "attack_power_off_hand": 11,
+          "bonus_attack_power_main_hand": 3,
+          "bonus_attack_power_off_hand": 3
+        },
+        "5": {
+          "attack_power_main_hand": 14,
+          "attack_power_off_hand": 14,
+          "bonus_attack_power_main_hand": 4,
+          "bonus_attack_power_off_hand": 4
+        },
+        "6": {
+          "attack_power_main_hand": 17,
+          "attack_power_off_hand": 17,
+          "bonus_attack_power_main_hand": 5,
+          "bonus_attack_power_off_hand": 5
+        },
+        "7": {
+          "attack_power_main_hand": 20,
+          "attack_power_off_hand": 20,
+          "bonus_attack_power_main_hand": 6,
+          "bonus_attack_power_off_hand": 6
+        },
+        "8": {
+          "attack_power_main_hand": 23,
+          "attack_power_off_hand": 23,
+          "bonus_attack_power_main_hand": 7,
+          "bonus_attack_power_off_hand": 7
+        },
+        "9": {
+          "attack_power_main_hand": 26,
+          "attack_power_off_hand": 26,
+          "bonus_attack_power_main_hand": 8,
+          "bonus_attack_power_off_hand": 8
+        },
+        "10": {
+          "attack_power_main_hand": 29,
+          "attack_power_off_hand": 29,
+          "bonus_attack_power_main_hand": 9,
+          "bonus_attack_power_off_hand": 9
+        },
+        "11": {
+          "attack_power_main_hand": 32,
+          "attack_power_off_hand": 32,
+          "bonus_attack_power_main_hand": 10,
+          "bonus_attack_power_off_hand": 10
+        },
+        "12": {
+          "attack_power_main_hand": 35,
+          "attack_power_off_hand": 35,
+          "bonus_attack_power_main_hand": 11,
+          "bonus_attack_power_off_hand": 11
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "stamina_regen": 500,
+          "damage_reduction_penetration": 3
+        },
+        "2": {
+          "dex": 1,
+          "stamina_regen": 1000,
+          "damage_reduction_penetration": 6,
+          "per": 1
+        },
+        "3": {
+          "dex": 1,
+          "stamina_regen": 1500,
+          "damage_reduction_penetration": 9,
+          "per": 1
+        },
+        "4": {
+          "dex": 2,
+          "stamina_regen": 2000,
+          "damage_reduction_penetration": 12,
+          "per": 2
+        },
+        "5": {
+          "dex": 2,
+          "stamina_regen": 2500,
+          "damage_reduction_penetration": 15,
+          "per": 2
+        },
+        "6": {
+          "dex": 3,
+          "stamina_regen": 3000,
+          "damage_reduction_penetration": 18,
+          "per": 3
+        },
+        "7": {
+          "dex": 3,
+          "stamina_regen": 3500,
+          "damage_reduction_penetration": 21,
+          "per": 3
+        },
+        "8": {
+          "dex": 4,
+          "stamina_regen": 4000,
+          "damage_reduction_penetration": 24,
+          "per": 4
+        },
+        "9": {
+          "dex": 4,
+          "stamina_regen": 4500,
+          "damage_reduction_penetration": 27,
+          "per": 4
+        },
+        "10": {
+          "dex": 5,
+          "stamina_regen": 5000,
+          "damage_reduction_penetration": 30,
+          "per": 5
+        },
+        "11": {
+          "dex": 5,
+          "stamina_regen": 5500,
+          "damage_reduction_penetration": 33,
+          "per": 5
+        },
+        "12": {
+          "dex": 6,
+          "stamina_regen": 6000,
+          "damage_reduction_penetration": 36,
+          "per": 6
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "kCostRegen",
+        "kAllAccuracy",
+        "kAllDoubleAttack",
+        "kAllCriticalAttack",
+        "kBonusDemonAttackPower",
+        "kBuffGivenDurationModifier"
+      ],
+      "heroicTraits": [],
+      "heroicEffects": [],
+      "resonanceEffects": [
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:hp_max",
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:cost_max",
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:hp_regen",
+          "stats": [
+            {
+              "stat": "hp_regen",
+              "value": 40000
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:cost_regen",
+          "stats": [
+            {
+              "stat": "cost_regen",
+              "value": 40000
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:all_accuracy",
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:weaken_accuracy",
+          "stats": [
+            {
+              "stat": "weaken_accuracy",
+              "value": 2080
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:all_double_attack",
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:all_critical_attack",
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:collide_amplification",
+          "stats": [
+            {
+              "stat": "collide_amplification",
+              "value": 2080
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_polymorph_003:resonance:skill_cooldown_modifier",
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 400
+            }
+          ]
+        }
+      ],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": {
+        "id": "wp_item_archboss_cr_02",
+        "name": "Яд неистовой Бел’Адир",
+        "description": "При критическом попадании арбалетом с вероятностью 20% накладывается яд: 170% базового урона каждую секунду в течение 5 сек., до 3 уровней. Снижение урона цели уменьшается на 28."
+      },
+      "gearbook": {
+        "questlog": {
+          "id": "crossbow_aa_t2_polymorph_003",
+          "name": "Queen Bellandir's Ashen Spine Throwers",
+          "equipmentType": "crossbow",
+          "grade": 41,
+          "matchedBy": "icon"
+        }
+      },
+      "origin": "tldb",
+      "clientSource": {
+        "table": "TLItemLooks",
+        "locresId": "crossbow_aa_t2_polymorph_003",
+        "match": "tldb-item",
+        "nameKey": "crossbow_aa_t2_polymorph_003_UIName",
+        "descriptionKey": "",
+        "candidates": [
+          "crossbow_aa_t2_polymorph_003"
+        ]
+      },
+      "sourceStatus": "tldb-3.18",
+      "sourceNotes": []
+    },
+    {
+      "id": "wand_aa_t2_polymorph_003",
+      "name": "Неистовая мёртвая хватка Тевента",
+      "sourceName": "Tevent's Grasp of Cremation",
+      "englishName": "Tevent's Grasp of Cremation",
+      "description": "",
+      "thumbnail": "/Icons/Gearbook/Weapon/IT_P_Wand_00011A.webp",
+      "slot": "Weapon",
+      "grade": "Epic",
+      "tier": "t2",
+      "category": "Wand",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "attack_power_main_hand": 69,
+        "bonus_attack_power_main_hand": 79,
+        "attack_speed_main_hand": 550,
+        "attack_range_main_hand": 1680
+      },
+      "extraStats": {
+        "int": 6,
+        "all_critical_attack": 800,
+        "skill_cooldown_modifier": 200,
+        "dex": 2
+      },
+      "enchantScaling": {
+        "1": {
+          "attack_power_main_hand": 1,
+          "bonus_attack_power_main_hand": 2
+        },
+        "2": {
+          "attack_power_main_hand": 3,
+          "bonus_attack_power_main_hand": 4
+        },
+        "3": {
+          "attack_power_main_hand": 5,
+          "bonus_attack_power_main_hand": 6
+        },
+        "4": {
+          "attack_power_main_hand": 7,
+          "bonus_attack_power_main_hand": 8
+        },
+        "5": {
+          "attack_power_main_hand": 9,
+          "bonus_attack_power_main_hand": 10
+        },
+        "6": {
+          "attack_power_main_hand": 11,
+          "bonus_attack_power_main_hand": 13
+        },
+        "7": {
+          "attack_power_main_hand": 13,
+          "bonus_attack_power_main_hand": 15
+        },
+        "8": {
+          "attack_power_main_hand": 15,
+          "bonus_attack_power_main_hand": 17
+        },
+        "9": {
+          "attack_power_main_hand": 16,
+          "bonus_attack_power_main_hand": 19
+        },
+        "10": {
+          "attack_power_main_hand": 18,
+          "bonus_attack_power_main_hand": 21
+        },
+        "11": {
+          "attack_power_main_hand": 20,
+          "bonus_attack_power_main_hand": 24
+        },
+        "12": {
+          "attack_power_main_hand": 22,
+          "bonus_attack_power_main_hand": 26
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "all_critical_attack": 100,
+          "skill_cooldown_modifier": 50
+        },
+        "2": {
+          "int": 1,
+          "all_critical_attack": 200,
+          "skill_cooldown_modifier": 100,
+          "dex": 1
+        },
+        "3": {
+          "int": 1,
+          "all_critical_attack": 300,
+          "skill_cooldown_modifier": 150,
+          "dex": 1
+        },
+        "4": {
+          "int": 2,
+          "all_critical_attack": 400,
+          "skill_cooldown_modifier": 200,
+          "dex": 2
+        },
+        "5": {
+          "int": 2,
+          "all_critical_attack": 500,
+          "skill_cooldown_modifier": 250,
+          "dex": 2
+        },
+        "6": {
+          "int": 3,
+          "all_critical_attack": 600,
+          "skill_cooldown_modifier": 300,
+          "dex": 3
+        },
+        "7": {
+          "int": 3,
+          "all_critical_attack": 700,
+          "skill_cooldown_modifier": 350,
+          "dex": 3
+        },
+        "8": {
+          "int": 4,
+          "all_critical_attack": 800,
+          "skill_cooldown_modifier": 400,
+          "dex": 4
+        },
+        "9": {
+          "int": 4,
+          "all_critical_attack": 900,
+          "skill_cooldown_modifier": 450,
+          "dex": 4
+        },
+        "10": {
+          "int": 5,
+          "all_critical_attack": 1000,
+          "skill_cooldown_modifier": 500,
+          "dex": 5
+        },
+        "11": {
+          "int": 5,
+          "all_critical_attack": 1100,
+          "skill_cooldown_modifier": 550,
+          "dex": 5
+        },
+        "12": {
+          "int": 6,
+          "all_critical_attack": 1200,
+          "skill_cooldown_modifier": 600,
+          "dex": 6
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "kCostRegen",
+        "kAllAccuracy",
+        "kAllDoubleAttack",
+        "kAllCriticalAttack",
+        "kSkillCooldownModifier",
+        "kBonusGrankusAttackPower"
+      ],
+      "heroicTraits": [],
+      "heroicEffects": [],
+      "resonanceEffects": [
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:hp_max",
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:cost_max",
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:hp_regen",
+          "stats": [
+            {
+              "stat": "hp_regen",
+              "value": 40000
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:cost_regen",
+          "stats": [
+            {
+              "stat": "cost_regen",
+              "value": 40000
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:all_accuracy",
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:sleep_accuracy",
+          "stats": [
+            {
+              "stat": "sleep_accuracy",
+              "value": 2080
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:weaken_accuracy",
+          "stats": [
+            {
+              "stat": "weaken_accuracy",
+              "value": 2080
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:all_double_attack",
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:all_critical_attack",
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 520
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_polymorph_003:resonance:skill_cooldown_modifier",
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 400
+            }
+          ]
+        }
+      ],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": {
+        "id": "wp_item_archboss_wa_02",
+        "name": "Голод неистового Тевента",
+        "description": "При наложении проклятия жезла с вероятностью 15% накладывается проклятие: 35% базового урона в секунду на 30 сек. и снижение защиты на 10%. Урон по монстрам увеличен на 100%."
+      },
+      "gearbook": {
+        "questlog": {
+          "id": "wand_aa_t2_polymorph_003",
+          "name": "Tevent's Grasp of Cremation",
+          "equipmentType": "wand",
+          "grade": 41,
+          "matchedBy": "icon"
+        }
+      },
+      "origin": "tldb",
+      "clientSource": {
+        "table": "TLItemLooks",
+        "locresId": "wand_aa_t2_polymorph_003",
+        "match": "tldb-item",
+        "nameKey": "wand_aa_t2_polymorph_003_UIName",
+        "descriptionKey": "",
+        "candidates": [
+          "wand_aa_t2_polymorph_003"
+        ]
+      },
+      "sourceStatus": "tldb-3.18",
+      "sourceNotes": []
+    },
+    {
+      "id": "cloak_unique_aa_t2_set_001",
+      "name": "Исповедь Каланты",
+      "sourceName": "Исповедь Калантии",
+      "englishName": "Calanthia's Confession",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_ca_10001.webp",
+      "slot": "Cape",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Cloak",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 285,
+        "range_armor": 285
+      },
+      "extraStats": {
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "attack_speed_modifier": 680,
+        "skill_power_resistance": 1430
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 10,
+          "range_armor": 10
+        },
+        "2": {
+          "melee_armor": 20,
+          "range_armor": 20
+        },
+        "3": {
+          "melee_armor": 30,
+          "range_armor": 30
+        },
+        "4": {
+          "melee_armor": 40,
+          "range_armor": 40
+        },
+        "5": {
+          "melee_armor": 50,
+          "range_armor": 50
+        },
+        "6": {
+          "melee_armor": 60,
+          "range_armor": 60
+        },
+        "7": {
+          "melee_armor": 70,
+          "range_armor": 70
+        },
+        "8": {
+          "melee_armor": 80,
+          "range_armor": 80
+        },
+        "9": {
+          "melee_armor": 90,
+          "range_armor": 90
+        },
+        "10": {
+          "melee_armor": 100,
+          "range_armor": 100
+        },
+        "11": {
+          "melee_armor": 110,
+          "range_armor": 110
+        },
+        "12": {
+          "melee_armor": 120,
+          "range_armor": 120
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "attack_speed_modifier": 30,
+          "skill_power_resistance": 50
+        },
+        "2": {
+          "attack_speed_modifier": 60,
+          "skill_power_resistance": 100
+        },
+        "3": {
+          "attack_speed_modifier": 90,
+          "skill_power_resistance": 150
+        },
+        "4": {
+          "attack_speed_modifier": 130,
+          "skill_power_resistance": 200
+        },
+        "5": {
+          "attack_speed_modifier": 160,
+          "skill_power_resistance": 250
+        },
+        "6": {
+          "attack_speed_modifier": 190,
+          "skill_power_resistance": 300
+        },
+        "7": {
+          "attack_speed_modifier": 230,
+          "skill_power_resistance": 350
+        },
+        "8": {
+          "attack_speed_modifier": 260,
+          "skill_power_resistance": 400
+        },
+        "9": {
+          "attack_speed_modifier": 290,
+          "skill_power_resistance": 450
+        },
+        "10": {
+          "attack_speed_modifier": 330,
+          "skill_power_resistance": 500
+        },
+        "11": {
+          "attack_speed_modifier": 360,
+          "skill_power_resistance": 550
+        },
+        "12": {
+          "attack_speed_modifier": 390,
+          "skill_power_resistance": 600
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_bind_tolerance_630c58e2",
+        "ql_stun_tolerance_630c58e2",
+        "ql_blind_tolerance_630c58e2",
+        "ql_sleep_tolerance_630c58e2",
+        "ql_weaken_tolerance_630c58e2",
+        "ql_silence_tolerance_630c58e2",
+        "ql_collide_resistance_630c58e2",
+        "ql_skill_power_resistance_f765176e",
+        "ql_petrification_tolerance_630c58e2",
+        "ql_debuff_taken_duration_modifier_2e80e3b4"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:damage_reduction",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:damage_reduction_penetration",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:attack_range_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:cost_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:cost_consumption_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:damage_reduction",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:damage_reduction_penetration",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:attack_range_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:cost_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:cost_consumption_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:damage_reduction",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:damage_reduction_penetration",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:attack_range_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:all_critical_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:all_double_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:all_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:cost_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:cost_consumption_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "cloak_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Cloak",
+        "questlogId": "cloak_unique_aa_t2_set_001",
+        "equipmentType": "cloak",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669413",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "cloak_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "cloak_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "chest_unique_aa_t2_set_001",
+      "name": "Доспех сожалений Каланты",
+      "sourceName": "Раскаяние Калантии",
+      "englishName": "Calanthia's Regret",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_ts_10001.webp",
+      "slot": "Chest",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Chest",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 336,
+        "range_armor": 368
+      },
+      "extraStats": {
+        "per": 7,
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "all_double_attack": 870
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 11,
+          "range_armor": 12
+        },
+        "2": {
+          "melee_armor": 21,
+          "range_armor": 23
+        },
+        "3": {
+          "melee_armor": 32,
+          "range_armor": 35
+        },
+        "4": {
+          "melee_armor": 42,
+          "range_armor": 46
+        },
+        "5": {
+          "melee_armor": 53,
+          "range_armor": 58
+        },
+        "6": {
+          "melee_armor": 63,
+          "range_armor": 69
+        },
+        "7": {
+          "melee_armor": 74,
+          "range_armor": 81
+        },
+        "8": {
+          "melee_armor": 84,
+          "range_armor": 92
+        },
+        "9": {
+          "melee_armor": 95,
+          "range_armor": 104
+        },
+        "10": {
+          "melee_armor": 105,
+          "range_armor": 115
+        },
+        "11": {
+          "melee_armor": 116,
+          "range_armor": 127
+        },
+        "12": {
+          "melee_armor": 126,
+          "range_armor": 138
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "all_double_attack": 50
+        },
+        "2": {
+          "all_double_attack": 100
+        },
+        "3": {
+          "all_double_attack": 150
+        },
+        "4": {
+          "per": 1,
+          "all_double_attack": 200
+        },
+        "5": {
+          "per": 1,
+          "all_double_attack": 250
+        },
+        "6": {
+          "per": 1,
+          "all_double_attack": 300
+        },
+        "7": {
+          "per": 1,
+          "all_double_attack": 350
+        },
+        "8": {
+          "per": 2,
+          "all_double_attack": 400
+        },
+        "9": {
+          "per": 2,
+          "all_double_attack": 450
+        },
+        "10": {
+          "per": 2,
+          "all_double_attack": 500
+        },
+        "11": {
+          "per": 2,
+          "all_double_attack": 550
+        },
+        "12": {
+          "per": 3,
+          "all_double_attack": 600
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_buff_given_duration_modifier_b102d73d",
+        "ql_debuff_taken_duration_modifier_2e80e3b4"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:Int",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:con",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:damage_reduction",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:debuff_taken_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:all_double_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:buff_given_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:stamina_regen",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:Int",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:con",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:damage_reduction",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:debuff_taken_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:all_double_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:buff_given_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:stamina_regen",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:Int",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:con",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:all_critical_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:damage_reduction",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "damage_reduction",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:debuff_taken_duration_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:all_double_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:buff_given_duration_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 800
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:stamina_regen",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "chest_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Chest",
+        "questlogId": "chest_unique_aa_t2_set_001",
+        "equipmentType": "chest",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669409",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "chest_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "chest_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "feet_unique_aa_t2_set_001",
+      "name": "Сапоги тишины Каланты",
+      "sourceName": "Оковы Калантии",
+      "englishName": "Calanthia's Fetters",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_bt_10001.webp",
+      "slot": "Feet",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Feet",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 315,
+        "range_armor": 345
+      },
+      "extraStats": {
+        "dex": 7,
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "move_speed_modifier": 580
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 11,
+          "range_armor": 12
+        },
+        "2": {
+          "melee_armor": 21,
+          "range_armor": 23
+        },
+        "3": {
+          "melee_armor": 32,
+          "range_armor": 35
+        },
+        "4": {
+          "melee_armor": 42,
+          "range_armor": 46
+        },
+        "5": {
+          "melee_armor": 53,
+          "range_armor": 58
+        },
+        "6": {
+          "melee_armor": 63,
+          "range_armor": 69
+        },
+        "7": {
+          "melee_armor": 74,
+          "range_armor": 81
+        },
+        "8": {
+          "melee_armor": 84,
+          "range_armor": 92
+        },
+        "9": {
+          "melee_armor": 95,
+          "range_armor": 104
+        },
+        "10": {
+          "melee_armor": 105,
+          "range_armor": 115
+        },
+        "11": {
+          "melee_armor": 116,
+          "range_armor": 127
+        },
+        "12": {
+          "melee_armor": 126,
+          "range_armor": 138
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "move_speed_modifier": 30
+        },
+        "2": {
+          "move_speed_modifier": 60
+        },
+        "3": {
+          "move_speed_modifier": 90
+        },
+        "4": {
+          "dex": 1,
+          "move_speed_modifier": 130
+        },
+        "5": {
+          "dex": 1,
+          "move_speed_modifier": 160
+        },
+        "6": {
+          "dex": 1,
+          "move_speed_modifier": 190
+        },
+        "7": {
+          "dex": 1,
+          "move_speed_modifier": 230
+        },
+        "8": {
+          "dex": 2,
+          "move_speed_modifier": 260
+        },
+        "9": {
+          "dex": 2,
+          "move_speed_modifier": 290
+        },
+        "10": {
+          "dex": 2,
+          "move_speed_modifier": 330
+        },
+        "11": {
+          "dex": 2,
+          "move_speed_modifier": 360
+        },
+        "12": {
+          "dex": 3,
+          "move_speed_modifier": 390
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_stamina_max_f171b56e",
+        "ql_move_speed_modifier_f765176e"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:str",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:Int",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:cost_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:damage_reduction_penetration",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:cost_regen",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_regen",
+              "value": 120000
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:str",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:Int",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:cost_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:damage_reduction_penetration",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:cost_regen",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_regen",
+              "value": 120000
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:str",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:Int",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:cost_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:all_critical_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:damage_reduction_penetration",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:all_double_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:all_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:cost_regen",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_regen",
+              "value": 120000
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "feet_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Feet",
+        "questlogId": "feet_unique_aa_t2_set_001",
+        "equipmentType": "feet",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669412",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "feet_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "feet_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "hands_unique_aa_t2_set_001",
+      "name": "Перчатки скорби Каланты",
+      "sourceName": "Прикосновение Калантии",
+      "englishName": "Calanthia's Touch",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_gl_10001.webp",
+      "slot": "Hands",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Hands",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 315,
+        "range_armor": 345
+      },
+      "extraStats": {
+        "dex": 7,
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "attack_speed_modifier": 580
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 11,
+          "range_armor": 12
+        },
+        "2": {
+          "melee_armor": 21,
+          "range_armor": 23
+        },
+        "3": {
+          "melee_armor": 32,
+          "range_armor": 35
+        },
+        "4": {
+          "melee_armor": 42,
+          "range_armor": 46
+        },
+        "5": {
+          "melee_armor": 53,
+          "range_armor": 58
+        },
+        "6": {
+          "melee_armor": 63,
+          "range_armor": 69
+        },
+        "7": {
+          "melee_armor": 74,
+          "range_armor": 81
+        },
+        "8": {
+          "melee_armor": 84,
+          "range_armor": 92
+        },
+        "9": {
+          "melee_armor": 95,
+          "range_armor": 104
+        },
+        "10": {
+          "melee_armor": 105,
+          "range_armor": 115
+        },
+        "11": {
+          "melee_armor": 116,
+          "range_armor": 127
+        },
+        "12": {
+          "melee_armor": 126,
+          "range_armor": 138
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "attack_speed_modifier": 30
+        },
+        "2": {
+          "attack_speed_modifier": 60
+        },
+        "3": {
+          "attack_speed_modifier": 90
+        },
+        "4": {
+          "dex": 1,
+          "attack_speed_modifier": 130
+        },
+        "5": {
+          "dex": 1,
+          "attack_speed_modifier": 160
+        },
+        "6": {
+          "dex": 1,
+          "attack_speed_modifier": 190
+        },
+        "7": {
+          "dex": 1,
+          "attack_speed_modifier": 230
+        },
+        "8": {
+          "dex": 2,
+          "attack_speed_modifier": 260
+        },
+        "9": {
+          "dex": 2,
+          "attack_speed_modifier": 290
+        },
+        "10": {
+          "dex": 2,
+          "attack_speed_modifier": 330
+        },
+        "11": {
+          "dex": 2,
+          "attack_speed_modifier": 360
+        },
+        "12": {
+          "dex": 3,
+          "attack_speed_modifier": 390
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_attack_range_modifier_f765176e",
+        "ql_attack_speed_modifier_f765176e"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:per",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:con",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:melee_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:range_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:magic_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:attack_range_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:per",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:con",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:melee_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:range_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:magic_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:attack_range_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:per",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:con",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:all_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:melee_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:range_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:magic_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:attack_range_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "attack_range_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:all_double_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "hands_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Hands",
+        "questlogId": "hands_unique_aa_t2_set_001",
+        "equipmentType": "hands",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669410",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "hands_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "hands_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "head_unique_aa_t2_set_001",
+      "name": "Проклятое забрало Каланты",
+      "sourceName": "Лик Калантии",
+      "englishName": "Calanthia's Visage",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_hm_10001.webp",
+      "slot": "Head",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Head",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 326,
+        "range_armor": 356
+      },
+      "extraStats": {
+        "Int": 7,
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "skill_cooldown_modifier": 430
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 11,
+          "range_armor": 12
+        },
+        "2": {
+          "melee_armor": 21,
+          "range_armor": 23
+        },
+        "3": {
+          "melee_armor": 32,
+          "range_armor": 35
+        },
+        "4": {
+          "melee_armor": 42,
+          "range_armor": 46
+        },
+        "5": {
+          "melee_armor": 53,
+          "range_armor": 58
+        },
+        "6": {
+          "melee_armor": 63,
+          "range_armor": 69
+        },
+        "7": {
+          "melee_armor": 74,
+          "range_armor": 81
+        },
+        "8": {
+          "melee_armor": 84,
+          "range_armor": 92
+        },
+        "9": {
+          "melee_armor": 95,
+          "range_armor": 104
+        },
+        "10": {
+          "melee_armor": 105,
+          "range_armor": 115
+        },
+        "11": {
+          "melee_armor": 116,
+          "range_armor": 127
+        },
+        "12": {
+          "melee_armor": 126,
+          "range_armor": 138
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "skill_cooldown_modifier": 20
+        },
+        "2": {
+          "skill_cooldown_modifier": 50
+        },
+        "3": {
+          "skill_cooldown_modifier": 70
+        },
+        "4": {
+          "Int": 1,
+          "skill_cooldown_modifier": 100
+        },
+        "5": {
+          "Int": 1,
+          "skill_cooldown_modifier": 120
+        },
+        "6": {
+          "Int": 1,
+          "skill_cooldown_modifier": 150
+        },
+        "7": {
+          "Int": 1,
+          "skill_cooldown_modifier": 170
+        },
+        "8": {
+          "Int": 2,
+          "skill_cooldown_modifier": 200
+        },
+        "9": {
+          "Int": 2,
+          "skill_cooldown_modifier": 220
+        },
+        "10": {
+          "Int": 2,
+          "skill_cooldown_modifier": 250
+        },
+        "11": {
+          "Int": 2,
+          "skill_cooldown_modifier": 270
+        },
+        "12": {
+          "Int": 3,
+          "skill_cooldown_modifier": 300
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_skill_cooldown_modifier_b102d73d",
+        "ql_cost_consumption_modifier_191a66fb"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:str",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:dex",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:cost_consumption_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:damage_reduction_penetration",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:debuff_taken_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:cost_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:str",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:dex",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:cost_consumption_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:damage_reduction_penetration",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:debuff_taken_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:cost_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:str",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:dex",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:all_double_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:all_critical_attack",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:cost_consumption_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_consumption_modifier",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:damage_reduction_penetration",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "damage_reduction_penetration",
+              "value": 24
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:debuff_taken_duration_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:cost_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "head_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Head",
+        "questlogId": "head_unique_aa_t2_set_001",
+        "equipmentType": "head",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669408",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "head_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "head_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "legs_unique_aa_t2_set_001",
+      "name": "Набедренники забвения Каланты",
+      "sourceName": "Узы Калантии",
+      "englishName": "Calanthia's Bindings",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/p_set_pl_m_pt_10001.webp",
+      "slot": "Legs",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Legs",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "melee_armor": 326,
+        "range_armor": 356
+      },
+      "extraStats": {
+        "str": 7,
+        "hp_max": 2000,
+        "magic_armor": 300,
+        "damage_reduction": 26
+      },
+      "enchantScaling": {
+        "1": {
+          "melee_armor": 11,
+          "range_armor": 12
+        },
+        "2": {
+          "melee_armor": 21,
+          "range_armor": 23
+        },
+        "3": {
+          "melee_armor": 32,
+          "range_armor": 35
+        },
+        "4": {
+          "melee_armor": 42,
+          "range_armor": 46
+        },
+        "5": {
+          "melee_armor": 53,
+          "range_armor": 58
+        },
+        "6": {
+          "melee_armor": 63,
+          "range_armor": 69
+        },
+        "7": {
+          "melee_armor": 74,
+          "range_armor": 81
+        },
+        "8": {
+          "melee_armor": 84,
+          "range_armor": 92
+        },
+        "9": {
+          "melee_armor": 95,
+          "range_armor": 104
+        },
+        "10": {
+          "melee_armor": 105,
+          "range_armor": 115
+        },
+        "11": {
+          "melee_armor": 116,
+          "range_armor": 127
+        },
+        "12": {
+          "melee_armor": 126,
+          "range_armor": 138
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "damage_reduction": 1
+        },
+        "2": {
+          "damage_reduction": 3
+        },
+        "3": {
+          "damage_reduction": 4
+        },
+        "4": {
+          "str": 1,
+          "damage_reduction": 6
+        },
+        "5": {
+          "str": 1,
+          "damage_reduction": 7
+        },
+        "6": {
+          "str": 1,
+          "damage_reduction": 9
+        },
+        "7": {
+          "str": 1,
+          "damage_reduction": 10
+        },
+        "8": {
+          "str": 2,
+          "damage_reduction": 12
+        },
+        "9": {
+          "str": 2,
+          "damage_reduction": 13
+        },
+        "10": {
+          "str": 2,
+          "damage_reduction": 15
+        },
+        "11": {
+          "str": 2,
+          "damage_reduction": 16
+        },
+        "12": {
+          "str": 3,
+          "damage_reduction": 18
+        }
+      },
+      "runeSlots": 0,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_cost_max_b102d73d",
+        "ql_hp_regen_64595562",
+        "ql_cost_regen_64595562",
+        "ql_buff_given_duration_modifier_b102d73d",
+        "ql_debuff_taken_duration_modifier_2e80e3b4"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "all_armor",
+          "values": [
+            80,
+            160,
+            240,
+            320
+          ]
+        },
+        {
+          "stat": "all_evasion",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_double_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "all_critical_defense",
+          "values": [
+            400,
+            800,
+            1200,
+            1600
+          ]
+        },
+        {
+          "stat": "critical_damage_taken_modifier",
+          "values": [
+            140,
+            280,
+            420,
+            560
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:per",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:con",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:all_evasion",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:all_critical_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:debuff_taken_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:all_double_defense",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:cost_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:attack_speed_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1050
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:stamina_regen",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:melee_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:range_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:1:magic_armor",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:per",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:con",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:all_evasion",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:all_critical_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:debuff_taken_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:all_double_defense",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:cost_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:attack_speed_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1050
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:stamina_regen",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:melee_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:range_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:2:magic_armor",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:per",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:con",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:all_evasion",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_evasion",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:all_critical_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_critical_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:debuff_taken_duration_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -800
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:all_double_defense",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_double_defense",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:hp_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:cost_max",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "cost_max",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:attack_speed_modifier",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1050
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:stamina_regen",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "stamina_regen",
+              "value": 8000
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:all_accuracy",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 1600
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:melee_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "melee_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:range_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "range_armor",
+              "value": 320
+            }
+          ]
+        },
+        {
+          "id": "legs_unique_aa_t2_set_001:heroic-effect:3:magic_armor",
+          "group": 3,
+          "stats": [
+            {
+              "stat": "magic_armor",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": false,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Legs",
+        "questlogId": "legs_unique_aa_t2_set_001",
+        "equipmentType": "legs",
+        "questlogGrade": 51,
+        "tlcodexId": "1752669411",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "legs_unique_aa_t2_set_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "legs_unique_aa_t2_set_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "crossbow_aa_t2_raid_001",
+      "name": "Предвестники Хаоса Каланты",
+      "sourceName": "Арбалеты погибели Калантии",
+      "englishName": "Calanthia's Repeaters of Ruin",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/it_p_crossbow_10001.webp",
+      "slot": "Weapon",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Crossbow",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "attack_range_main_hand": 1440,
+        "attack_speed_main_hand": 575,
+        "off_hand_attack_chance": 3200,
+        "bonus_attack_power_main_hand": 31,
+        "attack_power_main_hand": 96,
+        "bonus_attack_power_off_hand": 31,
+        "attack_power_off_hand": 96
+      },
+      "extraStats": {
+        "dex": 11,
+        "damage_reduction_penetration": 36,
+        "all_species_damage_amplification": 240
+      },
+      "enchantScaling": {
+        "1": {
+          "attack_power_main_hand": 2,
+          "attack_power_off_hand": 2
+        },
+        "2": {
+          "bonus_attack_power_main_hand": 1,
+          "attack_power_main_hand": 5,
+          "bonus_attack_power_off_hand": 1,
+          "attack_power_off_hand": 5
+        },
+        "3": {
+          "bonus_attack_power_main_hand": 2,
+          "attack_power_main_hand": 8,
+          "bonus_attack_power_off_hand": 2,
+          "attack_power_off_hand": 8
+        },
+        "4": {
+          "bonus_attack_power_main_hand": 3,
+          "attack_power_main_hand": 11,
+          "bonus_attack_power_off_hand": 3,
+          "attack_power_off_hand": 11
+        },
+        "5": {
+          "bonus_attack_power_main_hand": 4,
+          "attack_power_main_hand": 14,
+          "bonus_attack_power_off_hand": 4,
+          "attack_power_off_hand": 14
+        },
+        "6": {
+          "bonus_attack_power_main_hand": 5,
+          "attack_power_main_hand": 17,
+          "bonus_attack_power_off_hand": 5,
+          "attack_power_off_hand": 17
+        },
+        "7": {
+          "bonus_attack_power_main_hand": 6,
+          "attack_power_main_hand": 20,
+          "bonus_attack_power_off_hand": 6,
+          "attack_power_off_hand": 20
+        },
+        "8": {
+          "bonus_attack_power_main_hand": 7,
+          "attack_power_main_hand": 23,
+          "bonus_attack_power_off_hand": 7,
+          "attack_power_off_hand": 23
+        },
+        "9": {
+          "bonus_attack_power_main_hand": 8,
+          "attack_power_main_hand": 26,
+          "bonus_attack_power_off_hand": 8,
+          "attack_power_off_hand": 26
+        },
+        "10": {
+          "bonus_attack_power_main_hand": 9,
+          "attack_power_main_hand": 29,
+          "bonus_attack_power_off_hand": 9,
+          "attack_power_off_hand": 29
+        },
+        "11": {
+          "bonus_attack_power_main_hand": 10,
+          "attack_power_main_hand": 32,
+          "bonus_attack_power_off_hand": 10,
+          "attack_power_off_hand": 32
+        },
+        "12": {
+          "bonus_attack_power_main_hand": 11,
+          "attack_power_main_hand": 35,
+          "bonus_attack_power_off_hand": 11,
+          "attack_power_off_hand": 35
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "damage_reduction_penetration": 3,
+          "all_species_damage_amplification": 40
+        },
+        "2": {
+          "dex": 1,
+          "damage_reduction_penetration": 6,
+          "all_species_damage_amplification": 80
+        },
+        "3": {
+          "dex": 1,
+          "damage_reduction_penetration": 9,
+          "all_species_damage_amplification": 120
+        },
+        "4": {
+          "dex": 2,
+          "damage_reduction_penetration": 12,
+          "all_species_damage_amplification": 160
+        },
+        "5": {
+          "dex": 2,
+          "damage_reduction_penetration": 15,
+          "all_species_damage_amplification": 200
+        },
+        "6": {
+          "dex": 3,
+          "damage_reduction_penetration": 18,
+          "all_species_damage_amplification": 240
+        },
+        "7": {
+          "dex": 3,
+          "damage_reduction_penetration": 21,
+          "all_species_damage_amplification": 280
+        },
+        "8": {
+          "dex": 4,
+          "damage_reduction_penetration": 24,
+          "all_species_damage_amplification": 320
+        },
+        "9": {
+          "dex": 4,
+          "damage_reduction_penetration": 27,
+          "all_species_damage_amplification": 360
+        },
+        "10": {
+          "dex": 5,
+          "damage_reduction_penetration": 30,
+          "all_species_damage_amplification": 400
+        },
+        "11": {
+          "dex": 5,
+          "damage_reduction_penetration": 33,
+          "all_species_damage_amplification": 440
+        },
+        "12": {
+          "dex": 6,
+          "damage_reduction_penetration": 36,
+          "all_species_damage_amplification": 480
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "ql_hp_max_b102d73d",
+        "ql_all_accuracy_f765176e",
+        "ql_weaken_accuracy_630c58e2",
+        "ql_all_double_attack_f765176e",
+        "ql_all_critical_attack_f765176e",
+        "ql_cost_consumption_modifier_191a66fb"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "con",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "dex",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "Int",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "per",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "str",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:str",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:dex",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:Int",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:per",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:con",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:range_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:range_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:range_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "range_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:buff_given_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:debuff_taken_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 2100
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:skill_cooldown_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:1:attack_speed_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1850
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:str",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:dex",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:Int",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:per",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:con",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:range_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:range_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:range_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "range_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:buff_given_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:debuff_taken_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 2100
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:skill_cooldown_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "crossbow_aa_t2_raid_001:heroic-effect:2:attack_speed_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1850
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": true,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Crossbow",
+        "questlogId": "crossbow_aa_t2_raid_001",
+        "equipmentType": "crossbow",
+        "questlogGrade": 51,
+        "tlcodexId": "1741582276",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "crossbow_aa_t2_raid_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "crossbow_aa_t2_raid_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    },
+    {
+      "id": "wand_aa_t2_raid_001",
+      "name": "Гримуар Хаоса Каланты",
+      "sourceName": "Доктрина хаоса Калантии",
+      "englishName": "Calanthia's Doctrine of Chaos",
+      "description": "",
+      "thumbnail": "/Icons/Questlog/Heroic/it_p_wand_10002.webp",
+      "slot": "Weapon",
+      "grade": "Heroic",
+      "tier": "t2",
+      "category": "Wand",
+      "requiredLevel": 1,
+      "enchantMaxLevel": 12,
+      "baseStats": {
+        "attack_range_main_hand": 1820,
+        "attack_speed_main_hand": 575,
+        "bonus_attack_power_main_hand": 81,
+        "attack_power_main_hand": 71
+      },
+      "extraStats": {
+        "Int": 12,
+        "cost_consumption_modifier": 1000,
+        "all_species_damage_amplification": 240
+      },
+      "enchantScaling": {
+        "1": {
+          "bonus_attack_power_main_hand": 2,
+          "attack_power_main_hand": 1
+        },
+        "2": {
+          "bonus_attack_power_main_hand": 4,
+          "attack_power_main_hand": 3
+        },
+        "3": {
+          "bonus_attack_power_main_hand": 6,
+          "attack_power_main_hand": 5
+        },
+        "4": {
+          "bonus_attack_power_main_hand": 8,
+          "attack_power_main_hand": 7
+        },
+        "5": {
+          "bonus_attack_power_main_hand": 10,
+          "attack_power_main_hand": 9
+        },
+        "6": {
+          "bonus_attack_power_main_hand": 13,
+          "attack_power_main_hand": 11
+        },
+        "7": {
+          "bonus_attack_power_main_hand": 15,
+          "attack_power_main_hand": 13
+        },
+        "8": {
+          "bonus_attack_power_main_hand": 17,
+          "attack_power_main_hand": 15
+        },
+        "9": {
+          "bonus_attack_power_main_hand": 19,
+          "attack_power_main_hand": 16
+        },
+        "10": {
+          "bonus_attack_power_main_hand": 21,
+          "attack_power_main_hand": 18
+        },
+        "11": {
+          "bonus_attack_power_main_hand": 24,
+          "attack_power_main_hand": 20
+        },
+        "12": {
+          "bonus_attack_power_main_hand": 26,
+          "attack_power_main_hand": 22
+        }
+      },
+      "extraEnchantScaling": {
+        "1": {
+          "cost_consumption_modifier": 100,
+          "all_species_damage_amplification": 40
+        },
+        "2": {
+          "Int": 1,
+          "cost_consumption_modifier": 200,
+          "all_species_damage_amplification": 80
+        },
+        "3": {
+          "Int": 1,
+          "cost_consumption_modifier": 300,
+          "all_species_damage_amplification": 120
+        },
+        "4": {
+          "Int": 2,
+          "cost_consumption_modifier": 400,
+          "all_species_damage_amplification": 160
+        },
+        "5": {
+          "Int": 2,
+          "cost_consumption_modifier": 500,
+          "all_species_damage_amplification": 200
+        },
+        "6": {
+          "Int": 3,
+          "cost_consumption_modifier": 600,
+          "all_species_damage_amplification": 240
+        },
+        "7": {
+          "Int": 3,
+          "cost_consumption_modifier": 700,
+          "all_species_damage_amplification": 280
+        },
+        "8": {
+          "Int": 4,
+          "cost_consumption_modifier": 800,
+          "all_species_damage_amplification": 320
+        },
+        "9": {
+          "Int": 4,
+          "cost_consumption_modifier": 900,
+          "all_species_damage_amplification": 360
+        },
+        "10": {
+          "Int": 5,
+          "cost_consumption_modifier": 1000,
+          "all_species_damage_amplification": 400
+        },
+        "11": {
+          "Int": 5,
+          "cost_consumption_modifier": 1100,
+          "all_species_damage_amplification": 440
+        },
+        "12": {
+          "Int": 6,
+          "cost_consumption_modifier": 1200,
+          "all_species_damage_amplification": 480
+        }
+      },
+      "runeSlots": 3,
+      "traits": [
+        "ql_all_accuracy_f765176e",
+        "ql_weaken_accuracy_630c58e2",
+        "ql_all_double_attack_f765176e",
+        "ql_all_critical_attack_f765176e",
+        "ql_attack_speed_modifier_f765176e",
+        "ql_cost_consumption_modifier_191a66fb"
+      ],
+      "heroicTraits": [
+        {
+          "stat": "con",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "dex",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "Int",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "per",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        },
+        {
+          "stat": "str",
+          "values": [
+            2,
+            4,
+            6,
+            8
+          ]
+        }
+      ],
+      "heroicEffects": [
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:str",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:dex",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:Int",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:per",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:con",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:all_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:magic_accuracy",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:all_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:magic_critical_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:all_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:magic_double_attack",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "magic_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:buff_given_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:debuff_taken_duration_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:hp_max",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 2100
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:skill_cooldown_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:1:attack_speed_modifier",
+          "group": 1,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1850
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:str",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "str",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:dex",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "dex",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:Int",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "Int",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:per",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "per",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:con",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "con",
+              "value": 14
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:all_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:magic_accuracy",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_accuracy",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:all_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:magic_critical_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_critical_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:all_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "all_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:magic_double_attack",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "magic_double_attack",
+              "value": 2800
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:buff_given_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "buff_given_duration_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:debuff_taken_duration_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "debuff_taken_duration_modifier",
+              "value": -1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:hp_max",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "hp_max",
+              "value": 2100
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:skill_cooldown_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "skill_cooldown_modifier",
+              "value": 1400
+            }
+          ]
+        },
+        {
+          "id": "wand_aa_t2_raid_001:heroic-effect:2:attack_speed_modifier",
+          "group": 2,
+          "stats": [
+            {
+              "stat": "attack_speed_modifier",
+              "value": 1850
+            }
+          ]
+        }
+      ],
+      "resonanceEffects": [],
+      "skillCoreEligible": true,
+      "setName": "",
+      "setItems": [],
+      "setBonuses": [],
+      "specialPerk": null,
+      "gearbook": {
+        "source": "https://questlog.gg",
+        "secondarySource": "https://tlcodex.com",
+        "grade": "Heroic",
+        "category": "Wand",
+        "questlogId": "wand_aa_t2_raid_001",
+        "equipmentType": "wand",
+        "questlogGrade": 51,
+        "tlcodexId": "1741582279",
+        "tlcodexGradeCode": 8
+      },
+      "origin": "questlog",
+      "clientSource": {
+        "table": "Questlog",
+        "locresId": "wand_aa_t2_raid_001",
+        "match": "questlog-tlcodex-icon",
+        "nameKey": "",
+        "descriptionKey": "",
+        "candidates": [
+          "wand_aa_t2_raid_001"
+        ]
+      },
+      "sourceStatus": "questlog-normalized",
+      "sourceNotes": []
+    }
+  ]
+}

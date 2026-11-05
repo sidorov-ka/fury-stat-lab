@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {itemStats,gearStats,resonanceReady} from '../engine.js';
+import {weaponEffects} from '../weapon-effects.js';
+import {deriveStats,simulate,DEFAULTS,IDS} from '../simulator.js';
+const c=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
+const bow=c.equipment.find(i=>i.id==='crossbow_aa_t2_raid_001'),head=c.equipment.find(i=>i.id==='head_unique_aa_t2_set_001');
+assert(bow&&head);assert.equal(c.equipment.filter(i=>i.sourceData==='docs/ru-november-weapons.json').length,10);
+const effects=bow.heroicEffects.filter(e=>e.stats[0].stat==='dex').map(e=>e.id);const entry={id:bow.id,level:12,traits:[],heroicEffectIds:effects,heroicTrait:{stat:'dex',level:4},skillCoreId:'crossbow_aa_t2_polymorph_003'};
+const base=itemStats(bow,12,[],c,null),withStats=itemStats(bow,12,[],c,null,entry);assert.equal(withStats.dex-base.dex,36);assert.equal(resonanceReady(bow,entry,c),false);
+const state={items:{weapon1:entry},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};assert.equal(gearStats(state,c).dex,withStats.dex);assert(weaponEffects(state).has('bellandirAscended'));assert(!weaponEffects({...state,items:{weapon1:{...entry,skillCoreId:'wand_aa_t2_polymorph_001'}}}).has('tevent'));assert(deriveStats(state,c).crossMax>0);
+const params={...DEFAULTS,crossMin:100,crossMax:100,critR:1e9,mana:1e6,auto:1,interval:.5};
+const result=simulate({catalog:c,state,params,priority:[]},true);assert(result.damage['bellandir-poison']>0);
+console.log('Legendary traits and random stats, core validation, and upgraded Bellandir poison passed.');
