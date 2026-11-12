@@ -20,7 +20,8 @@ def apply_october_overrides(catalog):
                 'sourceData': 'docs/ru-october-earrings.json'}
         item['thumbnail'] = 'icons/' + hashlib.sha256(original['thumbnail'].encode()).hexdigest()[:20] + '.webp'
         earrings.append(item)
-    catalog['equipment'] = [i for i in catalog['equipment'] if i['slot'] != 'Earring'] + earrings
+    october_ids = {i['id'] for i in earrings}
+    catalog['equipment'] = [i for i in catalog['equipment'] if i['id'] not in october_ids] + earrings
     patch = json.loads((ROOT / 'docs/ru-october-skills.json').read_text())
     for skill in catalog['skills']:
         skill.update(patch['skills'].get(skill['id'], {}))
