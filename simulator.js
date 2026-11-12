@@ -1,10 +1,10 @@
 import {eventInfo,breakdown} from './damage-attribution.js?v=damage-model-20261027c';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
-import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=earrings-20261105';
-import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=earrings-20261105';
+import {Bloodlust,cooldownSeconds,offhandChance,rapidOffhandChances,masteryEffects,signedChance,weakenProbability,remainingCooldownFactor,nightMultiplier,actionDuration} from './combat-mechanics.js?v=calculation-review-20261112';
+import {weaponEffects,WEAPON_EFFECTS,ProcDot} from './weapon-effects.js?v=calculation-review-20261112';
 import {commonSelection,commonWarnings,COMMON_IDS} from './common-mastery.js?v=full-audit-20261016';
 // Experimental expected-value PvE model. No claim of a verified RU combat engine.
-import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=earrings-20261105';
+import {gearStats,itemStats,weaponRange,ATTRS,totalAttributes,conditionalSetStats,setPassives} from './engine.js?v=calculation-review-20261112';
 
 import {TREES,normalizeTree,treeStats,treeWarnings} from './mastery-tree.js?v=full-audit-20261016';
 export const IDS={mark:'WP_CR_CR_S_ArmorBreakShot',step:'WP_CR_CR_S_Step',nature:'WP_CR_CR_S_AddProjectile',rapid:'WP_CR_CR_S_RapidShot',mana:'WP_CR_CR_S_BloodToSoul',ghost:'WP_CR_S_GhostWalk',buck:'WP_CR_CR_S_BuckShot',barrage:'WP_CR_FuriousFire',shot:'WP_CR_D_AddShot',weak:'WP_CR_D_WeakPointShot',trap:'WP_CR_TauntTrap',touch:'WP_WA_GR_S_Corruption',decay:'WP_WA_GR_S_Decay',burst:'WP_WA_GR_S_CurseBurst',area:'WP_WA_GR_S_CurseArea',spread:'WP_WA_GR_S_CurseSpread',light:'WP_WA_GR_S_DefenseUp',laser:'WP_WA_GR_S_LinkLaser',wind:'WP_CR_D_RobShot',heal:'WP_WA_GR_S_Heal',healAll:'WP_WA_GR_S_HealAll',sleep:'WP_WA_GR_S_Sleep',healField:'WP_WA_GR_S_HealField',shield:'WP_WA_GR_S_MagicShield'};
@@ -63,11 +63,11 @@ function rawCharacterStats(state,catalog){
  for(const [k,v] of Object.entries(conditionalSetStats(state,catalog,attributes,raw)))raw[k]=(raw[k]||0)+v;
  return {raw,extras,dexPercent,dexSeconds,mastery};
 }
-export function deriveStats(state,catalog){
- const {raw,extras,dexPercent,dexSeconds,mastery}=rawCharacterStats(state,catalog),mx=masteryEffects(state);
+export function deriveStats(state,catalog,targetSpecies=''){
+ const {raw,extras,dexPercent,dexSeconds,mastery}=rawCharacterStats(state,catalog);
 
  const val=k=>(raw[k]||0)*(catalog.formats[k]?.mul??1);
- const out={...DEFAULTS,accuracyR:val('all_accuracy')+val('range_accuracy'),accuracyM:val('all_accuracy')+val('magic_accuracy'),weaken:val('all_state_accuracy')+val('weaken_accuracy'),critR:val('all_critical_attack')+val('range_critical_attack'),critM:val('all_critical_attack')+val('magic_critical_attack'),heavyR:val('all_double_attack')+val('range_double_attack'),heavyM:val('all_double_attack')+val('magic_double_attack'),critDamage:val('critical_damage_dealt_modifier'),boost:val('skill_power_amplification'),bonus:val('damage_reduction_penetration'),cooldown:val('skill_cooldown_modifier'),speed:val('attack_speed_modifier'),mana:val('cost_max'),regen:val('cost_regen'),efficiency:val('cost_consumption_modifier'),hp:val('hp_max'),buffDuration:val('buff_given_duration_modifier')};
+ const out={...DEFAULTS,accuracyR:val('all_accuracy')+val('range_accuracy'),accuracyM:val('all_accuracy')+val('magic_accuracy'),weaken:val('all_state_accuracy')+val('weaken_accuracy'),critR:val('all_critical_attack')+val('range_critical_attack'),critM:val('all_critical_attack')+val('magic_critical_attack'),heavyR:val('all_double_attack')+val('range_double_attack'),heavyM:val('all_double_attack')+val('magic_double_attack'),critDamage:val('critical_damage_dealt_modifier'),boost:val('skill_power_amplification'),bonus:val('damage_reduction_penetration'),cooldown:val('skill_cooldown_modifier'),speed:val('attack_speed_modifier'),mana:val('cost_max'),regen:val('cost_regen'),efficiency:val('cost_consumption_modifier'),hp:val('hp_max'),buffDuration:val('buff_given_duration_modifier'),debuffDuration:val('debuff_given_duration_modifier')};
  out.speed=Math.min(150,out.speed);out.cooldown=Math.min(200,out.cooldown);out.buffDuration=Math.min(150,out.buffDuration);
  for(const position of ['front','side','back'])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out[position+name]=val(position+'_'+stat);
  for(const [suffix,type] of [['R','range'],['M','magic']])for(const [name,stat] of [['Accuracy','accuracy'],['Crit','critical_attack'],['Heavy','double_attack']])out['boss'+name+suffix]=val('boss_all_'+stat)+val('boss_'+type+'_'+stat);
@@ -93,13 +93,15 @@ export function deriveStats(state,catalog){
  // This node gives the same rating against all five monster species; count it once.
  out.weaken+=passive.weaken;
  out.wandInterval=attackInterval((itemStats(catalog.equipment.find(i=>i.id===state.items.weapon2?.id)||{},state.items.weapon2?.level||0,state.items.weapon2?.traits||[],catalog).attack_speed_main_hand||2000)*.001,dexPercent,out.speed,dexSeconds);
- out.species+=val('all_species_damage_amplification')+Math.min(...['demon','animal','undead','grankus','creation'].map(k=>(raw[k+'_damage_amplification']||0)*(catalog.formats[k+'_damage_amplification']?.mul??.1)));
+ const speciesTypes=['demon','animal','undead','grankus','creation'],species=speciesTypes.includes(targetSpecies)?targetSpecies:null;
+ out.species+=val('all_species_damage_amplification')+(species?val(species+'_damage_amplification'):Math.min(...speciesTypes.map(k=>val(k+'_damage_amplification'))));
+ if(species)out.bonus+=val('bonus_'+species+'_attack_power');
  return out;
 }
 // Character values always come from the build. Only fight assumptions may be overridden.
 export const COMBAT_ASSUMPTION_KEYS=['attackPosition','targetIsBoss','controlImmune','giantBlessing','enemyMana','stepDuration','mainWeapon','evasion','endurance','heavyEvasion','weakenResistance','incomingDps','furyInterval','enemyAttacks','moving','killInterval','targetDistance','targetHealth','resistance','selfSkillBoost','selfDurationExtension','targetResistanceDrop','lightMaxBonus','lightOpeningMultiplier','lightOpeningSeconds','regenPeriod','pve','defense','defenseK','ratingK','animationFloor','latency'];
 export function simulationParams(state,catalog,assumptions={}){
- const params={mainWeapon:'Crossbow',attackPosition:'front',...BUFF_DEFAULTS,...deriveStats(state,catalog),targetIsBoss:1,sheetIncludesPassives:1};
+ const params={mainWeapon:'Crossbow',attackPosition:'front',...BUFF_DEFAULTS,...deriveStats(state,catalog,assumptions.targetSpecies),targetIsBoss:1,sheetIncludesPassives:1};
  for(const key of COMBAT_ASSUMPTION_KEYS)if(Object.hasOwn(assumptions,key))params[key]=assumptions[key];
  return params;
 }
@@ -152,6 +154,9 @@ export function coverage(state,catalog){
  if(state.active.includes(IDS.step))warnings.push('Смещение: время рывка по умолчанию 1 с. В данных RU время применения равно нулю; длительность анимации выбрана по контексту и редактируется в настройках боя.');
  if(state.active.includes(IDS.nature))warnings.push('Гнев природы: коэффициенты заряда RU ур. 4; Огонь RU ур. 4: 30% на воспламенение длительностью 3 с; коэффициент тика взят из Огненных зарядов RU. Выбрана одна стихия до начала боя.');
  if(state.active.includes(IDS.touch)&&(state.specs[IDS.touch]||[]).some(id=>id.endsWith('_3')))warnings.push('Глубокая скорбь: 50% на дополнительный уровень, предел 3 применяется к каждой вероятностной ветви. Приоритет взрыва оценивается по средним уровням.');
+ if(weaponEffects(state).has('bellandirAscended'))warnings.push('Неистовая Бел’Адир: периодический урон учитывается; снижение снижения урона цели пока не моделируется.');
+ if(weaponEffects(state).has('teventAscended'))warnings.push('Неистовый Тевент: периодический урон учитывается; снижение защиты цели пока не моделируется.');
+ if(state.active.includes(IDS.barrage)&&(state.specs[IDS.barrage]||[]).some(id=>/_[12]$/.test(id)))warnings.push('Беспощадный обстрел: отдельные специализации пока не подтверждены и могут не влиять на расчёт.');
  if(weaponEffects(state).has('bellandir'))warnings.push('Вероятностный яд Бел’Адир: 20% при критическом попадании. При обновлении сохраняется фаза тиков; выбран наиболее вероятный вариант механики RU T2.');
  if(state.active.includes(IDS.area))warnings.push('Ритуальный круг: сохранение области повторно накладывает проклятие после снятия. Время применения взято из данных RU; точная анимация Перста угасания не измерена.');
  if(masteryEffects(state).Wand_Hero_Tactic_04)warnings.push('Летаргия: контроль монстров не изменяет урон по неподвижной цели. Входящие атаки не приостанавливаются вероятностным контролем.');
@@ -220,7 +225,7 @@ p.healing=combatHealing(state,catalog,p);const all=models(catalog,state,override
  const extraDots=[],stackEvents={},bloodlust=new Bloodlust(),bloodlustCasts=new Set(),bloodlustSpeedEvents=[];
  const bloodlustSpeed=()=>{while(bloodlustSpeedEvents.length&&bloodlustSpeedEvents[0].end<=t)bloodlustSpeedEvents.shift();return 5*(1-bloodlustSpeedEvents.reduce((miss,e)=>miss*(1-e.probability),1));};
  const stackGain=(key,value,seconds,cap)=>{const rows=(stackEvents[key]||[]).filter(e=>e.end>t);rows.push({value,end:t+seconds});stackEvents[key]=rows;return Math.min(cap,rows.reduce((sum,e)=>sum+e.value,0));};
- const debuffScale=1+(gearStats(state,catalog).debuff_given_duration_modifier||0)*.0001;
+ const debuffScale=1+(p.debuffDuration??((gearStats(state,catalog).debuff_given_duration_modifier||0)*.01))/100;
  const wp=(base,curse=false)=>weakenProbability(base,p.weaken,p.weakenResistance,curse&&!hasMx('Wand_High_Def_Skill')&&state.passive.includes(PASS.duration)?pv(PASS.duration,'Вероятность наложения проклятий ▲',4)/100:0);
  const accuracyBonus=()=> (accuracyBuffEnd>t?accuracyBuffStacks*30:0)+(mana<=p.mana*.4&&hasMx('Crossbow_High_Tac_Skill')&&has(PASS.bonus)?150:0);
  const combatPosition=()=>buffs.ghost>t&&byId.get(IDS.ghost)?.specs.includes(4)?'best':p.attackPosition;

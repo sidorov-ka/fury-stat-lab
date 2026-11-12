@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {deriveStats,simulate,DEFAULTS,IDS} from '../simulator.js';
+const catalog=JSON.parse(fs.readFileSync(new URL('../catalog.json',import.meta.url)));
+const state={items:{},attrs:{str:10,dex:10,Int:10,per:10,con:10},active:[],passive:[],defensive:[],specs:{},masteryTrees:{}};
+const modified=structuredClone(catalog);modified.attributes.baseCharacter.stats.debuff_given_duration_modifier=5000;
+assert.equal(deriveStats(state,modified).debuffDuration-deriveStats(state,catalog).debuffDuration,50);
+const once=c=>simulate({catalog:c,state,params:{...DEFAULTS,...deriveStats(state,c),wandMin:100,wandMax:100,mana:1e6,auto:0},priority:[IDS.touch],overrides:{[IDS.touch]:{cast:0,hitDelay:0,cooldownSec:999}}});
+assert(once(modified).damage[IDS.touch]>once(catalog).damage[IDS.touch]);
+console.log('Non-equipment debuff duration reaches derived stats and simulated damage.');
