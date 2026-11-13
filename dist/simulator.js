@@ -725,6 +725,20 @@ export function optimize(input,progress=()=>{}){
   if(i%20===19)refine();
   if(i%10===0)progress({done:i,budget,dps:best.dps});
  }
+ // A specialization can be worth removing only when its points are spent on
+ // another skill. Compare that exchange explicitly for Deep Sorrow.
+ if(best.priority.includes(IDS.touch)){
+  const deep=(input.catalog.skills.find(s=>s.id===IDS.touch)?.specializations||[]).find(t=>Number(t.id.split('_').at(-1))===3)?.id;
+  if(deep&&(bestSpecs[IDS.touch]||[]).includes(deep)){
+   const reduced={...bestSpecs,[IDS.touch]:bestSpecs[IDS.touch].filter(id=>id!==deep)};
+   const removed=run(best.priority,reduced,best.burstStacks);tested++;remember(removed,reduced);
+   for(const id of best.priority.filter(id=>id!==IDS.touch))for(const option of specializationOptions(input.catalog,id)){
+    const candidate={...reduced,[id]:option.ids};
+    if(pointsOf(candidate)>target)continue;
+    const trial=run(best.priority,candidate,best.burstStacks);tested++;remember(trial,candidate);
+   }
+  }
+ }
  const specs={...fixedSpecs,...bestSpecs},state={...input.state,active:best.priority,specs};
  const specPoints=input.catalog.skills.reduce((sum,s)=>sum+(s.specializations||[]).filter(t=>specs[s.id]?.includes(t.id)).reduce((n,t)=>n+Number(t.cost),0),0);
  const result={...run(best.priority,bestSpecs,best.burstStacks,true),specs,specPoints,supportTrials,curseSearch,referenceTrials,utilityPoints:specializationUtility(input.catalog,specs),baseline:baseline.dps,tested,warnings:coverage(state,input.catalog)};
