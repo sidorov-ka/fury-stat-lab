@@ -6,11 +6,11 @@ import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole
 import {setupSimulation} from './sim-ui.js?v=calculation-review-20261112';
 import {createStore,mergeDefaults} from './storage.js?v=full-audit-20261016';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=full-audit-20261016';
-import {TREES,normalizeTree} from './mastery-tree.js?v=full-audit-20261016';
+import {TREES,normalizeTree,treeStats} from './mastery-tree.js?v=full-audit-20261016';
 import {mountMastery} from './mastery-ui.js?v=full-audit-20261016';
 import {mountRunes} from './rune-ui.js?v=full-audit-20261016';
-import {runeEffects,runeSlots,normalizeMaxRunes} from './runes.js?v=full-audit-20261016';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets} from './engine.js?v=calculation-review-20261112';
+import {runeEffects,runeSlots,normalizeMaxRunes,runeStats} from './runes.js?v=full-audit-20261016';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets,gearStats} from './engine.js?v=calculation-review-20261112';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -69,9 +69,9 @@ function renderAttrs(){
  renderAttributeRows();
 }
 function renderAttributeRows(){
- const spent=spentAttributes(state.attrs),totals=totalAttributes(state,catalog);
+ const spent=spentAttributes(state.attrs),totals=totalAttributes(state,catalog),gear=gearStats(state,catalog),runes=runeStats(state,catalog),mastery=treeStats(state);
  $('attr-note').textContent=`Потрачено ${spent} / ${ATTRIBUTE_BUDGET} очков · Осталось ${Math.max(0,ATTRIBUTE_BUDGET-spent)}`;
- $('attributes').innerHTML=ATTRS.map(([k,label])=>{const v=state.attrs[k],cost=attributeCost(v+1)-attributeCost(v),bonus=totals[k]-v,adjust=state.attributeAdjustments?.[k]||0;return `<div class="attribute-row"><b>${label}</b><div class="attribute-controls"><button data-attr-step="${k}" data-delta="-1" ${v<=10?'disabled':''} aria-label="Уменьшить ${label}">−</button><input type="number" min="10" step="1" value="${v}" data-attr="${k}" aria-label="${label} до бонусов"><button data-attr-step="${k}" data-delta="1" ${spent+cost>ATTRIBUTE_BUDGET?'disabled':''} aria-label="Увеличить ${label}">+</button></div><small>10 + ${v-10} вложено · ${attributeCost(v)} очк.</small><small>Бонусы ${bonus>=0?'+':''}${n(bonus)} → <strong>${n(totals[k])}</strong></small><small>Следующее +1: ${cost} очк.</small>${adjust?`<small>Перенесённая поправка: ${n(adjust)}. Проверь старый итог.</small>`:''}</div>`}).join('');
+ $('attributes').innerHTML=ATTRS.map(([k,label])=>{const v=state.attrs[k],cost=attributeCost(v+1)-attributeCost(v),bonus=totals[k]-v,adjust=state.attributeAdjustments?.[k]||0,key=k==='Int'?'int':k,rune=Number(runes[key]||0)+(k==='Int'?Number(runes.Int||0):0),equipment=Number(gear[key]||0)+(k==='Int'?Number(gear.Int||0):0)-rune,master=Number(mastery[key]||0);return `<div class="attribute-row"><b>${label}</b><div class="attribute-controls"><button data-attr-step="${k}" data-delta="-1" ${v<=10?'disabled':''} aria-label="Уменьшить ${label}">−</button><input type="number" min="10" step="1" value="${v}" data-attr="${k}" aria-label="${label} до бонусов"><button data-attr-step="${k}" data-delta="1" ${spent+cost>ATTRIBUTE_BUDGET?'disabled':''} aria-label="Увеличить ${label}">+</button></div><small>10 + ${v-10} вложено · ${attributeCost(v)} очк.</small><small>Вещи и комплекты ${n(equipment)} · Руны ${n(rune)} · Мастерство ${n(master)}</small><small>Бонусы ${bonus>=0?'+':''}${n(bonus)} → <strong>${n(totals[k])}</strong></small><small>Следующее +1: ${cost} очк.</small>${adjust?`<small>Перенесённая поправка: ${n(adjust)}. Проверь старый итог.</small>`:''}</div>`}).join('');
  const change=(k,value)=>{const old=state.attrs[k],v=Math.max(10,Math.min(200,Math.trunc(Number(value)||10))),next={...state.attrs,[k]:v};if(v>old&&spentAttributes(next)>ATTRIBUTE_BUDGET){toast('Не хватает очков характеристик');renderAttributeRows();return;}state.attrs=next;renderStats();};
  $('attributes').querySelectorAll('[data-attr]').forEach(el=>el.onchange=()=>change(el.dataset.attr,el.value));
  $('attributes').querySelectorAll('[data-attr-step]').forEach(el=>el.onclick=()=>change(el.dataset.attrStep,state.attrs[el.dataset.attrStep]+Number(el.dataset.delta)));
