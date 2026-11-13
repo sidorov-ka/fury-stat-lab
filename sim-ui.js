@@ -1,4 +1,4 @@
-import {skillIcon} from './skill-icons.js?v=20261113b';
+import {skillIcon} from './skill-icons.js?v=20261113c';
 import {combatRatings} from './position-combat.js?v=full-audit-20261016';
 import {COMMON_PASSIVES} from './common-mastery.js?v=full-audit-20261016';
 import {COMBAT_ASSUMPTION_KEYS,simulationParams,IDS,PASS,models,coverage,chance,specializationRole,ROLE_LABELS} from './simulator.js?v=calculation-review-20261112';
