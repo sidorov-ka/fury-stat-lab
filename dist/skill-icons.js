@@ -2,7 +2,7 @@
 const transformed={
  'SkillSet_WP_WA_GR_S_Decay_trait_1':'icons/skill-enchanting-time.webp',
  'SkillSet_WP_WA_GR_S_DefenseUp_trait_1':'icons/skill-valorous-barrier.webp',
- 'SkillSet_WP_WA_GR_S_HealAll_trait_1':'icons/skill-janices-rage.webp'
+ 'SkillSet_WP_WA_GR_S_CurseBurst_trait_1':'icons/skill-dark-explosion.webp'
 };
 export function skillIcon(skill,specs={}){
  if(!skill)return '';
