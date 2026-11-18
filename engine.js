@@ -3,6 +3,19 @@ import {runeStats} from './runes.js?v=full-audit-20261016';
 export const ATTRS = [['str','Сила'],['dex','Ловкость'],['Int','Мудрость'],['per','Восприятие'],['con','Стойкость']];
 export const SLOTS = [['weapon1','Арбалет','Crossbow'],['weapon2','Жезл','Wand'],['head','Голова','Head'],['chest','Тело','Chest'],['hands','Перчатки','Hands'],['legs','Поножи','Legs'],['feet','Обувь','Feet'],['cape','Плащ','Cape'],['necklace','Ожерелье','Necklace'],['earring','Серьги','Earring'],['bracelet','Браслет','Bracelet'],['ring1','Кольцо 1','Ring'],['ring2','Кольцо 2','Ring'],['belt','Пояс','Belt']];
 export const traitLimit = grade => ({Common:0,Uncommon:2,Rare:3,Rare2:4,Epic2:4,Epic:4,Heroic:4,Legendary:4}[grade] || 0);
+// Random stats cannot duplicate fixed item stats. Treat repeated random stats as
+// mutually exclusive as a conservative assumption until the game confirms otherwise.
+export function validHeroicEffects(item,ids=[]){
+ const key=s=>String(s||'').toLowerCase();
+ const fixed=new Set([...Object.keys(item.baseStats||{}),...Object.keys(item.extraStats||{})].map(key));
+ const groups=new Set(),stats=new Set(),valid=[];
+ for(const id of ids){
+  const effect=item.heroicEffects?.find(e=>e.id===id),rows=effect?.stats||[];
+  if(!effect||!rows.length||groups.has(effect.group)||rows.some(r=>fixed.has(key(r.stat))||stats.has(key(r.stat))))continue;
+  groups.add(effect.group);rows.forEach(r=>stats.add(key(r.stat)));valid.push(effect);
+ }
+ return valid;
+}
 export function itemStats(item,level=0,traits=[],catalog,resonanceId=null,entry={}){
  const stats={}; const add=(k,v)=>{if(k==='species_damage_amplification')k='all_species_damage_amplification';if(Number.isFinite(Number(v)))stats[k]=(stats[k]||0)+Number(v)};
  for(const [base,scale] of [['baseStats','enchantScaling'],['extraStats','extraEnchantScaling']]){
@@ -19,8 +32,7 @@ export function itemStats(item,level=0,traits=[],catalog,resonanceId=null,entry=
   add(info.stat,info.curve?.length?Number(base)+Number(info.curve[lv-1]||0):Number(info.max??base));
  }
  if(item.grade==='Heroic'){
-  const seenGroups=new Set();
-  for(const id of entry.heroicEffectIds||[]){const effect=item.heroicEffects?.find(x=>x.id===id);if(!effect||seenGroups.has(effect.group))continue;seenGroups.add(effect.group);for(const row of effect.stats||[])add(row.stat,row.value);}
+  for(const effect of validHeroicEffects(item,entry.heroicEffectIds||[]))for(const row of effect.stats||[])add(row.stat,row.value);
   const trait=item.heroicTraits?.find(x=>x.stat===entry.heroicTrait?.stat);
   if(trait){const level=Math.max(1,Math.min(trait.values.length,Math.trunc(Number(entry.heroicTrait.level)||1)));add(trait.stat,trait.values[level-1]);}
  }

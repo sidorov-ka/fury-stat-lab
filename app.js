@@ -3,15 +3,15 @@ import {WEAPON_EFFECTS} from './weapon-effects.js?v=calculation-review-20261112'
 import {normalizeCommon,mountCommon} from './common-mastery.js?v=full-audit-20261016';
 import {equipmentDraft,newTrait} from './equipment-defaults.js?v=full-audit-20261016';
 import {ATTRIBUTE_BUDGET,attributeCost,spentAttributes,migrateAttributes} from './attributes.js?v=full-audit-20261016';
-import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=calculation-review-20261112';
-import {setupSimulation} from './sim-ui.js?v=20261113e';
+import {deriveStats,characterStats,statBreakdown,passiveLevel,specializationRole,ROLE_LABELS} from './simulator.js?v=legendary-stats-20261118';
+import {setupSimulation} from './sim-ui.js?v=legendary-stats-20261118';
 import {createStore,mergeDefaults} from './storage.js?v=full-audit-20261016';
 import {MASTERY_FIELDS,emptyMastery} from './mastery.js?v=full-audit-20261016';
 import {TREES,normalizeTree,treeStats} from './mastery-tree.js?v=full-audit-20261016';
 import {mountMastery} from './mastery-ui.js?v=full-audit-20261016';
 import {mountRunes} from './rune-ui.js?v=full-audit-20261016';
 import {runeEffects,runeSlots,normalizeMaxRunes,runeStats} from './runes.js?v=full-audit-20261016';
-import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets,gearStats} from './engine.js?v=calculation-review-20261112';
+import {ATTRS,SLOTS,traitLimit,resonanceReady,itemStats,weaponRange,specCost,totalAttributes,activeSets,gearStats,validHeroicEffects} from './engine.js?v=legendary-stats-20261118';
 const $=id=>document.getElementById(id);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>Number(v||0).toLocaleString('ru-RU',{maximumFractionDigits:2});
@@ -175,9 +175,20 @@ function renderItemPreview(item){
   const host=document.createElement('div');host.className='resonance-panel';$('picker-preview').append(host);
   const groups=[...new Set((item.heroicEffects||[]).map(e=>e.group))].sort((a,b)=>a-b);
   const effectLabel=e=>(e.stats||[]).map(r=>statLabel(r.stat)+' '+(r.value>0?'+':'')+format(r.stat,r.value)).join(' · ');
-  host.innerHTML='<h3>Случайные характеристики</h3>'+groups.map(group=>`<label class="trait-line">Характеристика ${group}<select data-heroic-group="${group}" aria-label="Случайная характеристика ${group}"><option value="">Не выбрана</option>${item.heroicEffects.filter(e=>e.group===group).map(e=>`<option value="${escape(e.id)}" ${(draft.heroicEffectIds||[]).includes(e.id)?'selected':''}>${escape(effectLabel(e))}</option>`).join('')}</select></label>`).join('')+`<h3>Легендарное свойство</h3><div class="trait-line"><select id="heroic-trait" aria-label="Легендарное свойство"><option value="">Не выбрано</option>${(item.heroicTraits||[]).map(t=>`<option value="${escape(t.stat)}" ${draft.heroicTrait?.stat===t.stat?'selected':''}>${escape(statLabel(t.stat))}</option>`).join('')}</select><input id="heroic-trait-level" type="number" min="1" max="4" value="${draft.heroicTrait?.level||4}" aria-label="Уровень легендарного свойства"></div>`;
+  const selectedEffects=validHeroicEffects(item,draft.heroicEffectIds||[]);
+  const invalidEffects=(draft.heroicEffectIds||[]).length-selectedEffects.length;
+  draft.heroicEffectIds=selectedEffects.map(e=>e.id);
+  host.innerHTML='<h3>Случайные характеристики</h3>'+(invalidEffects?'<p class="micro">Недопустимые сохранённые характеристики не учитываются. Выберите доступные варианты.</p>':'')+groups.map(group=>`<label class="trait-line">Характеристика ${group}<select data-heroic-group="${group}" aria-label="Случайная характеристика ${group}"></select></label>`).join('')+`<h3>Легендарное свойство</h3><div class="trait-line"><select id="heroic-trait" aria-label="Легендарное свойство"><option value="">Не выбрано</option>${(item.heroicTraits||[]).map(t=>`<option value="${escape(t.stat)}" ${draft.heroicTrait?.stat===t.stat?'selected':''}>${escape(statLabel(t.stat))}</option>`).join('')}</select><input id="heroic-trait-level" type="number" min="1" max="4" value="${draft.heroicTrait?.level||4}" aria-label="Уровень легендарного свойства"></div>`;
   if(item.slot==='Weapon'){const cores=catalog.equipment.filter(x=>x.slot==='Weapon'&&x.category===item.category&&WEAPON_EFFECTS[x.id]);host.insertAdjacentHTML('beforeend',`<h3>Ядро умения</h3><select id="skill-core" aria-label="Ядро умения"><option value="">Без ядра</option>${cores.map(c=>`<option value="${escape(c.id)}" ${draft.skillCoreId===c.id?'selected':''}>${escape(c.name)}</option>`).join('')}</select>`);host.querySelector('#skill-core').onchange=e=>{draft.skillCoreId=e.target.value||null;};}
-  host.querySelectorAll('[data-heroic-group]').forEach(el=>el.onchange=()=>{draft.heroicEffectIds=[...host.querySelectorAll('[data-heroic-group]')].map(x=>x.value).filter(Boolean);updateValues();});
+  const renderHeroicOptions=()=>{
+   for(const el of host.querySelectorAll('[data-heroic-group]')){
+    const group=Number(el.dataset.heroicGroup),current=(draft.heroicEffectIds||[]).find(id=>item.heroicEffects.some(e=>e.id===id&&e.group===group))||'';
+    const others=(draft.heroicEffectIds||[]).filter(id=>id!==current);
+    const options=item.heroicEffects.filter(e=>e.group===group&&validHeroicEffects(item,[...others,e.id]).some(v=>v.id===e.id));
+    el.innerHTML='<option value="">Не выбрана</option>'+options.map(e=>`<option value="${escape(e.id)}" ${e.id===current?'selected':''}>${escape(effectLabel(e))}</option>`).join('');
+    el.onchange=()=>{draft.heroicEffectIds=[...others,...(el.value?[el.value]:[])];renderHeroicOptions();updateValues();};
+   }
+  };renderHeroicOptions();
   const trait=host.querySelector('#heroic-trait'),level=host.querySelector('#heroic-trait-level');const setTrait=()=>{level.value=Math.max(1,Math.min(4,Math.trunc(Number(level.value)||1)));draft.heroicTrait=trait.value?{stat:trait.value,level:Number(level.value)}:null;updateValues();};trait.onchange=setTrait;level.oninput=level.onchange=setTrait;
  }
 
